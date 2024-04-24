@@ -1,15 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll('.star');
-    const ratingValue = document.getElementById('ratingValue');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const stars = document.querySelectorAll('.star');
+//     const ratingValue = document.getElementById('ratingValue');
   
-    stars.forEach(function(star) {
-      star.addEventListener('click', function() {
-        const value = parseInt(star.getAttribute('data-value'));
-        ratingValue.innerText = 'You rated ' + value + ' stars.';
-        // You can implement further logic here like sending the rating to a server
-      });
-    });
-  });
+//     stars.forEach(function(star) {
+//       star.addEventListener('click', function() {
+//         const value = parseInt(star.getAttribute('data-value'));
+//         ratingValue.innerText = 'You rated ' + value + ' stars.';
+//       });
+//     });
+//   });
   
   // Owl-carousel for doctor Videos
   $(document).ready(function(){

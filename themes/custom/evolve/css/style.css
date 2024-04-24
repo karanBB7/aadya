@@ -188,13 +188,7 @@ section {
 	letter-spacing: 1px;
 }
 
-#sec1 .rating {
-	position: relative;
-	left: 0px;
-	unicode-bidi: bidi-override;
-	direction: rtl;
 
-}
 
 @media screen and (min-width: 1083px) {
 	#sec1 .intro-box {
@@ -221,20 +215,26 @@ section {
 }
 
 
-#sec1 .star {
-	font-size: 30px;
-	color: var(--c3);
-	cursor: pointer;
-	background: var(--c1);
-	border-radius: 100%;
-	padding: 4px 8px 4px 8px;
-	/* margin: 2px; */
+.rating {
+	position: relative;
+	left: 0px;
+	unicode-bidi: bidi-override;
+	direction: rtl;
 }
 
-#sec1 .star:hover,
-#sec1 .star:hover ~ .star {
+.star {
+	font-size: 30px;
+	border-radius: 100%;
+	padding: 4px 8px 4px 8px;
+	background: var(--c1);
+	color: var(--c3);
+}
+
+.filled {
 	color: #ffcc00;
 }
+
+
 
 #sec1 .line {
 	width: 5px;

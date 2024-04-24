@@ -20,19 +20,29 @@
 					<div class="col-sm-7 bg-change">
 						<div class="sm-fl">
 							<button class="btn appbtn rounded-pill mb-2 order-lg-2 order-sm-2">Make an appointment</button>
-							<button class="whatsappbtn btn mb-2 d-block d-sm-none"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button>
+
+							<a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello." target="_blank"><button class="whatsappbtn btn mb-2 d-block d-sm-none"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+
 						</div>
 						<p class="pt-4 fs-6 mb-4 d-none d-sm-block">{{ arr_data.profile_theme1.field_phone_number}} <br>{{ arr_data.profile_theme1.field_email_address}}</p>
-						<div class="rating float-start mb-3 mt-3 order-lg-2 order-sm-2" id="rating">
-							<span class="star" data-value="1">&#9733;</span>
-							<span class="star" data-value="2">&#9733;</span>
-							<span class="star" data-value="3">&#9733;</span>
-							<span class="star" data-value="4">&#9733;</span>
-							<span class="star" data-value="5">&#9733;</span>
-						</div>
+
+    <div class="rating float-start mb-3 mt-3 order-lg-2 order-sm-2" id="rating">
+        {% set value = arr_data.profile_theme1.field_ratingscore %}
+        {% for i in 5..1 %}
+            {% if i <= value %}
+                <span class="star filled" data-value="{{ i }}">&#9733;</span>
+            {% else %}
+                <span class="star" data-value="{{ i }}">&#9734;</span>
+            {% endif %}
+        {% endfor %}
+    </div>
 					</div>
 					<div class="col-sm-5 d-none d-sm-block">
+
+						<a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello." target="_blank">
 						<button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button>
+						</a>
+
 						<p class="exp mt-3"><span class="ten">{{ arr_data.profile_theme1.field_experiences}} Years</span></p>
 						<p class="fs-5 fw-bold mx-1 mb-4" style="margin-top: -30px;"><span class="ex">Experience</span></p>
 						<p class="exp mb-4"><span class="ten">{{ arr_data.profile_theme1.field_patients}}</span> Patients</p>
@@ -80,7 +90,6 @@
 						<div class="col-lg-7 col-sm-7 pilltext">
 							<p>{{arr_data.profile_theme1.field_overview}}</p>
 							<br>
-							{# <p>Mr. Riley ha</p> #}
 							<h2><b>Education</b></h2>
 							<p>{{arr_data.profile_theme1.field_allcertifications}}</p>
 						</div>
@@ -98,7 +107,12 @@
 							<br>
 						</div>
 						<div class="col-lg-5 col-sm-5">
-							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+							{% for key, url in arr_data.profile_theme1.field_youtube %}
+    {% if loop.index == 3 %}
+        <iframe width="100%" height="80%" src="{{ url.field_youtube_embede }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    {% endif %}
+{% endfor %}
+
 						</div>
 					</div>
 				</div>
@@ -119,7 +133,9 @@
 							<p>Perelman School of Medicine at the University of Pennsylvania (1987)</p>
 						</div>
 						<div class="col-lg-5 col-sm-5">
-							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+
+						
+
 						</div>
 					</div>
 				</div>
@@ -684,68 +700,21 @@
 				<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
-
 			</div>
-
-
 
 			<div class="container pt-5">
 				<div class="accordion">
 					<div class="row">
-						
+						{% for key,faq in arr_data.profile_theme1.field_faq %}
 						<div class="col-lg-6 col-md-6 mb-4">
 							<article class="accordion-item rounded">
-								<span class="accordion-label">01. What are Dr. Hedley Top areas of Expertise?</span>
+								<span class="accordion-label">{{loop.index}}) {{faq.field_header}}</span>
 								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+									<p>{{faq.field_content}}</p>
 								</div>
 							</article>
 						</div>
-
-						<div class="col-lg-6 col-md-6 mb-4">
-							<article class="accordion-item rounded">
-								<span class="accordion-label">02. Can i use my Insurance at Dr. Hedley ?</span>
-								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
-								</div>
-							</article>
-						</div>
-
-						<div class="col-lg-6 col-md-6 mb-4">
-							<article class="accordion-item rounded">
-								<span class="accordion-label">03. What are Dr. Hedley Top areas of Expertise?</span>
-								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
-								</div>
-							</article>
-						</div>
-
-						<div class="col-lg-6 col-md-6 mb-4">
-							<article class="accordion-item rounded">
-								<span class="accordion-label">04. Can i use my Insurance at Dr. Hedley ?</span>
-								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
-								</div>
-							</article>
-						</div>
-
-						<div class="col-lg-6 col-md-6 mb-4">
-							<article class="accordion-item rounded">
-								<span class="accordion-label">05. What are Dr. Hedley Top areas of Expertise?</span>
-								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
-								</div>
-							</article>
-						</div>
-
-						<div class="col-lg-6 col-md-6 mb-4">
-							<article class="accordion-item rounded">
-								<span class="accordion-label">06. Can i use my Insurance at Dr. Hedley ?</span>
-								<div class="accordion-content">
-									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
-								</div>
-							</article>
-						</div>
+						{% endfor %}
 						
 					</div>
 				</div>
@@ -757,7 +726,7 @@
 
 
 	<div class="pt-3">
-		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15555.80884571165!2d77.59631594999999!3d12.91079305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1712128342123!5m2!1sen!2sin" class="map" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		<iframe src="{{arr_data.profile_theme1.field_map}}" class="map" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 	</div>
 
 	<script src="assets/js/main.js"></script>
