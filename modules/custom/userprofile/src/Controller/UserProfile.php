@@ -115,6 +115,8 @@ class UserProfile extends ControllerBase
 			}
 			unset($data);
 		}
+		// echo "<pre>";
+		// print_r($response);exit;
 		return array(
 			'#theme' => 'profile_template',
 			'#arr_data' => $response,

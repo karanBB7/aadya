@@ -49,464 +49,716 @@
 		</div>
 	</div>
 </section>
-<section id="sec2" class="pt-5 pb-5">
-	<div class="container">
-		<ul class="nav nav-pills " role="tablist">
-		{% set k = 1 %}
-		{% for key,usertabdata in arr_data.tabs.field_tab_section %}
-			<li class="nav-item">
-				<a class="nav-link {{ (k == 1) ? 'active' : '' }} fw-bold" data-bs-toggle="pill" href="#{{usertabdata.field_tab_id}}">{{usertabdata.field_tab_name}}</a>
-			</li>
-			{% set k = k+1 %}
-		{% endfor %}
-		</ul>
-	</div>
-	<div class="container">
-		<div class="tab-content">
-		{% set i = 1 %}
-		{% for key,usertabdata in arr_data.tabs.field_tab_section %}
-			<div id="{{ usertabdata.field_tab_id }}" class="container tab-pane {{ (i == 1) ? 'active' : '' }} pt-4">
-				<br>
+
+
+	<section id="sec2" class="pt-5 pb-5">
+		<div class="container">
+			<ul class="nav nav-pills " role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active fw-bold" data-bs-toggle="pill" href="#overview">Overview</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#speciality">Speciality</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#summary">Expertise summary</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#practise">Places of practise</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#meet">First available time to meet </a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="container">
+			<div class="tab-content">
+
+				<div id="overview" class="container tab-pane active pt-4"><br>
+					<div class="row">
+						<div class="col-lg-7 col-sm-7 pilltext">
+							<p>{{arr_data.profile_theme1.field_overview}}</p>
+							<br>
+							{# <p>Mr. Riley ha</p> #}
+							<h2><b>Education</b></h2>
+							<p>{{arr_data.profile_theme1.field_allcertifications}}</p>
+						</div>
+						<div class="col-lg-5 col-sm-5">
+							<img class="img-fluid" alt="" src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+						</div>
+					</div>
+
+				</div>
+
+				<div id="speciality" class="container tab-pane fade pt-4"><br>
+					<div class="row">
+						<div class="col-lg-7 col-sm-7 pilltext">
+							<p>{{arr_data.profile_theme1.field_specialities}}</p>
+							<br>
+						</div>
+						<div class="col-lg-5 col-sm-5">
+							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+						</div>
+					</div>
+				</div>
+
+				<div id="summary" class="container tab-pane fade pt-4"><br>
+					<div class="row">
+						<div class="col-lg-7 col-sm-7 pilltext">
+							<p>As SANA Medical Center President and CMO since 1997, Scott Riley is an
+								active member in the San Diego County community. He currently serves
+								as the Vice Chair of the Board of Directors for the San Diego Council of
+								Clinics, a board member of the North San Diego Economic Council, San
+								Diegans for Healthcare Coverage, the Blue Shield/UCSF Clinical Leadership
+								Institute, The San Diego Regional Climate Education Partnership, CSUSM
+								University Council and the Palomar College President’s Circle. </p>
+							<br>
+							<p>Mr. Riley ha</p>
+							<b>Education </b>
+							<p>Perelman School of Medicine at the University of Pennsylvania (1987)</p>
+						</div>
+						<div class="col-lg-5 col-sm-5">
+							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+						</div>
+					</div>
+				</div>
+
+				<div id="practise" class="container tab-pane fade pt-4"><br>
+					<div class="row">
+						<div class="col-lg-7 col-sm-7 pilltext">
+							<p>As SANA Medical Center President and CMO since 1997, Scott Riley is an
+								active member in the San Diego County community. He currently serves
+								as the Vice Chair of the Board of Directors for the San Diego Council of
+								Clinics, a board member of the North San Diego Economic Council, San
+								Diegans for Healthcare Coverage, the Blue Shield/UCSF Clinical Leadership
+								Institute, The San Diego Regional Climate Education Partnership, CSUSM
+								University Council and the Palomar College President’s Circle. </p>
+							<br>
+							<p>Mr. Riley ha</p>
+							<b>Education </b>
+							<p>Perelman School of Medicine at the University of Pennsylvania (1987)</p>
+						</div>
+						<div class="col-lg-5 col-sm-5">
+							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+						</div>
+					</div>
+				</div>
+
+				<div id="meet" class="container tab-pane fade pt-4"><br>
+					<div class="row">
+						<div class="col-lg-7 col-sm-7 pilltext">
+							<p>As SANA Medical Center President and CMO since 1997, Scott Riley is an
+								active member in the San Diego County community. He currently serves
+								as the Vice Chair of the Board of Directors for the San Diego Council of
+								Clinics, a board member of the North San Diego Economic Council, San
+								Diegans for Healthcare Coverage, the Blue Shield/UCSF Clinical Leadership
+								Institute, The San Diego Regional Climate Education Partnership, CSUSM
+								University Council and the Palomar College President’s Circle. </p>
+							<br>
+							<p>Mr. Riley ha</p>
+							<b>Education </b>
+							<p>Perelman School of Medicine at the University of Pennsylvania (1987)</p>
+						</div>
+						<div class="col-lg-5 col-sm-5">
+							<img class="img-fluid" src="assets/img/docvid.png" alt="">
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="container mt-4">
+			<div class="owl-carousel docslider">
+			{% for key,url in arr_data.profile_theme1.field_youtube %}				
+				<iframe src="{{url.field_youtube_embede}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+			{% endfor %}
+				
+				{# <img src="assets/img/video2.png" class="img-fluid" alt="...">
+				<img src="assets/img/video3.png" class="img-fluid" alt="...">
+				<img src="assets/img/video1.png" class="img-fluid" alt="...">
+				<img src="assets/img/video2.png" class="img-fluid" alt="..."> #}
+			</div>
+		</div>
+	</section>
+
+
+	<section id="sec3" class="p-5 pb-0">
+		<div class="container">
+			<h2>Book Appointment</h2>
+			<ul class="nav nav-pills pt-3" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active fw-bold" data-bs-toggle="pill" href="#brain">Advanced Brain Clinic </a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#spine">Spine Surgical Clinic</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link fw-bold" data-bs-toggle="pill" href="#medical">Gleneagles Medical Centre Clinic</a>
+				</li>
+			</ul>
+
+
+			<div id="brain" class="container tab-pane active"><br>
+				<div class="col-lg-8 col-sm-12 pt-4">
+					<div class="row">
+
+						<div class="owl-carousel dateslider">
+							<div class="date-wrapper">
+								<div class="day text-center">MON</div>
+								<div class="date text-center">16</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Tue</div>
+								<div class="date text-center">17</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Wed</div>
+								<div class="date text-center">18</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Thu</div>
+								<div class="date text-center">19</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Fri</div>
+								<div class="date text-center">20</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Sat</div>
+								<div class="date text-center">21</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Sun</div>
+								<div class="date text-center">22</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Mon</div>
+								<div class="date text-center">23</div>
+							</div>
+
+							<div class="date-wrapper">
+								<div class="day text-center">Tue</div>
+								<div class="date text-center">24</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="row pt-5 d-flex">
+					<div class="">
+						<i class="fa-solid fa-location-dot fs-1"></i>
+					</div>
+					<div class="col-sm-5 pt-1">
+						<p class="loctext fw-bold fs-5">Clinic One <br><span>51 Goldhill Plaza #19-10/12 Banglore 308900</span></p>
+
+					</div>
+
+
+				</div>
+
 				<div class="row">
-					<div class="col-lg-7 col-sm-7 pilltext">
-						<p>{{ usertabdata.field_description|raw }}</p>
-						<br>
-						<p>{{ usertabdata.field_name}}</p>
-						<b>Education </b>
-						<p>{{ usertabdata.field_education|raw}}</p>
+
+					<div class="col-sm-12">
+						<div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
+						<button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
 					</div>
-					<div class="col-lg-5 col-sm-5">
-						<img class="img-fluid" alt="{{ usertabdata.field_background_image.alt }}" src="{{ usertabdata.field_background_image.url }}">
+
+					<div class="col-sm-12">
+						<div class="fs-3 pt-5"><b>After Noon </b></div>
+						<button class="ap-book p-3 mt-2"><b>12 noon - 5PM </b> <span class="text-danger">Doctor On Leave</span></button>
 					</div>
-				</div>
-			</div>
-			{% set i = i+1 %}
-		{% endfor %}
-		</div>
-	</div>
-	<div class="container mt-4">
-		<div class="owl-carousel docslider">
-			<img src="assets/img/video1.png" class="img-fluid" alt="...">
-			<img src="assets/img/video2.png" class="img-fluid" alt="...">
-			<img src="assets/img/video3.png" class="img-fluid" alt="...">
-			<img src="assets/img/video1.png" class="img-fluid" alt="...">
-			<img src="assets/img/video2.png" class="img-fluid" alt="...">
-		</div>
-	</div>
-</section>
-<section id="sec3" class="p-5 pb-0">
-	<div class="container">
-		<h2>Book Appointment</h2>
-		<ul class="nav nav-pills pt-3" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active fw-bold" data-bs-toggle="pill" href="#brain">Advanced Brain Clinic </a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link fw-bold" data-bs-toggle="pill" href="#spine">Spine Surgical Clinic</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link fw-bold" data-bs-toggle="pill" href="#medical">Gleneagles Medical Centre Clinic</a>
-			</li>
-		</ul>
-		<div id="brain" class="container tab-pane active">
-			<br>
-			<div class="col-lg-8 col-sm-12 pt-4">
-				<div class="row">
-					<div class="owl-carousel dateslider">
-						<div class="date-wrapper">
-							<div class="day text-center">MON</div>
-							<div class="date text-center">16</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Tue</div>
-							<div class="date text-center">17</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Wed</div>
-							<div class="date text-center">18</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Thu</div>
-							<div class="date text-center">19</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Fri</div>
-							<div class="date text-center">20</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Sat</div>
-							<div class="date text-center">21</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Sun</div>
-							<div class="date text-center">22</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Mon</div>
-							<div class="date text-center">23</div>
-						</div>
-						<div class="date-wrapper">
-							<div class="day text-center">Tue</div>
-							<div class="date text-center">24</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row pt-5">
-				<div class="col-sm-1 col-lg- ">
-					<img src="assets/img/loc.png" class="loc-icon d-block mx-auto" alt="">
-				</div>
-				<div class="col-sm-5 pt-1">
-					<p class="loctext fw-bold fs-5">Clinic One <br><span>51 Goldhill Plaza #19-10/12 Banglore 308900</span></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
-					<button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
-				</div>
-				<div class="col-sm-12">
-					<div class="fs-3 pt-5"><b>After Noon </b></div>
-					<button class="ap-book p-3 mt-2"><b>12 noon - 5PM </b> <span class="text-danger">Doctor On Leave</span></button>
-				</div>
-				<div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
-				<div class="sm-4">
-					<ul class="time-wrap">
-						<li class="time">
-							<button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
-						</li>
-						<li class="time">
-							<button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
-						</li>
-						<li class="time">
-							<button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
-						</li>
-						<li class="time">
-							<button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
-						</li>
-						<li class="time">
-							<button class="ap-book p-3 mt-2"><b>2:00 PM</b></button>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div id="spine" class="container tab-pane fade">
-			<br>
-			<div class="col-sm-7">
-				<h3>Spine</h3>
-			</div>
-		</div>
-		<div id="medical" class="container tab-pane fade">
-			<br>
-			<div class="col-sm-7">
-				<h3>Medical</h3>
-			</div>
-		</div>
-	</div>
-</section>
-<section id="sec4" class="pt-0">
-	<div class="container">
-		<div class="row p-2">
-			<h2 class="col-lg-9">Areas of expertise</h2>
-			<button class="btn mx-end col-lg-3 facilities">View All Speciality Facilities</button>
-		</div>
-		<div class="row pt-5">
-			<div class="col-lg-4 col-md-6 col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp1.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp2.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp3.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp4.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp5.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6  col-sm-4 p-5">
-				<div class="col-sm-4 mx-auto">
-					<img src="assets/img/exp6.png" width="100%">
-				</div>
-				<h6 class="text-center p-3"><b>Neurological treatments</b></h6>
-				<div class="text-center">
-					Neurosurgeons, like Neurologists,
-					treat a variety of diseases. People
-					who visit neurosurgeons are
-					frequently those who have been
-					recommended to do so by
-					neurologists
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section id="sec5" class="">
-	<h2 class="text-center">Latest News & Articles</h2>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12 search-wrapper p-3">
-				<div class="row">
-					<div class="col-sm-12 col-md-12">
-						<div class="d-flex">
-							<input class="form-control flex-grow-1 p-3" type="search" placeholder="Search for news">
-							<button class="searchBtn p-3 ml-2">Search</button>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-12 mt-3 mt-md-0">
-						<div class="tags text-white d-flex flex-wrap">
-							<p class="mx-2 my-1">All</p>
-							<p class="mx-2 my-1">Article Long </p>
-							<p class="mx-2 my-1">Read</p>
-							<p class="mx-2 my-1">Video</p>
-							<p class="mx-2 my-1">Opinion</p>
-							<p class="mx-2 my-1">Interview</p>
-							<p class="mx-2 my-1">Explainer</p>
-							<p class="mx-2 my-1">First</p>
-							<p class="mx-2 my-1">Person</p>
-							<p class="mx-2 my-1">Exclusive</p>
-							<p class="mx-2 my-1">Investigation</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<h5 class="p-3">6 Results</h5>
-			<div class="col-lg-4 col-md-6 col-sm-4">
-				<div class="articele-wrapper pb-5">
-					<img src="assets/img/article1.png" width="100%">
-					<div class="d-flex mx-4 mt-2">
-						<div class="offset-lg-0">By Matthew Reyes </div>
-						<div class="offset-lg-1">4 October, 2022</div>
-					</div>
-					<div class="p-4 pt-0">
-						<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
-						<div>Lorem ipsum dolor sit amet,
-							consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore
-							et dolore magna...
-							<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4">
-				<div class="articele-wrapper pb-5">
-					<img src="assets/img/article2.png" width="100%">
-					<div class="d-flex mx-4 mt-2">
-						<div class="offset-lg-0">By Matthew Reyes </div>
-						<div class="offset-lg-1">4 October, 2022</div>
-					</div>
-					<div class="p-4 pt-0">
-						<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
-						<div>Lorem ipsum dolor sit amet,
-							consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore
-							et dolore magna...
-							<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-4">
-				<div class="articele-wrapper pb-5">
-					<img src="assets/img/article3.png" width="100%">
-					<div class="d-flex mx-4 mt-2">
-						<div class="offset-lg-0">By Matthew Reyes </div>
-						<div class="offset-lg-1">4 October, 2022</div>
-					</div>
-					<div class="p-4 pt-0">
-						<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
-						<div>Lorem ipsum dolor sit amet,
-							consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore
-							et dolore magna...
-							<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<section id="sec6" class="p-2">
-	<div class="container">
-		<p class="text-center fs-5 pt-5">Patient Experience</p>
-		<h2 class="text-center pb-4">What patients say about the doctor</h2>
-		<div class="col-sm-12 border border-dark-subtle rounded p-4">
-			<div class="row">
-				<input type="search" class="p-3 col-sm-9" placeholder="Patient Experience">
-				<div class="col-sm-3 d-flex">
-					<span class="pt-3">Sort By: </span>
-					<div class="dropdown mx-2">
-						<button type="button" class="btn p-3 dropdown-toggle border border-dark-subtle" data-bs-toggle="dropdown">
-						Most Recent
-						</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Normal</a></li>
-							<li><a class="dropdown-item active" href="#">Active</a></li>
-							<li><a class="dropdown-item disabled" href="#">Disabled</a></li>
+
+					<div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
+					<div class="sm-4">
+
+
+						<ul class="time-wrap">
+							<li class="time">
+								<button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
+							</li>
+							<li class="time">
+								<button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
+							</li>
+							<li class="time">
+								<button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
+							</li>
+							<li class="time">
+								<button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
+							</li>
+							<li class="time">
+								<button class="ap-book p-3 mt-2"><b>2:00 PM</b></button>
+							</li>
 						</ul>
+
+
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+			<div id="spine" class="container tab-pane fade"><br>
+				<div class="col-sm-7">
+					<h3>Spine</h3>
+				</div>
+			</div>
+			<div id="medical" class="container tab-pane fade"><br>
+				<div class="col-sm-7">
+					<h3>Medical</h3>
+				</div>
+			</div>
+
+
+		</div>
+	</section>
+
+	<section id="sec4" class="pt-0">
+		<div class="container">
+			<div class="row p-2">
+				<h2 class="col-lg-9">Areas of expertise</h2>
+				<button class="btn mx-end col-lg-3 facilities">View All Speciality Facilities</button>
+			</div>
+			<div class="row pt-5 sm-hide">
+
+
+
+
+{% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
+				<div class="col-lg-4 col-md-6 col-sm-4 p-5">
+					<div class="col-sm-4 mx-auto">
+						<img src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" width="100%">
+					</div>
+					<h6 class="text-center p-3"><b>{{data.field_expertisehead}}</b></h6>
+					<div class="text-center">
+						{{data.field_expertisecontent}}
+					</div>
+				</div>
+
+{% endfor %}
+
+
+			</div>
+
+{# <!------------Expertise Mobile view--------------------> #}
+
+			<div class="owl-carousel expslider d-block d-sm-none pt-5">
+
+{% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
+				<div class="col-lg-4 col-md-6 col-sm-4 p-5">
+					<div class="col-sm-4 mx-auto">
+						<img src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:50% !important;">
+					</div>
+
+					<h6 class="text-center p-3"><b>{{data.field_expertisehead}}</b></h6>
+					<div class="text-center">{{data.field_expertisecontent}}</div>
+				</div>
+{% endfor %}
+
+
+			</div>
+		</div>
+	</section>
+
+	<section id="sec5" class="">
+		<h2 class="text-center">Latest News & Articles</h2>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 search-wrapper p-3">
+					<div class="row">
+						<div class="col-sm-12 col-md-12">
+							<div class="d-flex">
+								<input class="form-control flex-grow-1 p-3" type="search" placeholder="Search for news">
+								<button class="searchBtn p-3 ml-2">Search</button>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-12 mt-3 mt-md-0">
+							<div class="tags text-white d-flex flex-wrap">
+								<p class="mx-2 my-1">All</p>
+								<p class="mx-2 my-1">Article Long </p>
+								<p class="mx-2 my-1">Read</p>
+								<p class="mx-2 my-1">Video</p>
+								<p class="mx-2 my-1">Opinion</p>
+								<p class="mx-2 my-1">Interview</p>
+								<p class="mx-2 my-1">Explainer</p>
+								<p class="mx-2 my-1">First</p>
+								<p class="mx-2 my-1">Person</p>
+								<p class="mx-2 my-1">Exclusive</p>
+								<p class="mx-2 my-1">Investigation</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h5 class="p-3">6 Results</h5>
+
+
+				<div class="row sm-hide">
+
+				
+					<div class="col-lg-4 col-md-6 col-sm-4 mb-3">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article1.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+	
+	
+					<div class="col-lg-4 col-md-6 col-sm-4 mb-3">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article2.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+	
+	
+					<div class="col-lg-4 col-md-6 col-sm-4">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article3.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+				</div>
+
+{# <!---------------Blog Mobile View---------------------> #}
+
+				<div class="owl-carousel blogslider d-block d-sm-none">
+					<div class="col-lg-4 col-md-6 col-sm-4">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article1.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+	
+	
+					<div class="col-lg-4 col-md-6 col-sm-4">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article2.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+	
+	
+					<div class="col-lg-4 col-md-6 col-sm-4">
+						<div class="articele-wrapper pb-5">
+							<img src="assets/img/article3.png" width="100%">
+							<div class="d-flex mx-4 mt-2">
+								<div class="offset-lg-0">By Matthew Reyes </div>
+								<div class="offset-lg-1">4 October, 2022</div>
+							</div>
+							<div class="p-4 pt-0">
+	
+								<h6 class="pt-3 "><b>Having overweight and depression can</b></h6>
+								<div>Lorem ipsum dolor sit amet,
+									consectetur adipiscing elit, sed do
+									eiusmod tempor incididunt ut labore
+									et dolore magna...
+									<button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+
+
+	<section id="sec6" class="p-2">
+		<div class="container">
+			<p class="text-center fs-5 pt-5">Patient Experience</p>
+			<h2 class="text-center pb-4">What patients say about the doctor</h2>
+			<div class="col-sm-12 border border-dark-subtle rounded p-4">
+				<div class="row">
+					<input type="search" class="p-3 col-sm-9" placeholder="Patient Experience">
+					<div class="col-sm-3 d-flex"> <span class="pt-3">Sort By: </span>
+						<div class="dropdown mx-2">
+							<button type="button" class="btn p-3 dropdown-toggle border border-dark-subtle" data-bs-toggle="dropdown">
+								Most Recent
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Normal</a></li>
+								<li><a class="dropdown-item active" href="#">Active</a></li>
+								<li><a class="dropdown-item disabled" href="#">Disabled</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-sm-12 border border-dark-subtle rounded mt-5 pb-3 pt-3">
+					<button class="exp rounded-pill p-3 me-4 mt-3">All Patient Experiences</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">brain checks</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy </button>
+					<button class="exp rounded-pill p-3 me-4 mt-3"> cancer and tumors</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3"> craniosynostosis</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">All Reviews </button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">brain checks </button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
+					<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
+				</div>
+			</div>
+
+			<div class="row sm-hide">
+
+{% for key,testimonials in arr_data.profile_theme1.field_testimonials %}
+
+				<div class="col-sm-6 p-4">
+					<div class="test-wrapp">
+						<div class="p-3">
+							<div class="quotes">"</div>
+							<h4><b>{{testimonials.field_head}}</b></h4>
+							<br>
+							<p class="text-black">{{testimonials.field_content}}</p>
+							<div class="row">
+								<div class="col-sm-3">
+									<img src="{{testimonials.field_image.url}}" alt="{{testimonials.field_image.alt}}" class="pt-2 img-fluid d-block mx-auto">
+								</div>
+								<div class="col-md-12 col-sm-6 pt-2">
+									<div class="fw-bolder">{{testimonials.field_patienname}}</div>
+									<button class="rel-btn p-2 m-2 btn">Aneurysm</button>
+									<button class="rel-btn p-2 m-2 btn">Hedeche</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+{% endfor %}
+
+			</div>
+
+{# <!----------------Testimonials Mobile View----------------------> #}
+
+			<div class="row owl-carousel testimonial-slider d-block d-sm-none">
+
+			{% for key,testimonials in arr_data.profile_theme1.field_testimonials %}
+				<div class="col-sm-6 p-4">
+					<div class="test-wrapp">
+						<div class="p-3">
+							<div class="quotes">"</div>
+							<b>{{testimonials.field_head}}</b><br>
+							{{testimonials.field_content}}
+
+							<div class="row">
+								<div class="col-sm-3">
+									<img src="{{testimonials.field_image.url}}" alt="{{testimonials.field_image.alt}}" class="pt-2 timg img-fluid d-block mx-auto">
+								</div>
+								<div class="col-md-12 col-sm-6 pt-2">
+									<div class="fw-bolder">{{testimonials.field_patienname}}</div>
+									<button class="rel-btn p-2 m-2 btn">Aneurysm</button>
+									<button class="rel-btn p-2 m-2 btn">Hedeche</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+{% endfor %}
+
+			</div>
+
+
 		</div>
-		<div class="row">
-			<div class="col-sm-12 border border-dark-subtle rounded mt-5 pb-3 pt-3">
+	</section>
+
+	<section id="sec7" class="pt-5 pb-5">
+		<div class="container">
+			<h2 class="text-center pb-5">Frequently Asked Questions</h2>
+
+			<div class="col-sm-12 border border-dark-subtle rounded p-4">
+				<div class="row">
+					<input type="search" class="p-3 col-sm-9" placeholder="Search For Answers">
+					<div class="col-sm-3 d-flex"> <span class="pt-3">Sort By: </span>
+						<div class="dropdown mx-2">
+							<button type="button" class="btn p-3 dropdown-toggle border border-dark-subtle" data-bs-toggle="dropdown">
+								Most Recent
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Normal</a></li>
+								<li><a class="dropdown-item active" href="#">Active</a></li>
+								<li><a class="dropdown-item disabled" href="#">Disabled</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-sm-12 border border-dark-subtle rounded p-3 mt-5">
 				<button class="exp rounded-pill p-3 me-4 mt-3">All Patient Experiences</button>
-				<button class="exp rounded-pill p-3 me-4 mt-3">brain checks</button>
-				<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy </button>
-				<button class="exp rounded-pill p-3 me-4 mt-3"> cancer and tumors</button>
-				<button class="exp rounded-pill p-3 me-4 mt-3"> craniosynostosis</button>
-				<button class="exp rounded-pill p-3 me-4 mt-3">All Reviews </button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">brain checks </button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
 				<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
+				<button class="exp rounded-pill p-3 me-4 mt-3">All Reviews</button>
+				<button class="exp rounded-pill p-3 me-4 mt-3">brain checks</button>
+				<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
+				<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
+				<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
+
 			</div>
-		</div>
-		<div class="row ">
-			<div class="col-sm-6 p-4">
-				<div class="test-wrapp">
-					<div class="p-3">
-						<div class="quotes">"</div>
-						<b>I visited Neurological treatments</b><br>
-						Aliquam fringilla nibh nec erat rhoncus, at sodales orci
-						mattis. Vestibulu ante ipsum primis in faucibus orci
-						luctus et ultrices posuere cubilia erp curae Cras
-						volutpat fermentum ligula.
-						<div class="row">
-							<div class="col-sm-3">
-								<img src="assets/img/testimonial1.png" class="pt-2 img-fluid d-block mx-auto">
-							</div>
-							<div class="col-md-12 col-sm-6 pt-2">
-								<div class="fw-bolder">Weston R. James</div>
-								<button class="rel-btn p-2 m-2 btn">Aneurysm</button>
-								<button class="rel-btn p-2 m-2 btn">Hedeche</button>
-							</div>
+
+
+
+			<div class="container pt-5">
+				<div class="accordion">
+					<div class="row">
+						
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">01. What are Dr. Hedley Top areas of Expertise?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6 p-4">
-				<div class="test-wrapp">
-					<div class="p-3">
-						<div class="quotes">"</div>
-						<b>I visited Numbness </b><br>
-						Aliquam fringilla nibh nec erat rhoncus, at sodales orci
-						mattis. Vestibulu ante ipsum primis in faucibus orci
-						luctus et ultrices posuere cubilia erp curae Cras
-						volutpat fermentum ligula.
-						<div class="row">
-							<div class="col-sm-3">
-								<img src="assets/img/testimonial2.png" class="pt-2 img-fluid d-block mx-auto">
-							</div>
-							<div class="col-md-12 col-sm-6 pt-2">
-								<div class="fw-bolder">Weston R. James</div>
-								<button class="rel-btn p-2 m-2 btn">Aneurysm</button>
-								<button class="rel-btn p-2 m-2 btn">Hedeche</button>
-							</div>
+
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">02. Can i use my Insurance at Dr. Hedley ?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
 						</div>
+
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">03. What are Dr. Hedley Top areas of Expertise?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
+						</div>
+
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">04. Can i use my Insurance at Dr. Hedley ?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
+						</div>
+
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">05. What are Dr. Hedley Top areas of Expertise?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
+						</div>
+
+						<div class="col-lg-6 col-md-6 mb-4">
+							<article class="accordion-item rounded">
+								<span class="accordion-label">06. Can i use my Insurance at Dr. Hedley ?</span>
+								<div class="accordion-content">
+									<p>If you want to cancel or change an order, you should contact the company or organization from which you made the purchase as soon as possible. This can usually be done through their customer service department. Be prepared to provide them with your order number and any other relevant information they may need to identify your order.</p>
+								</div>
+							</article>
+						</div>
+						
 					</div>
 				</div>
 			</div>
+
 		</div>
+
+	</section>
+
+
+	<div class="pt-3">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15555.80884571165!2d77.59631594999999!3d12.91079305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1712128342123!5m2!1sen!2sin" class="map" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 	</div>
-</section>
-<section id="sec7" class="pt-5 pb-5">
-	<div class="container">
-		<h2 class="text-center pb-5">Frequently Asked Questions</h2>
-		<div class="col-sm-12 border border-dark-subtle rounded p-4">
-			<div class="row">
-				<input type="search" class="p-3 col-sm-9" placeholder="Search For Answers">
-				<div class="col-sm-3 d-flex">
-					<span class="pt-3">Sort By: </span>
-					<div class="dropdown mx-2">
-						<button type="button" class="btn p-3 dropdown-toggle border border-dark-subtle" data-bs-toggle="dropdown">
-						Most Recent
-						</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Normal</a></li>
-							<li><a class="dropdown-item active" href="#">Active</a></li>
-							<li><a class="dropdown-item disabled" href="#">Disabled</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-12 border border-dark-subtle rounded p-3 mt-5">
-			<button class="exp rounded-pill p-3 me-4 mt-3">All Patient Experiences</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">brain checks </button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">All Reviews</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">brain checks</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">proton therapy</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">cancer and tumors</button>
-			<button class="exp rounded-pill p-3 me-4 mt-3">craniosynostosis</button>
-		</div>
-	</div>
-</section>
-<div class="pt-3">
-	<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15555.80884571165!2d77.59631594999999!3d12.91079305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1712128342123!5m2!1sen!2sin" class="map" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-<script src="assets/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+	<script src="assets/js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
