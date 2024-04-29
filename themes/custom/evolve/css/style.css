@@ -214,26 +214,42 @@ section {
 	}
 }
 
-
 .rating {
-	position: relative;
-	left: 0px;
-	unicode-bidi: bidi-override;
-	direction: rtl;
+    position: relative;
+    left: 0px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
 }
 
 .star {
-	font-size: 30px;
-	border-radius: 100%;
-	padding: 4px 8px 4px 8px;
-	background: var(--c1);
-	color: var(--c3);
+    font-size: 30px;
+    border-radius: 100%;
+    padding: 4px 8px;
+    color: var(--c3); 
+	background-color: var(--c1);
 }
 
 .filled {
-	color: #ffcc00;
+    color: #ffcc00; 
+}
+.half-filled {
+    color: transparent;
+    position: relative;
 }
 
+.half-filled::before {
+    content: '\2605';
+    display: block;
+    position: absolute;
+    width: 50%; 
+    top: -3px; 
+    left: 12px; 
+    background-image: linear-gradient(90deg, rgba(255, 204, 0, 1) 50%, rgba(76, 148, 211, 1) 50%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
 
 
 #sec1 .line {

@@ -25,18 +25,22 @@
 
 						</div>
 						<p class="pt-4 fs-6 mb-4 d-none d-sm-block">{{ arr_data.profile_theme1.field_phone_number}} <br>{{ arr_data.profile_theme1.field_email_address}}</p>
-
-    <div class="rating float-start mb-3 mt-3 order-lg-2 order-sm-2" id="rating">
-        {% set value = arr_data.profile_theme1.field_ratingscore %}
-        {% for i in 5..1 %}
-            {% if i <= value %}
-                <span class="star filled" data-value="{{ i }}">&#9733;</span>
-            {% else %}
-                <span class="star" data-value="{{ i }}">&#9734;</span>
-            {% endif %}
-        {% endfor %}
-    </div>
-					</div>
+<div class="rating float-start mb-3 mt-3 order-lg-2 order-sm-2" id="rating">
+    {% set value =  arr_data.profile_theme1.field_profilerating %}
+    {% set wholeStars = value | round(0, 'floor') %}
+    {% set remainder = value - wholeStars %}
+    
+    {% for i in 5..1 %}
+        {% if i <= wholeStars %}
+            <span class="star filled" data-value="{{ i }}">&#9733;</span>
+        {% elseif i == (wholeStars + 1) and remainder > 0 %}
+            <span class="star half-filled" data-value="{{ i }}">&#9733;</span>
+        {% else %}
+            <span class="star" data-value="{{ i }}">&#9734;</span>
+        {% endif %}
+    {% endfor %}
+</div>
+			</div>
 					<div class="col-sm-5 d-none d-sm-block">
 
 						<a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello." target="_blank">
@@ -191,11 +195,6 @@
 				<iframe src="{{url.field_youtube_embede}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 			{% endfor %}
-				
-				{# <img src="assets/img/video2.png" class="img-fluid" alt="...">
-				<img src="assets/img/video3.png" class="img-fluid" alt="...">
-				<img src="assets/img/video1.png" class="img-fluid" alt="...">
-				<img src="assets/img/video2.png" class="img-fluid" alt="..."> #}
 			</div>
 		</div>
 	</section>
