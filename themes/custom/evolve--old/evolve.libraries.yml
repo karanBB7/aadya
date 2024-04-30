@@ -2,10 +2,10 @@ global-styling:
   version: 1.0
   css:
     theme:
-      assets/css/style.css: {}
-      assets/css/style_mobile.css: {}
+      css/style.css: {}
+      css/print.css: {}
   js:
-    assets/js/main.js: {}
+    js/custom.js: {}
   dependencies:
     - core/jquery
   images:

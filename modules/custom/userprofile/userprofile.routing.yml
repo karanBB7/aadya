@@ -7,3 +7,33 @@ userprofile.profile:
     _permission: 'access content'
   options:
     no_cache: 'TRUE'
+
+userprofile.getcategorynews:
+  path: '/get_category_news'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::getCategoryNews'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.get_search_news:
+  path: '/get_search_news'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::getSearchNews'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.getprofile:
+  path: '/doctor-profile/{username}'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::getDoctorProfile'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'

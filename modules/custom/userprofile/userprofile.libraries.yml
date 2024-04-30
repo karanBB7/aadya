@@ -1,0 +1,9 @@
+userprofile:
+  version: 3.9
+  js:
+    js/userprofile.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/jquery.cookie

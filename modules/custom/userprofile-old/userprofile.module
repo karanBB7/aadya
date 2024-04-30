@@ -17,19 +17,12 @@ use Drupal\taxonomy\Entity\Term;
 /**
  * Implementing hook_theme().
  */
-function userprofile_page_attachments(array &$attachments) {
-	$attachments['#attached']['library'][] = 'userprofile/userprofile';
-}
 
 function userprofile_theme() {
 	return array(
    		'profile_template' => array(
             'variables' => array('arr_data' => NULL),
             'template' => 'profile-custom-template',
-        ),
-        'profile_doctor_template' => array(
-            'variables' => array('arr_data' => NULL),
-            'template' => 'profile-doctor-custom-template',
         ),
   	);
 }

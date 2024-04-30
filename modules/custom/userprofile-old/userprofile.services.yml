@@ -1,0 +1,4 @@
+services:
+ userprofile.field_details:
+   class: Drupal\userprofile\LoadFields
+   arguments: ['@entity_field.manager']
