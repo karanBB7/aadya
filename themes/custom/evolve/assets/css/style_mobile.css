@@ -1,83 +1,112 @@
 @media only screen and (max-width: 767px) {
 
 
-	.img-bg {
-		background-color: var(--c1);
-	}
-
-	.svg {
-		position: relative;
-		top: -80px;
+	#sec1 .img-bg {
+		background: var(--c1);
 		width: 100%;
-		height: 1vh;
-	}
-
-	.container-fluid {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
-	}
-
-	.tc {
-		text-align: center;
-		font-size: 1.3em;
-	}
-
-	.appbtn {
-		margin: 5px;
-		border: 1px solid var(--c3);
-	}
-
-	.whatsappbtn {
-		border: 1px solid var(--c3);
-	}
-
-
-	.sm-fl {
-		padding-top: 20px;
-		display: flex !important;
-	}
-
-	.bg-change {
-		background-color: var(--c1);
-	}
-
-	.star {
-		border: 1px solid var(--c3) !important;
-
-	}
-
-	.rating {
-		display: inline-block;
-		margin-top: 20px;
-		margin-left: 15% !important;
-		margin-right: auto !important;
-	}
-
-
-	.nav {
-		display: flex !important;
-		overflow-x: auto !important;
-		flex-wrap: nowrap !important;
-	}
-
-	.nav-item {
-		display: inline-flex !important;
-		white-space: nowrap;
-	}
-
-	.li-fl {
-		flex: 0 0 100% !important;
-		max-width: 100% !important;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	
-	.sm-hide {
-		display: none;
+	#sec1 .img-bg img {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+		
+		#sec1 .container{
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
+		
+		
+		
+		#sec1 .intro-box {
+		padding-left: 0px;
 	}
 	
-	.timg {
-		width: 40% !important;
+		.svg {
+			position: relative;
+			top: -80px;
+			width: 100%;
+			height: 1vh;
+		}
+	
+		.container-fluid {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+	
+		.tc {
+			text-align: center;
+			font-size: 1.3em;
+		}
+		
+		
+		
+	
+		.appbtn {
+			margin: 5px;
+			border: 1px solid var(--c3);
+			width: 10
+		}
+	
+		.whatsappbtn {
+			border: 1px solid var(--c3);
+		}
+	
+		
+		
+	
+		.sm-fl {
+			padding-top: 20px;
+			display: flex !important;
+		}
+	
+		.bg-change {
+			background-color: var(--c1);
+		}
+	
+		.star {
+			border: 1px solid var(--c3) !important;
+	
+		}
+	
+		.rating {
+			display: inline-block;
+			margin-top: 20px;
+			margin-left: 15% !important;
+			margin-right: auto !important;
+		}
+	
+	
+		.nav {
+			display: flex !important;
+			overflow-x: auto !important;
+			flex-wrap: nowrap !important;
+		}
+	
+		.nav-item {
+			display: inline-flex !important;
+			white-space: nowrap;
+		}
+	
+		.li-fl {
+			flex: 0 0 100% !important;
+			max-width: 100% !important;
+		}
+		
+		.sm-hide {
+			display: none;
+		}
+		
+		.timg {
+			width: 40% !important;
+		}
+		
+	
+	
 	}
 	
-
-
-}

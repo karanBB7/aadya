@@ -1,9 +1,0 @@
-userprofile.profile:
-  path: '/userprofile'
-  defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getProfile'
-    _title: 'Profile'
-  requirements:
-    _permission: 'access content'
-  options:
-    no_cache: 'TRUE'
