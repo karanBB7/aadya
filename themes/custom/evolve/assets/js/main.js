@@ -26,8 +26,8 @@ $(document).ready(function () {
         0: {
             items: 1, 
             touchDrag: true, 
-            mouseDrag: true,
-            nav: true, 
+            mouseDrag: true, 
+            nav: true
         }
     }
 });

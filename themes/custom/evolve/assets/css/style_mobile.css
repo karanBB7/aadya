@@ -106,7 +106,45 @@
 			width: 40% !important;
 		}
 		
+		.sm-block{
+			display: block !important;
+		}
+
+
+		#p2sec1 .secondtheme .banner {
+			width: 100%;
+			height: auto !important;
+			object-fit: cover;
+		}
+			
+		#p2sec1 .secondtheme .circle-container {
+			position: relative;
+			margin-top: -130px;
+		}
+		
+		#p2sec1 .secondtheme .whatsappbtn {
+			top: 0px;
+			border: 1px solid var(--p2c3);
+		}
+			
+
+		.address-wrapper{
+			width: 100% !important;
+		}
+
+
 	
+	}
+
+
+
+
+
+	@media only screen and (max-width: 1024px) {
+		#p2sec1 .heightallignment {
+		margin-top: -50px;
+			padding-bottom: 10px;
+	}
 	
 	}
 	

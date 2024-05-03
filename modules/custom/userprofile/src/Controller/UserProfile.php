@@ -429,8 +429,8 @@ class UserProfile extends ControllerBase
 		}
 
 
-		// echo "<pre>";
-		// print_r($response);
+		echo "<pre>";
+		print_r($response);
 
 
 		return array(
