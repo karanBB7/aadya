@@ -10,5 +10,3 @@ global-styling:
     assets/js/main.js: {}
   dependencies:
     - core/jquery
-  images:
-    images/: {}

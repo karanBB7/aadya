@@ -208,26 +208,31 @@ class UserProfile extends ControllerBase
 
 		foreach ($ea_nodes2 as $key => $node) {
 			if ($uid) {
-				$nid = $node->get('nid')->value;
-				$title = $node->get('title')->value;
-				$date = $node->get('created')->value;
-				$final_date = date("d F Y", $date);
+				$nid = $node->get('nid')->value ?? null;
+				$title = $node->get('title')->value ?? '';
+				$date = $node->get('created')->value ?? null;
+				$final_date = $date ? date("d F Y", $date) : '';
 				$test = $node->field_patienpicture->getValue();
-				$test_id = $test[0]['target_id'];
-				$test_img = "";
-				$content = $node->field_content->getValue()[0]['value'];
-				$patienname = $node->field_patienname->getValue()[0]['value'];
-		
-				if (!empty($test_id)) {
-					$test_img = \Drupal\file\Entity\File::load($test_id)->createFileUrl();
-				}
+				$test_id = !empty($test) && isset($test[0]['target_id']) ? $test[0]['target_id'] : null;
+				$test_img = '';
+
+				$content = !empty($node->field_content->getValue()) && isset($node->field_content->getValue()[0]['value']) ? $node->field_content->getValue()[0]['value'] : '';
 				
+				$patienname = !empty($node->field_patienname->getValue()) && isset($node->field_patienname->getValue()[0]['value']) ? $node->field_patienname->getValue()[0]['value'] : '';
+		
+				if ($test_id) {
+					$file = \Drupal\file\Entity\File::load($test_id);
+					if ($file) {
+						$test_img = $file->createFileUrl();
+					}
+				}
+		
 				$author_uid = $node->getOwnerId();
 				$author = \Drupal\user\Entity\User::load($author_uid);
 				$author_name = $author ? $author->getDisplayName() : 'Unknown';
-
+		
 				if ($username == $author_name) {
-					$alias_url =  \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
+					$alias_url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
 					$response['patient_testimonials'][$key]['thumb'] = $test_img;
 					$response['patient_testimonials'][$key]['alias_url'] = $alias_url;
 					$response['patient_testimonials'][$key]['title'] = $title;

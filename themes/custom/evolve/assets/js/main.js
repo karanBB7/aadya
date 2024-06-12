@@ -123,7 +123,6 @@ $('.docslider').owlCarousel({
   
   
   $(".accordion .accordion-item .accordion-label").on("click", function () {
-    // alert("acc");
     let $clickedItem = $(this);
     if ($clickedItem.hasClass("cw-open")) {
         $clickedItem.removeClass("cw-open");

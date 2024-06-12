@@ -1,5 +1,14 @@
 <?php
 
+// error_reporting(0);
+// ini_set('display_errors', '0');
+// ini_set('log_errors', '0');
+
+
+// error_reporting(E_ALL);
+// ini_set('display_errors', TRUE);
+// ini_set('display_startup_errors', TRUE);
+
 // phpcs:ignoreFile
 
 /**
@@ -895,3 +904,4 @@ $databases['default']['default'] = array (
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_Uo8rz9APLni_fscu9h7Mpi7Uumh-we-_WhL2SZe3eN8YIhv2g4O5LEyaiFoxby0Cp7yCQR6NrA/sync';
 $config['system.logging']['error_level'] = 'verbose';
+// $config['system.logging']['error_level'] = 'hide';
