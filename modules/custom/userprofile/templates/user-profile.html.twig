@@ -1,0 +1,1150 @@
+<title>{{ arr_data.profile_theme1.field_name }}</title>
+
+{% if arr_data.profile_theme == 'theme1' %}
+<style>
+    :root {
+	--c1: #ffffff;
+	/*     white       */
+	--c2: #000000;
+	/*     black       */
+
+    --c4: #A7A7A7;
+    
+	--c3: {{ arr_data.profile_theme1.field_colorcode | default('#4c94d3') | trim  }};
+	/*                 */
+	
+
+}
+</style>
+
+<section id="sec1">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-lg-5 col-md-6  mx-auto order-lg-2 order-xs-2 img-bg">
+
+                <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+
+            </div>
+
+            <div class="svg d-block d-sm-none">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill="{{ arr_data.profile_theme1.field_colorcode | default('#4c94d3') | trim  }}" fill-opacity="1" d="M0,128L80,144C160,160,320,192,480,197.3C640,203,800,181,960,149.3C1120,117,1280,75,1360,53.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+                </svg>
+            </div>
+
+            <div class="col-lg-6 col-md-12 intro-box order-lg-1 order-xs-1">
+                <h1 class="fs-1 tc">{{ arr_data.profile_theme1.field_name}}</h1>
+                <p class="title tc p-0 m-0">{{ arr_data.profile_theme1.field_specialitiy}} </p>
+
+                 <p class="fs-low  small-padding tc col-sm-8">  
+                    {{ arr_data.profile_theme1.field_degree}}
+                  </p>
+
+                {# <p class="small-padding fs-low col-sm-8 tc">{{ arr_data.profile_theme1.field_allcertifications}} #}
+
+                <div class="d-block d-sm-none" style="margin-top: -20px;">
+                    <div class="d-flex pt-2 justify-content-center">
+                        <a class="fs-low p-2 pt-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
+
+                        <a class="mailto fs-low p-2 pt-1 " href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                    </div>
+                    
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-sm-7 ">
+                       <div class="d-none d-sm-block">
+                              <button class="btn appbtn mb-2 p-2 order-lg-1 order-sm-2">Book an appointment</button>
+                       </div>
+
+                        <div class="d-flex ">
+                             <a href="tel:{{ arr_data.profile_theme1.field_phone_number }}" class="p-1 pt-1 callto  d-none d-sm-block fs-low">
+                                {{ arr_data.profile_theme1.field_phone_number}} 
+                            | </a> 
+                            
+                             <a class="mailto fs-low pt-1 p-1 d-none d-sm-block" href="mailto:{{ arr_data.profile_theme1.field_email_address }}">
+                                 {{ arr_data.profile_theme1.field_email_address }}
+                             </a>
+                        </div>
+
+
+                    <div class="order-lg-2 order-sm-2" id="rating">
+                     <div id="star" class="star " data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
+                    </div>
+
+
+                        
+                    </div>
+
+
+                    <div class="col-sm-5 d-none d-sm-block">
+    
+                              <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank">
+                            <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button>
+                            </a>
+                        <p class="exp mt-3 col-10">{{ arr_data.profile_theme1.field_experiences}}</p>
+                       
+                        <p class="exp mb-4 col-10">{{ arr_data.profile_theme1.field_patients}}</p>
+                    </div>
+
+
+                    <div class="col-sm-12">
+
+{# large #}
+                     <div class="bg-change row sm-hide">
+                            {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                            <div class="col-sm-4 m-2 clinic-wrap ">
+                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        {# small #}
+
+                        <div class="bg-change row d-flex d-sm-none">
+                            {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                            <div class="col-sm-4 m-2 clinic-wrap mx-auto d-block">
+                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+
+                    <div class="sm-fl d-block d-sm-none" style="background:var(--c1);">
+                            <button class="btn appbtn mb-2 order-lg-2 order-sm-2 ">Book an appointment</button>
+                            <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+
+                        </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="slides">
+        <div class="p-1 move">
+            <span class="mx-1 blog-scroll">Blog</span> /
+            <span class="mx-1 blog-scroll">Status</span>/
+            <span class="mx-1 blog-scroll">News & Articles</span>
+        </div>
+    </div>
+</section>
+
+
+
+{% else%}
+<style>
+    :root {
+	--c1: #ffffff;
+	/*     white       */
+	--c2: #000000;
+	/*     black       */
+	--p2c3: {{ arr_data.profile_theme1.field_colorcode | default('#f81b3d') | trim  }};
+	/*                 */
+
+}
+</style>
+
+    <section id="p2sec1">
+        <div class="secondtheme">
+            <div class="banner">
+                <img src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="{{ arr_data.profile_theme1.field_displaypicture.alt }}" >
+
+                <div class="container d-none d-sm-block">
+                    <div class="row profile-wrapper">
+                        <div class="circle-container">
+                            <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                        </div>
+                        <div class="col-sm-8 content-wrapper">
+                            <div class="d-flex">
+
+                                <div class="col-8 mx-3">
+                                    <h1 class="fon1 pt-4">{{ arr_data.profile_theme1.field_name}}</h1>
+                                    <p class="title  fw-bold p-0 m-0 ">{{ arr_data.profile_theme1.field_specialitiy}} </p>
+                                    <p class="fs-low pt-1 p-0 m-0 ">{{ arr_data.profile_theme1.field_allcertifications}}
+                                    </p>
+
+
+                                    <p class="fs-low pt-1 mb-2 p-0 m-0 ">
+                                        <a class="callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">
+                                        {{ arr_data.profile_theme1.field_phone_number}}</a>
+                                
+                                        | <a class="mailto" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                                    </p>
+
+
+
+                                    
+                                </div>
+
+                                <div class="col-4">
+                                    <button class="btn appbtnred   float-end">Book an appointment</button>
+                                    <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank"><button class="whatsappbtn btn  float-end"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--            small device  -->
+
+                <div class="d-block d-sm-none">
+                    <div class="small-profileWrapper p-5">
+                        <div class="circle-container mx-auto">
+                            <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                        </div>
+                        <h1 class="fon1 pt-4 text-center">{{ arr_data.profile_theme1.field_name}}</h1>
+                        <p class="title tc fw-bold">{{ arr_data.profile_theme1.field_specialitiy}} </p>
+                        <p class="text-center">{{ arr_data.profile_theme1.field_degree}}<br>
+                        {# <p>{{ arr_data.profile_theme1.field_allcertifications}}<br>
+                        </p> #}
+                        <p class="text-center">
+
+                    <div class="d-flexjustify-content-center">
+                        <a class="fs-low pt-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
+                        <a class="mailto fs-low pt-1" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                    </div>
+
+                        </p>
+                    </div>
+                    <button class="btn appbtnred mx-auto d-block">Book an appointment</button>
+                    <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank">
+                    
+                    <button class="whatsappbtn btn mx-auto d-block"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+                    
+
+                    <div class="col-lg-4">
+                            <div id="rating">
+                                <div id="star" class="star text-center" data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
+                            </div>
+                    </div>
+
+
+                    <div class="d-flex">
+                        {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                            <div class=" mx-auto d-block col-sm-4 m-2 clinic-wrap">
+                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
+                            </div>
+                        {% endfor %}   
+                       
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-center fs-3 fw-bold">
+                        {{ arr_data.profile_theme1.field_experiences}}
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6 text-center fs-3 fw-bold">
+                        {{ arr_data.profile_theme1.field_patients}}
+                    </div>
+
+                </div>
+                
+                <!--            small device end -->
+                
+            </div>
+
+
+            <div class="container heightallignment d-none d-sm-block">
+                <div class="row">
+                    <div class="offset-lg-1 col-10 row">
+                        <div class="col-lg-4 col-sm-6 text-center fs-5 fw-bold">
+                            {{ arr_data.profile_theme1.field_experiences}}
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 text-center fs-5 fw-bold">
+                            {{ arr_data.profile_theme1.field_patients}}
+                        </div> 
+
+                        <div class="col-lg-5">
+                            <div id="rating">
+                                <div id="starsecondtheme" class="star" data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
+                            </div>
+                        </div>
+
+  
+
+                        {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                            <div class=" col-sm-4 m-2 clinic-wrap">
+                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
+                            </div>
+                        {% endfor %}     
+
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+    <div class="slides">
+        <div class="p-1 move">
+            <span class="mx-1 blog-scroll2">Blog</span> /
+            <span class="mx-1 blog-scroll2">Status</span>/
+            <span class="mx-1 blog-scroll2">News & Articles</span>
+        </div>
+    </div>
+    </section>
+
+
+{% endif %}
+
+
+
+
+
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec2' : 'p2sec2' }}" class="pt-5 pb-5 {{ arr_data.profile_theme == 'theme1' ? '' : 'theme2' }}">
+
+		{% if arr_data.profile_theme == 'theme2' %}
+			<div class="secondtheme">
+		{% endif %}
+    <div class="container">
+        <ul class="nav nav-pills d-flex flex-nowrap" role="tablist" id="navPills">
+
+         {% if arr_data.profile_theme1.field_overview %}
+            <li class="nav-item">
+                <a class="nav-link active fw-bold" data-bs-toggle="pill" href="#overview">Overview</a>
+            </li>
+            {% endif %}
+            {% if arr_data.profile_theme1.field_specialities %}
+            <li class="nav-item">
+                <a class="nav-link fw-bold" data-bs-toggle="pill" href="#speciality">Speciality</a>
+            </li>
+            {% endif %}
+
+
+            {% if arr_data.profile_theme1.field_expertise_summary %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#summary"> Expertise</a>
+                </li>
+            {% endif %}
+
+            {% if arr_data.profile_theme1.field_awards_honors %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#awandh"> Awards & Honors</a>
+                </li>
+            {% endif %}
+            {% if arr_data.profile_theme1.field_publication %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#publication">Publication</a>
+                </li>
+            {% endif %}
+
+
+            {% if arr_data.profile_theme1.field_education_in_details %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#eductaion">Education</a>
+                </li>
+            {% endif %}
+           
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="tab-content">
+
+            <div id="overview" class="container tab-pane active pt-4">
+                <div class="row">
+                    <div class="col-lg-7 col-sm-7 pilltext">
+                        <p class="overview-content">{{arr_data.profile_theme1.field_overview}}</p>
+                        <span class="read-more-btn" style="display:none;">Read more</span>
+                        <br>
+
+                    </div>
+
+                    {% if arr_data.profile_theme1.field_doctoroverviewvideo or arr_data.profile_theme1.field_overview_image %}
+                        <span class="link-overview" style="display:none;">{{arr_data.profile_theme1.field_doctoroverviewvideo }}</span>
+
+                        {% if arr_data.profile_theme1.field_doctoroverviewvideo %}
+                            <div class="col-lg-5 col-sm-5">
+                               <iframe width="100%" height="100%"  class="youtube-iframe-overview" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+
+                        {% else %}
+                            <div class="col-lg-5 col-sm-5">
+                                <img class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_overview_image.url}}" style="max-height:300px">
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+
+
+            <div id="speciality" class="container tab-pane fade pt-4">
+                <div class="row">
+                    <div class="col-lg-7 col-sm-7 pilltext">
+                        <p class="overview-content">{{arr_data.profile_theme1.field_specialities}}</p>
+                        <span class="read-more-btn" style="display:none;">Read more</span>
+                        <br>
+                    </div>
+
+
+                    {% if arr_data.profile_theme1.field_speciality_video_url or arr_data.profile_theme1.field_speciality_image %}
+
+                    <span class="link-speciality" style="display:none;">{{arr_data.profile_theme1.field_speciality_video_url }}</span>
+                        {% if arr_data.profile_theme1.field_speciality_video_url %}
+                            <div class="col-lg-5 col-sm-5">
+                                 <iframe width="100%" height="100%"  class="youtube-iframe-speciality" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+
+                        {% else %}
+                            <div class="col-lg-5 col-sm-5">
+                                <img class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_speciality_image.url}}" style="max-height:300px">
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+
+                </div>
+            </div>
+
+
+
+            <div id="summary" class="container tab-pane fade pt-4">
+                <div class="row">
+                    <div class="col-lg-12 pilltext">
+                        <div class="overview-content">{{arr_data.profile_theme1.field_expertise_summary|raw}}</div>                       
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div id="awandh" class="container tab-pane fade pt-4">
+                <div class="row">
+                    <div class="col-lg-12 pilltext">
+                        <div class="overview-content">{{arr_data.profile_theme1.field_awards_honors|raw}}</div>                       
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div id="publication" class="container tab-pane fade pt-4">
+                <div class="row">
+                    <div class="col-lg-12 pilltext">
+                        <div class="overview-content">{{arr_data.profile_theme1.field_publication|raw}}</div>                      
+                    </div>
+                   
+                </div>
+            </div>
+
+
+
+
+
+            <div id="eductaion" class="container tab-pane fade pt-4">
+                <div class="row">
+                    <div class="col-lg-12 pilltext">
+                        <p class="overview-content">{{arr_data.profile_theme1.field_education_in_details|raw}}</p>   <span class="read-more-btn" style="display:none;">Read more</span>                     
+                    </div>
+                    <div class="col-lg-5 col-sm-5">
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+	{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+
+</section>
+
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class="p-5 pb-3">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+
+
+    <div class="container">
+    <h2>Book Appointment</h2>
+    <ul class="nav nav-pills">
+        {% for k, clinic in arr_data.profile_theme1.field_logos %}
+            {% if k == '0' %}
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="pill" href="#{{ k }}">{{ clinic.field_clinicname }}</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="pill" href="#{{ k }}">{{ clinic.field_clinicname }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+
+            <div class="tab-content">
+                <div id="0" class=" tab-pane active"><br>
+                    <div id="brain" class=" tab-pane active"><br>
+                        <div class="col-lg-12 col-sm-12 pt-4">
+                            <div class="row">
+
+                                <div class="owl-carousel dateslider">
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">MON</div>
+                                        <div class="date text-center">16</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Tue</div>
+                                        <div class="date text-center">17</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Wed</div>
+                                        <div class="date text-center">18</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Thu</div>
+                                        <div class="date text-center">19</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Fri</div>
+                                        <div class="date text-center">20</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Sat</div>
+                                        <div class="date text-center">21</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Sun</div>
+                                        <div class="date text-center">22</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Mon</div>
+                                        <div class="date text-center">23</div>
+                                    </div>
+
+                                    <div class="date-wrapper">
+                                        <div class="day text-center">Tue</div>
+                                        <div class="date text-center">24</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex sm-block">
+                            <div class="col-sm-1 pt-3">
+                                <div class="location-wrapper">
+                                    <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
+                                </div>
+                            </div>
+                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
+                            {% set Clinic = arr_data.profile_theme1.field_logos[0] %}
+                                <div class="col-lg-8  pt-1">
+                                    <p class="fw-400 fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
+                                <button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="fs-3 pt-5"><b>After Noon </b></div>
+                                <button class="ap-book p-3 mt-2"><b>12 noon - 2PM </b> <span class="text-danger">Doctor On Leave</span></button>
+                            </div>
+
+                            <div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
+                            <div class="sm-4">
+
+
+                                <ul class="time-wrap">
+                                    <li class="time">
+                                        <button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
+                                    </li>
+                                    <li class="time">
+                                        <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
+                                    </li>
+                                    <li class="time">
+                                        <button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
+                                    </li>
+                                    <li class="time">
+                                        <button class="ap-book p-3 mt-2"><b>5:30 PM</b></button>
+                                    </li>
+                                    <li class="time">
+                                        <button class="ap-book p-3 mt-2"><b>6:00 PM</b></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="1" class=" tab-pane fade"><br>
+                    <div id="home" class=" tab-pane active"><br>
+                        <div id="brain" class=" tab-pane active"><br>
+                            <div class="col-lg-12 col-sm-12 pt-4">
+                                <div class="row">
+
+                                    <div class="owl-carousel dateslider">
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">MON</div>
+                                            <div class="date text-center">16</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Tue</div>
+                                            <div class="date text-center">17</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Wed</div>
+                                            <div class="date text-center">18</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Thu</div>
+                                            <div class="date text-center">19</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Fri</div>
+                                            <div class="date text-center">20</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Sat</div>
+                                            <div class="date text-center">21</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Sun</div>
+                                            <div class="date text-center">22</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Mon</div>
+                                            <div class="date text-center">23</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Tue</div>
+                                            <div class="date text-center">24</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex sm-block">
+                                <div class="col-sm-1 pt-3">
+                                    <div class="location-wrapper">
+                                        <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
+                                    </div>
+                                </div>
+
+                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
+                            {% set Clinic = arr_data.profile_theme1.field_logos[1] %}
+                                <div class="col-lg-8 pt-1">
+                                    <p class="fw-400  fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
+                                </div>
+                            {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
+                                <div class="sm-4">
+
+
+                                    <ul class="time-wrap">
+                                        <li class="time">
+                                            <button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
+                                        </li>
+                                        <li class="time">
+                                            <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
+                                        </li>
+                                        <li class="time">
+                                            <button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
+                                        </li>
+                                        <li class="time">
+                                            <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
+                                        </li>
+                                        <li class="time">
+                                            <button class="ap-book p-3 mt-2"><b>2:00 PM</b></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div id="2" class=" tab-pane fade"><br>
+                    <div id="home" class=" tab-pane active"><br>
+                        <div id="brain" class=" tab-pane active"><br>
+                            <div class="col-lg-12 col-sm-12 pt-4">
+                                <div class="row">
+
+                                    <div class="owl-carousel dateslider">
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">MON</div>
+                                            <div class="date text-center">16</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Tue</div>
+                                            <div class="date text-center">17</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Wed</div>
+                                            <div class="date text-center">18</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Thu</div>
+                                            <div class="date text-center">19</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Fri</div>
+                                            <div class="date text-center">20</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Sat</div>
+                                            <div class="date text-center">21</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Sun</div>
+                                            <div class="date text-center">22</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Mon</div>
+                                            <div class="date text-center">23</div>
+                                        </div>
+
+                                        <div class="date-wrapper">
+                                            <div class="day text-center">Tue</div>
+                                            <div class="date text-center">24</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex sm-block">
+                                <div class="col-sm-1 pt-3">
+                                    <div class="location-wrapper">
+                                        <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
+                                    </div>
+                                </div>
+
+                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
+                            {% set Clinic = arr_data.profile_theme1.field_logos[2] %}
+                                <div class="col-lg-8 pt-1 ">
+                                    <p class=" fw-400 fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
+                                </div>
+                            {% endif %}
+
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-sm-12">
+                                    <div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
+                                    <button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="fs-3 pt-5"><b>After Noon </b></div>
+                                    <button class="ap-book p-3 mt-2"><b>12 noon - 5PM </b> <span class="text-danger">Doctor On Leave</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+    </div>
+
+	
+	{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+
+</section>
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec4' : 'p2sec4' }}" class="pt-0">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+    <div class="container">
+        <div class="row p-2 sm-center">
+            <h2 class="text-center">Areas of expertise</h2>
+        </div>
+        <div class="row pt-5 sm-hide">
+
+        </div>
+
+        {# <!------------Expertise Mobile view--------------------> #}
+
+        <div class="owl-carousel expslider ">
+
+            {% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
+            <div class="col-lg-12 col-md-6 col-sm-4 p-5">
+                <div class="p-4 shadow" style="border-radius: 10px;" >
+                <div class="exp-imag-wrapper">
+                    <div class="col-sm-12 mx-auto">
+                        <img src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
+                    </div>
+                </div>
+                <h6 class="text-center p-3"><b>{{data.field_expertisehead}}</b></h6>
+                <div class="exp-cont">{{data.field_expertisecontent}}</div>
+            </div>
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+	
+	{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+
+</section>
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec5' : 'p2sec5' }}" class="">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+	<h2 class="text-center">Latest News & Articles</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 search-wrapper p-3">
+				<div class="row">
+					<div class="col-sm-12 col-md-12">
+						<div class="d-flex">
+							<input class="form-control flex-grow-1 p-3" type="search" name="search" id="search" placeholder="Search for news">
+							<button class="searchBtn p-3 ml-2 search_news_btn">Search</button>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-12 mt-3 mt-md-0">
+						<div class="tags text-white d-flex flex-wrap">
+							<p class="tag mx-2 my-1 cat-news-load {{ arr_data.profile_theme == 'theme1' ? 'active-tag1' : 'active-tag2' }}" data-id="" data-username="{{arr_data.auth_na}}">Latest</p>
+							{% for key,categorey in arr_data.news_categoery %}
+								<p class="tag mx-2 my-1 cat-news-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.auth_na}}">{{ categorey. term_name}} </p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="news_cls">
+
+				<h5 class="p-3">{{ arr_data.node_count }} Results</h5>
+				<div class="row">
+                    {% for key,news_article in arr_data.article %}
+                       <div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
+            <div class="articele-wrapper pb-5">
+                <div class="article-image">
+                    <img src="{{ news_article.thumb }}" width="100%">
+                </div>
+                <div class="d-flex mx-4 mt-2">
+                    <div class="offset-lg-0 text-capitalize">By {{ news_article.author }}</div>
+                    <div class="offset-lg-1">{{ news_article.date }}</div>
+                </div>
+                <div class="p-4 pt-0">
+                    <h6 class="pt-3"><b>{{ news_article.title }}</b></h6>
+
+                    <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                        {{ news_article.body|raw }}
+                    </div>
+
+
+                    <a href="/linqmd/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" >
+                         <button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
+                    </a>
+
+
+                    
+                </div>
+            </div>
+        </div>
+
+                    {% endfor %}
+
+
+
+                    <div class="owl-carousel blogslider d-block d-sm-none">
+                    {% for key,news_article in arr_data.article %}
+                            <div class="articele-wrapper pb-5 mx-auto">
+                                <img src="{{ news_article.thumb }}" width="100%">
+                                <div class="d-flex mx-4 mt-2">
+                                    <div class="offset-lg-0 text-capitalize">{{ news_article.author }} </div>
+                                    <div class="offset-lg-1">{{ news_article.date }}</div>
+                                </div>
+                                <div class="p-4 pt-0">
+
+                                    <h6 class="pt-3 "><b>{{news_article.title }}</b></h6>
+                                     <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                                          {{ news_article.body|raw }}
+                                      </div>
+                                      <a href="/linqmd/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" traget="_blank"><button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button></a>
+
+                                </div>
+                            </div>
+                    {% endfor %}
+                    </div>
+			    </div>
+		</div>
+	</div>
+
+
+
+{% if arr_data.profile_theme1.field_youtube or arr_data.profile_theme1.field_about_image %}
+
+    {% for key,url in arr_data.profile_theme1.field_youtube %}
+        <span class="link" style="display:none;">{{ url.field_youtube_embede }}</span>
+    {% endfor %}
+
+    <div class="container mt-4 pt-4">
+        <div class="owl-carousel docslider ">
+            {% for key,url in arr_data.profile_theme1.field_youtube %}
+
+                <div class="item col-sm-12 about-wrap">
+                <iframe class=" p-3 mx-auto d-block youtube-iframe" width="80%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <h6 class="text-center pt-2"><b>{{url.field_about_video_title}}</b></h6>
+                    <p class="text-center pb-2">{{url.field_about_video_description}}</p>
+                </div> 
+            {% endfor %}
+
+            {% for key,image in arr_data.profile_theme1.field_about_image %}
+
+            <div class="item col-sm-12 about-wrap">
+                    <div class="overview-image-wrap">
+                        <img src="{{image.field_about_images.url}}" alt="{{image.alt}}">
+                    </div>
+                    <h6 class="text-center pt-2"><b>{{image.field_about_image_title}}</b></h6>
+                    <p class="text-center pb-2">{{image.field_about_shot_description}}</p>
+                </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+
+		{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+</section>
+
+
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec6' : 'p2sec6' }}" class="p-2">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+
+
+    <div class="container">
+        <p class="text-center fs-5 pt-5">Patient Experience</p>
+        <h2 class="text-center pb-4">What patients say about the doctor</h2>
+        <div class="col-sm-12 border border-dark-subtle rounded p-4">
+            <div class="d-flex">
+                <div class="col-sm-10 pt-2">
+                 <input type="search" name="search" id="tstsearch" class="p-3 form-control" placeholder="Patient Experience">
+                </div>
+                <div class="col-sm-3"> 
+                        <button type="button" class="btn p-3 test-search m-2">
+                            Search
+                        </button>
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 border border-dark-subtle rounded mt-5 pb-3 pt-3">
+
+                <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.testimonialuid}}">All Patient Experiences</button>
+                {% for key,categorey in arr_data.patient_testimonialstags %}
+                    <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.testimonialuid}}">{{ categorey. term_name}} </button>
+                {% endfor %}
+
+            </div>
+        </div>
+
+       
+
+<div class="testimonials_cls">
+
+<h5 class="p-3">{{ arr_data.node_count_testimonials }} Results</h5>
+        <div class="row owl-carousel testimonial-slider pt-3">
+            {% for key,testimonials in arr_data.patient_testimonials %}
+                <div class="test-wrapp">
+                    <div class="p-3">
+                        <div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
+                        <b>{{testimonials.title}}</b><br>
+                    <div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                        {{testimonials.content}}
+                    </div>
+                    <a class="readMoreLink">Read more</a>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <img src="{{testimonials.thumb}}" class="pt-2 timg img-fluid d-block mx-auto">
+                            </div>
+                            <div class="col-md-12 col-sm-6 pt-2">
+                                <div class="fw-bolder">{{testimonials.patienname}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+</div>
+
+
+    </div>
+			{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+</section>
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec7' : 'p2sec7' }}" class="pt-5 pb-5">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+    <div class="container">
+        <h2 class="text-center pb-5">Frequently Asked Questions</h2>
+
+        <div class="col-sm-12 border border-dark-subtle rounded p-4">
+           <div class="d-flex">
+            <div class="col-sm-10 pt-2">
+                <input type="search" name="search" id="faqsearch" class="p-3 form-control" placeholder="Faq">
+            </div>
+					<div class="col-sm-3"> 
+							<button type="button" class="btn p-3 faq-search m-2">
+								Search
+							</button>
+					</div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 border border-dark-subtle rounded p-3 mt-5">
+            <button class="exp rounded-pill p-3 me-4 mt-3 faq-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.faquid}}">All</button>
+            {% for key,categorey in arr_data.faqtags %}
+					<button class="exp rounded-pill p-3 me-4 mt-3 faq-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.faquid}}">{{ categorey.term_name}} </button>
+			{% endfor %}
+        </div>
+
+        <div class="container pt-5">
+            <div class="faq_cls">
+                <div class="accordion">
+                    <h5 class="p-3">{{ arr_data.node_count_faq }} Results</h5>
+                    <div class="row">
+                        {% for key,faq in arr_data.faq %}
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <article class="accordion-item rounded">
+                                <span class="accordion-label">{{loop.index}}) {{faq.title}}</span>
+                                <div class="accordion-content">
+                                    <p>{{faq.body|raw}}</p>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                 </div>
+
+            </div>
+        </div>
+
+    </div>
+			{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+
+</section>
+
+
+        {% if arr_data.profile_theme == 'theme2' %}
+            <div class="secondtheme">
+        {% endif %}
+        <div class="pt-3">
+
+            <ul class="nav nav-pills map-pill">
+                {% for clinic in arr_data.profile_theme1.field_logos %}
+                    {% if loop.first %}
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="pill" href="#clinic-{{ loop.index0 }}" data-bs-target="#clinic-content-{{ loop.index0 }}" data-index="{{ loop.index0 }}">{{ clinic.field_clinicname }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="pill" href="#clinic-{{ loop.index0 }}" data-bs-target="#clinic-content-{{ loop.index0 }}" data-index="{{ loop.index0 }}">{{ clinic.field_clinicname }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <div class="tab-content">
+                {% for clinic in arr_data.profile_theme1.field_logos %}
+                    <div class="pt-2 tab-pane fade {% if loop.first %}show active{% endif %}" id="clinic-content-{{ loop.index0 }}">
+                        <div class="maplink">{{ clinic.field_map_link|raw}}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            {% if arr_data.profile_theme == 'theme2' %}
+                </div>
+            {% endif %}
+        </div>
+<p class="text-center p-2 fs-6 pb-0">Copyright © 2024, Linqmd. All rights reserved.</p>
+
+<script src="assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+

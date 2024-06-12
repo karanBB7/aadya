@@ -25,11 +25,19 @@ function userprofile_theme() {
 	return array(
    		'profile_template' => array(
             'variables' => array('arr_data' => NULL),
-            'template' => 'profile-custom-template',
+            'template' => 'user-profile',
         ),
         'profile_doctor_template' => array(
             'variables' => array('arr_data' => NULL),
-            'template' => 'profile-doctor-custom-template',
+            'template' => 'doctor-profile',
+        ),
+        'profile_blog_template' => array(
+            'variables' => array('arr_data' => NULL),
+            'template' => 'blog',
+        ),
+        'profile_all_blog_template' => array(
+            'variables' => array('blog_data' => NULL),
+            'template' => 'all-blog',
         ),
   	);
 }

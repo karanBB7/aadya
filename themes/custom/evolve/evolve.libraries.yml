@@ -4,6 +4,7 @@ global-styling:
     theme:
       assets/css/style.css: {}
       assets/css/style_mobile.css: {}
+      assets/css/blog.css: {}
   js:
     assets/js/main.js: {}
   dependencies:

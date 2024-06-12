@@ -1,0 +1,13 @@
+sites/default/files/php
+sites/default/files/tmp
+sites/default/files/translationssites/default/files/css
+sites/default/files/js
+sites/default/files/styles
+sites/default/settings.php
+sites/default/services.yml
+sites/example.sites.php
+node_modules/
+vendor/
+*.log
+*.css.map
+*.js.map

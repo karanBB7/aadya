@@ -888,10 +888,10 @@ $databases['default']['default'] = array (
   'prefix' => '',
   'host' => 'localhost',
   'port' => '3306',
-  'isolation_level' => 'READ COMMITTED',
+  // 'isolation_level' => 'READ COMMITTED',
   'driver' => 'mysql',
   'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
-  'autoload' => 'core/modules/mysql\\src\\Driver\\Database\\mysql\\',
+  // 'autoload' => 'core/modules/mysql\\src\\Driver\\Database\\mysql\\',
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_Uo8rz9APLni_fscu9h7Mpi7Uumh-we-_WhL2SZe3eN8YIhv2g4O5LEyaiFoxby0Cp7yCQR6NrA/sync';
 $config['system.logging']['error_level'] = 'verbose';

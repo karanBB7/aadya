@@ -8,10 +8,22 @@ userprofile.profile:
   options:
     no_cache: 'TRUE'
 
+userprofile.getprofile:
+  path: '/doctor-profile/{username}'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorProfile::getDoctorProfile'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
 userprofile.getcategorynews:
   path: '/get_category_news'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getCategoryNews'
+    _controller: '\Drupal\userprofile\Controller\Article::getCategoryNews'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -21,17 +33,73 @@ userprofile.getcategorynews:
 userprofile.get_search_news:
   path: '/get_search_news'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getSearchNews'
+    _controller: '\Drupal\userprofile\Controller\Article::getSearchNews'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
   options:
     no_cache: 'TRUE'
 
-userprofile.getprofile:
-  path: '/doctor-profile/{username}'
+
+
+userprofile.getcategorytestimonials:
+  path: '/get_category_testimonials'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getDoctorProfile'
+    _controller: '\Drupal\userprofile\Controller\Testimonial::getCategoryTestimonials'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.get_search_testimonials:
+  path: '/get_search_testimonials'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Testimonial::getSearchTestimonials'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
+userprofile.getcategoryfaq:
+  path: '/get_category_faq'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Faq::getCategoryfaq'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.get_search_faq:
+  path: '/get_search_faq'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Faq::getSearchfaq'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
+userprofile.getblog:
+  path: '/blog/{username}/{title}'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Blog::getBlog'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.getallblog:
+  path: '/blog/{username}'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Blog::getAllBlog'
     _title: 'Profile'
   requirements:
     _permission: 'access content'

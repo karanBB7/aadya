@@ -41,7 +41,7 @@
 	
 		.tc {
 			text-align: center;
-			font-size: 1.3em;
+			/* font-size: 1.3em; */
 		}
 		
 		
@@ -50,7 +50,7 @@
 		.appbtn {
 			margin: 5px;
 			border: 1px solid var(--c3);
-			width: 10
+			width: 10;
 		}
 	
 		.whatsappbtn {
@@ -61,6 +61,13 @@
 		
 	
 		.sm-fl {
+			background-color: var(--c1)!important;
+			padding-top: 20px;
+			display: flex !important;
+		}
+	
+		.sm-fl2 {
+			background-color: var(--c1)!important;
 			padding-top: 20px;
 			display: flex !important;
 		}
@@ -69,18 +76,15 @@
 			background-color: var(--c1);
 		}
 	
-		.star {
-			border: 1px solid var(--c3) !important;
-	
+
+		#sec1 .star i{
+			border: 1px solid var(--c3);
 		}
-	
-		.rating {
-			display: inline-block;
-			margin-top: 20px;
-			margin-left: 15% !important;
-			margin-right: auto !important;
+
+		#sec1 .star {
+			text-align: center;
 		}
-	
+
 	
 		.nav {
 			display: flex !important;
@@ -133,6 +137,62 @@
 		}
 
 
+		#p2sec5 .secondtheme .articele-wrapper{
+			width: 80% !important;
+		}
+
+		#p2sec5 .secondtheme .articele-wrapper .owl-prev {
+			left: 15px !important;
+		  }
+		
+		#p2sec5 .secondtheme .articele-wrapper .owl-next {
+			right: 15px !important;
+		  }
+		  
+
+		  .dateslider .owl-prev {
+			left: -20px !important;
+		  }
+		
+		  .dateslider .owl-next {
+			right: -20px !important;
+		  }
+
+		  .test-wrap{
+			width: 80% !important;
+		  }
+
+		  .sm-center{
+			align-items: center;
+			align-content: center;
+			text-align: center;
+		  }
+
+		  .small-padding{
+			padding: 5px !important;
+			padding-top: 0 !important;
+		  }
+
+		  .test-wrapp{
+			width: 90%;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto;
+		}
+		
+		
+		
+		.testimonial-slider .owl-prev {
+			position: absolute;
+			left: 0px !important;
+		  }
+		
+		.testimonial-slider .owl-next {
+			position: absolute;
+			right: -15px !important;
+		}
+
+		  
 	
 	}
 

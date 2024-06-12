@@ -1,0 +1,55 @@
+<div class="blog-container">
+    <div class="container pt-5">
+        <h1 class="text-center">{{blog_data.creator}}</h1>
+        <h3>Blogs</h3>
+        <div class="row">
+            {% for article in blog_data.article %}
+                <div class="col-sm-8 p-3">
+                    <div class="blog-content-wrapper">
+                        <div class="col-sm-12 fullblogwrapper shadow">
+                            <div class="blog-img-wrapper">
+                                <img src="{{ article.thumb }}" alt="{{ article.thumb }}">
+                             </div>
+
+                            <div class="blog-content">
+                                <a class="toblog" href="{{article.author}}/{{ article.title | replace({' ': '-'}) }}" target="_blank">
+                                    <div class="blog-title text-center pt-5">
+                                        {{ article.title }}
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="text-center p-2 pb-0">ON <u>{{ article.date }}</u> | BY <u>{{ article.author }}</u></div>
+                                <div id="article-body-{{ loop.index }}" class="text-center p-5">{{ article.body|raw }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-sm-3"></div>
+
+            <div class="pagination-wrapper">
+                {% if blog_data.current_page > 1 %}
+                    <a href="{{ path('userprofile.getallblog', {'username': blog_data.creator, 'page': blog_data.current_page - 1}) }}" class="pagination-link shadow"> <i class="fa-solid fa-angle-left"></i></a>
+                {% endif %}
+                {% for i in 1..blog_data.total_pages %}
+                    <a href="{{ path('userprofile.getallblog', {'username': blog_data.creator, 'page': i}) }}" class="pagination-link shadow {{ i == blog_data.current_page ? 'active' : '' }}">{{ i }}</a>
+                {% endfor %}
+                {% if blog_data.current_page < blog_data.total_pages %}
+                    <a href="{{ path('userprofile.getallblog', {'username': blog_data.creator, 'page': blog_data.current_page + 1}) }}" class="pagination-link shadow"><i class="fa-solid fa-angle-right"></i> </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+<p class="text-center bg-white m-0  p-2">Copyright © 2024, Linqmd. All rights reserved.</p>
+
+<script>
+$(document).ready(function(){
+    $('[id^="article-body-"]').each(function() {
+        var articleContent = $(this).text().trim().split(/\s+/);
+        var shortenedContent = articleContent.slice(0, 20).join(" ");
+        $(this).text(shortenedContent + "...");
+    });
+});
+</script>

@@ -1,0 +1,141 @@
+
+{% for article in arr_data.article %}
+    <title>{{article.title}}</title>
+{% endfor %}
+    <section id="blogsec">
+        <div class="main-content">
+            <div class="container pt-5">
+                <div class="row">
+
+                    <div class="col-sm-8">
+                        {% if arr_data.article is not empty %}
+                            {% for article in arr_data.article %}
+                                <article>
+                                    <h1 class="fw-bolder">{{article.title}}</h1>
+                                    <div class="col-sm-10">
+                                         <img src="{{ article.thumb }}" alt="Article Thumbnail" width="100%">
+                                    </div>
+                                    <div class="main-conntent">
+                                        
+                               <div class="pt-4"><b>By:</b> {{article.author}} </div>
+                               <div><b>Date:</b> {{article.date}}</div>
+                                        {{ article.body|raw }}
+                                    </div>
+                                </article>
+                              {% endfor %}
+                        {% else %}
+                            <p>No articles found.</p>
+                        {% endif %}
+
+
+                    <div class="sticky-social">
+                            <ul class="social">
+                                <li class="fb"><a class="fbshare" target="_blank"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
+
+                                <li class="whatsapp"><a class="whatsappshare" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
+
+                                <li class="linkedin"><a class="linkedinshare" target="_blank"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+
+                                <li class="twitter"><a class="twittershare" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="col-sm-4 other-blog " style="z-index:1 !important;">
+                        <h5 class=" fw-bolder">Other Articles you might Like</h5>
+                        <hr>
+                        <div class="row size-reduce">
+
+                            {% for random_article in arr_data.random_articles %}
+                                <div class="col-sm-5 mx-auto p-3 small-img-size">
+                                    <img src="{{ random_article.thumb }}" width="100%">
+                                </div>
+                                <div class="col-sm-7 small-content-center">
+                                    <p class="fw-bold  m-0 pt-3">{{random_article.title}}</p>
+                                    <p class="p-0 m-0 pb-2">By: {{random_article.author}}</p>
+                                    <a href="{{random_article.base_url}}/blog/{{ random_article.author }}/{{ random_article.title | replace({' ': '-'}) }}" target="_blank">
+                                         <button class="btn btn-primary mb-3" >Read More</button>
+                                     </a>
+                                </div>
+                                <hr>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+     <p style="z-index:5 !important;" class="text-center p-2 fs-6 pb-0 mb-0 bg-secondary text-white">Copyright © 2024, Linqmd. All rights reserved.</p>
+     
+    <script>
+        document.querySelectorAll('a').forEach(anchor => {
+            anchor.addEventListener('click', function(event) {
+                event.preventDefault();
+                let url = anchor.getAttribute('href');
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                window.open(url, '_blank');
+            });
+         });
+
+
+
+           function applyResponsiveClass() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.classList.remove('full-width');
+                if (window.innerWidth >= 750 && img.naturalWidth > 750) {
+                    img.classList.add('full-width');
+                }
+            });
+        }
+
+        window.onload = applyResponsiveClass;
+
+        window.onresize = applyResponsiveClass;
+
+        const observer = new MutationObserver(() => {
+            applyResponsiveClass();
+        });
+
+       observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    </script>
+
+        <script>
+        const link = encodeURI(window.location.href);
+        const msg = encodeURIComponent('Hey, I found this article');
+        const title = encodeURIComponent('Article');
+
+        const fb = document.querySelector('.fbshare');
+        fb.href = `https://www.facebook.com/share.php?u=${link}`;
+
+        const whatsapp = document.querySelector('.whatsappshare');
+        whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+
+        const linkedIn = document.querySelector('.linkedinshare');
+        linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+
+        const twitter = document.querySelector('.twittershare');
+        twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+
+    </script>
+
+
+
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
