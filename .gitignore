@@ -2,6 +2,7 @@ sites/default/files/php
 sites/default/files/tmp
 sites/default/files/translationssites/default/files/css
 sites/default/files/js
+sites/default/files/css
 sites/default/files/styles
 sites/default/settings.php
 sites/default/services.yml
