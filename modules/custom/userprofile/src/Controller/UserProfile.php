@@ -212,20 +212,10 @@ class UserProfile extends ControllerBase
 				$title = $node->get('title')->value ?? '';
 				$date = $node->get('created')->value ?? null;
 				$final_date = $date ? date("d F Y", $date) : '';
-				$test = $node->field_patienpicture->getValue();
-				$test_id = !empty($test) && isset($test[0]['target_id']) ? $test[0]['target_id'] : null;
-				$test_img = '';
-
 				$content = !empty($node->field_content->getValue()) && isset($node->field_content->getValue()[0]['value']) ? $node->field_content->getValue()[0]['value'] : '';
-				
 				$patienname = !empty($node->field_patienname->getValue()) && isset($node->field_patienname->getValue()[0]['value']) ? $node->field_patienname->getValue()[0]['value'] : '';
 		
-				if ($test_id) {
-					$file = \Drupal\file\Entity\File::load($test_id);
-					if ($file) {
-						$test_img = $file->createFileUrl();
-					}
-				}
+
 		
 				$author_uid = $node->getOwnerId();
 				$author = \Drupal\user\Entity\User::load($author_uid);
@@ -239,6 +229,32 @@ class UserProfile extends ControllerBase
 					$response['patient_testimonials'][$key]['date'] = $final_date;
 					$response['patient_testimonials'][$key]['content'] = $content;
 					$response['patient_testimonials'][$key]['patienname'] = $patienname;
+
+					$paragraphs = $node->get('field_picture')->referencedEntities();
+					$images = [];
+					foreach ($paragraphs as $paragraph) {
+						if ($paragraph->hasField('field_patient_picture')) {
+							$file = $paragraph->get('field_patient_picture')->entity;
+							if ($file) {
+								$file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+								$images[] = $file_url;
+							}
+						}
+					}
+
+					$video_paragraphs = $node->get('field_videos')->referencedEntities();
+					$videos = [];
+					foreach ($video_paragraphs as $video_paragraph) {
+						if ($video_paragraph->hasField('field_patient_videos')) {
+							$video_url = $video_paragraph->get('field_patient_videos')->value;
+							if ($video_url) {
+								$videos[] = $video_url;
+							}
+						}
+					}
+
+					$response['patient_testimonials'][$key]['videos'] = $videos;
+					$response['patient_testimonials'][$key]['images'] = $images;
 				}
 			}
 		}

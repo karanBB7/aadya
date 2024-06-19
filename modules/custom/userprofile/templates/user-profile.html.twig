@@ -1018,30 +1018,40 @@
 <div class="testimonials_cls">
 
 <h5 class="p-3">{{ arr_data.node_count_testimonials }} Results</h5>
-        <div class="row owl-carousel testimonial-slider pt-3">
-            {% for key,testimonials in arr_data.patient_testimonials %}
-                <div class="test-wrapp">
-                    <div class="p-3">
-                        <div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
-                        <b>{{testimonials.title}}</b><br>
-                    <div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
-                        {{testimonials.content}}
-                    </div>
-                    <a class="readMoreLink">Read more</a>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <img src="{{testimonials.thumb}}" class="pt-2 timg img-fluid d-block mx-auto">
-                            </div>
-                            <div class="col-md-12 col-sm-6 pt-2">
-                                <div class="fw-bolder">{{testimonials.patienname}}</div>
+<div class="row owl-carousel testimonial-slider pt-3">
+    {% for key, testimonials in arr_data.patient_testimonials %}
+        <div class="test-wrapp">
+            <div class="p-3">
+                <div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
+                <b>{{ testimonials.title }}</b><br>
+                <div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                    {{ testimonials.content }}
+                </div>
+                <a class="readMoreLink">Read more</a>
+
+                <div class="owl-carousel owl-theme patient">
+                    {% for image in testimonials.images %}
+                        <div class="item">
+                            <div class="patient-imag-wrapper">
+                                <img src="{{ image }}" class="patientImg pt-2 d-block mx-auto">
                             </div>
                         </div>
+                    {% endfor %}
 
-                    </div>
+                    {% for video in testimonials.videos %}
+                        <div class="item">
+                            <div class="patient-imag-wrapper">
+                                <span class="link-patient" style="display:none;">{{ video }}</span>
+                                <iframe class="youtube-iframe-patient" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
 
+                <div class="fw-bolder">{{ testimonials.patienname }}</div>
+            </div>
         </div>
+    {% endfor %}
 </div>
 
 

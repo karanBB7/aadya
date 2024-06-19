@@ -196,60 +196,77 @@ class DoctorProfile extends ControllerBase
 
 
 
-
 			$ea_query2 = \Drupal::entityQuery('node')
 			->condition('status', 1)
 			->condition('type', 'patient_testimonials', '=');
-			if(!empty($search)){
-				$ea_query2->condition('title', $search);
-			}
-			$ea_query2->accessCheck(TRUE);
-			$ea_nids2 = $ea_query2->sort('created', 'DESC')->execute();
-			// $node_count2 = count($ea_nids2);
-			$response['patient_testimonials'] = [];
-			$ea_nodes2 = Node::loadMultiple($ea_nids2);
-
-			foreach ($ea_nodes2 as $key => $node) {
-
-				if ($uid) {
-					$nid = $node->get('nid')->value;
-					$title = $node->get('title')->value;
-					$date = $node->get('created')->value;
-					$final_date = date("d F Y", $date);
-					$test_img = "";
-					if (!empty($node->field_patienpicture->getValue())) {
-						$test = $node->field_patienpicture->getValue();
-						$test_id = $test[0]['target_id'];
-						if(!empty($test_id)){
-							$test_img = \Drupal\file\Entity\File::load($test_id)->createFileUrl();
+		if (!empty($search)) {
+			$ea_query2->condition('title', $search);
+		}
+		$ea_query2->accessCheck(TRUE);
+		$ea_nids2 = $ea_query2->sort('created', 'DESC')->execute();
+		// $node_count2 = count($ea_nids2);
+		$response['patient_testimonials'] = [];
+		$ea_nodes2 = Node::loadMultiple($ea_nids2);
+		
+		foreach ($ea_nodes2 as $key => $node) {
+			if ($uid) {
+				$nid = $node->get('nid')->value;
+				$title = $node->get('title')->value;
+				$date = $node->get('created')->value;
+				$final_date = date("d F Y", $date);
+		
+				$content = "";
+				if (!empty($node->field_content->getValue())) {
+					$content = $node->field_content->getValue()[0]['value'];
+				}
+				$patienname = "";
+				if (!empty($node->field_patienname->getValue())) {
+					$patienname = $node->field_patienname->getValue()[0]['value'];
+				}
+		
+				$author_uid = $node->getOwnerId();
+				$author = \Drupal\user\Entity\User::load($author_uid);
+				$author_name = $author ? $author->getDisplayName() : 'Unknown';
+		
+				if ($username == $author_name) {
+					$alias_url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
+					$response['patient_testimonials'][$key]['alias_url'] = $alias_url;
+					$response['patient_testimonials'][$key]['title'] = $title;
+					$response['patient_testimonials'][$key]['date'] = $final_date;
+					$response['patient_testimonials'][$key]['content'] = $content;
+					$response['patient_testimonials'][$key]['patienname'] = $patienname;
+		
+					$paragraphs = $node->get('field_picture')->referencedEntities();
+					$images = [];
+					foreach ($paragraphs as $paragraph) {
+						if ($paragraph->hasField('field_patient_picture')) {
+							$file = $paragraph->get('field_patient_picture')->entity;
+							if ($file) {
+								$file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+								$images[] = $file_url;
+							}
 						}
 					}
-			
-					$content = "";
-					if (!empty($node->field_content->getValue())) {
-						$content = $node->field_content->getValue()[0]['value'];
+
+					$video_paragraphs = $node->get('field_videos')->referencedEntities();
+					$videos = [];
+					foreach ($video_paragraphs as $video_paragraph) {
+						if ($video_paragraph->hasField('field_patient_videos')) {
+							$video_url = $video_paragraph->get('field_patient_videos')->value;
+							if ($video_url) {
+								$videos[] = $video_url;
+							}
+						}
 					}
-					$patienname = "";
-					if (!empty($node->field_patienname->getValue())) {
-						$patienname = $node->field_patienname->getValue()[0]['value'];
-					}
-			
-					$author_uid = $node->getOwnerId();
-					$author = \Drupal\user\Entity\User::load($author_uid);
-					$author_name = $author ? $author->getDisplayName() : 'Unknown';
-					
-					if ($username == $author_name) {
-						$alias_url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $nid);
-						$response['patient_testimonials'][$key]['thumb'] = $test_img;
-						$response['patient_testimonials'][$key]['alias_url'] = $alias_url;
-						$response['patient_testimonials'][$key]['title'] = $title;
-						$response['patient_testimonials'][$key]['date'] = $final_date;
-						$response['patient_testimonials'][$key]['content'] = $content;
-						$response['patient_testimonials'][$key]['patienname'] = $patienname;
-					}
+
+					$response['patient_testimonials'][$key]['videos'] = $videos;
+					$response['patient_testimonials'][$key]['images'] = $images;
 				}
 			}
-			
+		}
+		
+		// echo "<pre>";
+		// print_r($response);
 
 
 			$terms2 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('patient_testimonials');

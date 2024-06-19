@@ -103,6 +103,15 @@ $('.docslider').owlCarousel({
             }
         }
     });
+
+        
+    $('.patient').owlCarousel({
+        center: true,
+        loop: true,
+        margin: 15,
+        items:1,
+        nav:true
+    });
   
   });
   
@@ -371,6 +380,22 @@ $('.docslider').owlCarousel({
             if (videoID) {
                 const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
                 $('.youtube-iframe-speciality').eq(index).attr('src', iframeSrc);
+            }
+        });
+    });
+
+
+    $(document).ready(function() {
+        function extractVideoID(url) {
+            const urlObj = new URL(url);
+            return urlObj.searchParams.get('v');
+        }
+        $('.link-patient').each(function(index) {
+            const youtubeLink = $(this).text().trim();
+            const videoID = extractVideoID(youtubeLink);
+            if (videoID) {
+                const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
+                $('.youtube-iframe-patient').eq(index).attr('src', iframeSrc);
             }
         });
     });

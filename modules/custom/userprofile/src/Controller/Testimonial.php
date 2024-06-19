@@ -81,43 +81,76 @@ class Testimonial extends ControllerBase
 			$title = $node->get('title')->value;
 			$date = $node->get('created')->value;
 			$final_date = date("d F Y", $date);
-			$test = $node->field_patienpicture->getValue();
-			$test_id = $test[0]['target_id'];
-			$test_img = "";
+			
 			$content = $node->field_content->getValue()[0]['value'];
 			$patienname = $node->field_patienname->getValue()[0]['value'];
 
 
 
-			if(!empty($test_id)){
-				$test_img = \Drupal\file\Entity\File::load($test_id)->createFileUrl();
-			}
+			
 			$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
-			$html .='
-			<div class="test-wrapp">
-			<div class="p-3">
-				<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
-				<b>'.$title.'</b><br>
-			<div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
-			'.$content.'
-			</div>
-			<a class="readMoreLink">Read more</a>
-				<div class="row">
-					<div class="col-sm-3">
-						<img src="'.$test_img.'" class="pt-2 timg img-fluid d-block mx-auto">
-					</div>
-					<div class="col-md-12 col-sm-6 pt-2">
-						<div class="fw-bolder">'.$patienname.'</div>
-					</div>
-				</div>
+			
+			$images = [];
+			if ($node->hasField('field_picture') && !$node->get('field_picture')->isEmpty()) {
+				$paragraphs = $node->get('field_picture')->referencedEntities();
+				foreach ($paragraphs as $paragraph) {
+					if ($paragraph->hasField('field_patient_picture') && !$paragraph->get('field_patient_picture')->isEmpty()) {
+						$file = $paragraph->get('field_patient_picture')->entity;
+						if ($file) {
+							$file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+							$images[] = $file_url;
+						}
+					}
+				}
+			}
 
-			</div>
-		</div>';
+			$videos = [];
+			if ($node->hasField('field_videos') && !$node->get('field_videos')->isEmpty()) {
+				$video_paragraphs = $node->get('field_videos')->referencedEntities();
+				foreach ($video_paragraphs as $video_paragraph) {
+					if ($video_paragraph->hasField('field_patient_videos') && !$video_paragraph->get('field_patient_videos')->isEmpty()) {
+						$video_url = $video_paragraph->get('field_patient_videos')->value;
+						if ($video_url) {
+							$videos[] = $video_url;
+						}
+					}
+				}
+			}
 
+			$html .= '<div class="test-wrapp">
+						<div class="p-3">
+							<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
+							<b>' . $title . '</b><br>
+							<div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">'
+								. $content .
+							'</div>
+							<a class="readMoreLink">Read more</a>
+							<div class="owl-carousel owl-theme patient">';
+
+			foreach ($images as $image) {
+				$html .= '<div class="item">
+							<div class="patient-imag-wrapper">
+								<img src="' . $image . '" class="patientImg pt-2 d-block mx-auto">
+							</div>
+						  </div>';
+			}
+
+			foreach ($videos as $video) {
+				$html .= '<div class="item">
+							<div class="patient-imag-wrapper">
+								<span class="link-patient" style="display:none;">' . $video . '</span>
+								<iframe class="youtube-iframe-patient" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>
+						  </div>';
+			}
+
+			$html .= '</div>
+					  <div class="fw-bolder">' . $patienname . '</div>
+					  </div>
+					</div>';
 		}
+		$html .= '</div>';
 
-
-		$html .='</div>';
 
 		$html .='<script>
 		$(document).ready(function() {
@@ -161,6 +194,32 @@ class Testimonial extends ControllerBase
 					});
 				}
 			});
+
+
+			$(".patient").owlCarousel({
+					center: true,
+					loop: true,
+					margin: 15,
+					items:1,
+					nav:true
+				});
+
+
+				function extractVideoID(url) {
+					const urlObj = new URL(url);
+					return urlObj.searchParams.get("v");
+				}
+				$(".link-patient").each(function(index) {
+					const youtubeLink = $(this).text().trim();
+					const videoID = extractVideoID(youtubeLink);
+					if (videoID) {
+						const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
+						$(".youtube-iframe-patient").eq(index).attr("src", iframeSrc);
+					}
+				});
+
+
+
 		});
 		</script>';
 
@@ -222,45 +281,78 @@ class Testimonial extends ControllerBase
 				$title = $node->get('title')->value;
 				$date = $node->get('created')->value;
 				$final_date = date("d F Y", $date);
-				$test = $node->field_patienpicture->getValue();
-				$test_id = $test[0]['target_id'];
-				$test_img = "";
+				// $test = $node->field_patienpicture->getValue();
+				// $test_id = $test[0]['target_id'];
 				$content = $node->field_content->getValue()[0]['value'];
 				$patienname = $node->field_patienname->getValue()[0]['value'];
 
 
-
-				if(!empty($test_id)){
-					$test_img = \Drupal\file\Entity\File::load($test_id)->createFileUrl();
-				}
 				$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
-				$html .='
-				
-				<div class="test-wrapp">
-					<div class="p-3">
-						<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
-						<b>'.$title.'</b><br>
-					<div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
-					'.$content.'
-					</div>
-					<a class="readMoreLink">Read more</a>
-						<div class="row">
-							<div class="col-sm-3">
-								<img src="'.$test_img.'" class="pt-2 timg img-fluid d-block mx-auto">
-							</div>
-							<div class="col-md-12 col-sm-6 pt-2">
-								<div class="fw-bolder">'.$patienname.'</div>
-							</div>
-						</div>
-
-					</div>
-				</div>';
 
 
+
+				$images = [];
+				if ($node->hasField('field_picture') && !$node->get('field_picture')->isEmpty()) {
+					$paragraphs = $node->get('field_picture')->referencedEntities();
+					foreach ($paragraphs as $paragraph) {
+						if ($paragraph->hasField('field_patient_picture') && !$paragraph->get('field_patient_picture')->isEmpty()) {
+							$file = $paragraph->get('field_patient_picture')->entity;
+							if ($file) {
+								$file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+								$images[] = $file_url;
+							}
+						}
+					}
+				}
+	
+				$videos = [];
+				if ($node->hasField('field_videos') && !$node->get('field_videos')->isEmpty()) {
+					$video_paragraphs = $node->get('field_videos')->referencedEntities();
+					foreach ($video_paragraphs as $video_paragraph) {
+						if ($video_paragraph->hasField('field_patient_videos') && !$video_paragraph->get('field_patient_videos')->isEmpty()) {
+							$video_url = $video_paragraph->get('field_patient_videos')->value;
+							if ($video_url) {
+								$videos[] = $video_url;
+							}
+						}
+					}
+				}
+	
+				$html .= '<div class="test-wrapp">
+							<div class="p-3">
+								<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
+								<b>' . $title . '</b><br>
+								<div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">'
+									. $content .
+								'</div>
+								<a class="readMoreLink">Read more</a>
+								<div class="owl-carousel owl-theme patient">';
+	
+				foreach ($images as $image) {
+					$html .= '<div class="item">
+								<div class="patient-imag-wrapper">
+									<img src="' . $image . '" class="patientImg pt-2 d-block mx-auto">
+								</div>
+							  </div>';
+				}
+	
+				foreach ($videos as $video) {
+					$html .= '<div class="item">
+								<div class="patient-imag-wrapper">
+									<span class="link-patient" style="display:none;">' . $video . '</span>
+									<iframe class="youtube-iframe-patient" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+								</div>
+							  </div>';
+				}
+	
+				$html .= '</div>
+						  <div class="fw-bolder">' . $patienname . '</div>
+						  </div>
+						</div>';
 			}
+			$html .= '</div>';
 
 
-			$html .='</div>';
 
 			$html .='<script>
 			$(document).ready(function() {
@@ -304,7 +396,36 @@ class Testimonial extends ControllerBase
 						});
 					}
 				});
+
+				
+				$(".patient").owlCarousel({
+					center: true,
+					loop: true,
+					margin: 15,
+					items:1,
+					nav:true
+				});
+
+
+				function extractVideoID(url) {
+					const urlObj = new URL(url);
+					return urlObj.searchParams.get("v");
+				}
+				$(".link-patient").each(function(index) {
+					const youtubeLink = $(this).text().trim();
+					const videoID = extractVideoID(youtubeLink);
+					if (videoID) {
+						const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
+						$(".youtube-iframe-patient").eq(index).attr("src", iframeSrc);
+					}
+				});
+
+
+
+
 			});
+
+
 			</script>';
 
 		}else{
