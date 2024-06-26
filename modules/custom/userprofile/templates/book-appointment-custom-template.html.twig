@@ -1,0 +1,42 @@
+<form action="" method="get">
+	<label for="name">Clinic Name:</label>
+	<select name="clinic_name" class="form-select form-element form-element--type-select">
+		<option value="">Select Clinic Name</option>
+		{% for key,item in arr_data.clinic %}
+			<option value="{{ item }}" {{ arr_data.clinic_name == item ? 'selected':''}}>{{ item }}</option>
+		{% endfor %}
+	</select>
+	<label for="name">From Date:</label>
+	<input type="date" id="from_date" class="form-date form-element form-element--type-date form-element--api-date" name="from_date" value="{{ arr_data.from_date}}">
+	<label for="description">To Date:</label>
+	<input type="date" id="to_date" name="to_date" class="form-date form-element form-element--type-date form-element--api-date" value="{{ arr_data.to_date}}">
+	<button type="submit" class="button button--primary">Filter</button>
+</form>
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Mobile Number</th>
+			<th>Clinic Name</th>
+			<th>Time Slot</th>
+			<th>Time</th>
+			<th>Booking Date</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% if arr_data.data is not empty %}
+		{% for key,item in arr_data.data %}
+			<tr>
+				<td>{{ item.id }}</td>
+				<td>{{ item.mobile_number }}</td>
+				<td>{{ item.clinic_name }}</td>
+				<td>{{ item.time_slot }}</td>
+				<td>{{ item.time_slot_name }}</td>
+				<td>{{ item.booking_date }}</td>
+			</tr>
+		{% endfor %}
+		{% else %}
+			<h5>No record found.</h5>
+	{% endif %}
+	</tbody>
+</table>

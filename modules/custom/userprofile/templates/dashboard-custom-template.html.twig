@@ -1,0 +1,241 @@
+<section>
+	<div class="px-5 header">
+		<div class="d-flex align-items-center">
+			<div>
+				<label for="months">Select a Month:</label>			
+				<select id="months" class="select-styles">
+					<option value="">Select</option>
+					{% for key,month in arr_data.months %}
+						<option value="{{ key }}" {{(arr_data.select_month == key) ? 'selected' : ''}}>{{ month }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="mx-5">
+				<label for="months">Select a years:</label>
+				<select id="date-dropdown" class="select-styles years">
+					<option value="">Select</option>
+					<option value="{{ arr_data.years }}" {{(arr_data.select_year == arr_data.years) ? 'selected' : ''}}>{{ arr_data.years }}</option>
+				</select>
+			</div>
+			<div class="mx-5">
+				<label for="months">Select a Doctor:</label>
+				<select class="select-styles doctor_select">
+					<option value="">Doctor</option>
+					{% for key,doctor in arr_data.usernames %}
+						<option value="{{ key }}" {{(arr_data.user_id == key) ? 'selected' : ''}}>{{ doctor }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="">
+				<label for="months">Select a Hospital:</label>
+				<select class="select-styles hospital">
+				{% if arr_data.hospitals is not empty %}
+					<option value="">Hospital</option>
+					{% for key,hospital in arr_data.hospitals %}
+						<option value="{{ hospital.target_id }}" {{(arr_data.clinic == hospital.target_id) ? 'selected' : ''}}>{{ hospital.clinic_name }}</option>
+					{% endfor %}
+				{% endif %}
+				</select>
+			</div>
+		</div> 
+	</div>
+	<div class="sidebar">
+		<div class="col-lg-4 side-list">
+			<ul>
+				<li class="fs-4">
+					<a href="#" onclick="showDoctorDetails()">Dashboard</a>
+				</li>
+				<li class="fs-4"><a href="#" onclick="showMyData()">Profile</a></li>
+			</ul>
+		</div>
+		<div class="col-lg-8" style="min-width: calc(100% - 15%)">
+			<div style="display: flex">
+				<table border="" style="width: 00px">
+					<tr>
+						<th style="padding: 20px"></th>
+						<th style="padding: 38px 0px 38px 0px">
+							<button class="nav-button" id="prevBtn">
+							<i class="fa-solid fa-circle-arrow-left"></i>
+							</button>
+						</th>
+					</tr>
+					<tr>
+						<td rowspan="3" style="text-align: center">
+							<img class="header-img" src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="doctor"/>
+							<br />
+							<p>
+								{{ arr_data.profile_theme1.field_name }} <br />
+								{{ arr_data.profile_theme1.field_specialitiy }} <br />
+								{{ arr_data.profile_theme1.field_degree }}
+							</p>
+						</td>
+						<th>
+							<strong> Morning 2PM-4PM</strong>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<strong>AfterNoon 6PM-8PM</strong>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<strong>Evening 6PM-8PM</strong>
+						</th>
+					</tr>
+				</table>
+				<div class="modal fade" id="cancel_appoiment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header border-0">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">Book Appointment</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="booking_data"></div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header border-0">
+								<h1 class="modal-title fs-5 booking_popup" id="exampleModalLabel">Modal </h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body" id="modalContent"></div>
+							<form class="mx-2 my-3" name="booking_appointment" method="post" id="booking_appointment">
+								<div class="mb-3">
+									<label for="exampleInputEmail1" class="form-label">Name</label>
+									<input type="text" class="form-control" id="paitent_name" name="paitent_name" aria-describedby="emailHelp">
+								</div>
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Phone Number</label>
+									<input type="number" class="form-control" id="phone_number" name="phone_number">
+								</div>
+								<input type="hidden" name="time_slot" id="time_slot" value="">
+								<input type="hidden" name="time_slot_name" id="time_slot_name" value="">
+								<input type="hidden" name="booking_date" id="booking_date" value="">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="scroller-container clinic_date_data" id="scroller-container" data-user-id = '{{arr_data.user_id}}'>
+					<table style="height: 412px">
+					<tr>
+					{% for key,item in arr_data.selecteddates %}
+						<th>
+							<p class="day-item">
+								{{ item.date }} <br />
+								{{ item.day }} <br />
+							<div class="switch {{ item.doctor_availability }}" onclick="toggleSwitch(this)" data-date="{{ item.fulldate }}">
+								<div class="switch-handle" id="switch-handle"></div>
+								<div class="switch-text" style="display: flex; justify-content: space-between;">
+									<div class="on-text" style="padding: 2px 7px;">in</div>
+									<div class="off-text" style="padding: 2px 5px;">out</div>
+								</div>
+							</div>
+							</p>
+						</th>
+					{% endfor %}
+					</tr>
+					<tr>
+						{% for ket,item in arr_data.morning_slots %}
+							<td>
+							{% for key,mor_slo in item %}
+								{% for mo,object in mor_slo %}
+									<div class="" ddata={{ arr_data.doctor_availability[ket] }}>
+										<strong class="time">{{ key }} <br></strong>
+										<button type="button" class="btn-time text-primary nameBtn open_booking_popup" data-bs-toggle="modal" data-bs-target="#cancel_appoiment" data-id="{{mo}}" >
+											<strong> {{object[0]}} </strong>
+										</button>
+									</div>
+								{% endfor %}
+									{% if arr_data.doctor_availability[ket] is not empty %}
+										<button type="button" class="btn-time text-primary" id="morningBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="{{ ket }}" data-time-slot-name="Morning" disabled="disabled">
+											<strong class="leave_doctor">{{ mor_slo }}</strong>
+										</button><br/>
+									{% else %}
+										<button type="button" class="btn-time text-primary" id="morningBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="{{ ket }}" data-time-slot-name="Morning">
+											<strong>{{ mor_slo }}</strong>
+										</button><br/>
+									{% endif %}
+							{% endfor %}
+							</td>
+						{% endfor %}
+					</tr>
+					<tr>
+						{% for ket,item in arr_data.afternoon_slots %}
+							<td>
+							{% for key,after_slo in item %}
+								{% for af,object in after_slo %}
+									<div class="">
+										<strong class="time">{{ key }} <br></strong>
+										<button type="button" class="btn-time text-primary nameBtn open_booking_popup" data-bs-toggle="modal" data-bs-target="#cancel_appoiment" data-id="{{af}}">
+										<strong> {{object[0]}} </strong>
+										</button>
+									</div>
+								{% endfor %}
+								{% if arr_data.doctor_availability[ket] is not empty %}
+									<button type="button" class="btn-time text-primary" id="morningBtn" data-time-slot-name="After Noon" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="{{ ket }}" disabled="disabled">
+										<strong class="leave_doctor">{{ after_slo }}</strong>
+									</button><br/>
+								{% else %}
+									<button type="button" class="btn-time text-primary" id="morningBtn" data-time-slot-name="After Noon" data-bs-toggle="modal" data-bs-target="#exampleModal" data-date="{{ ket }}">
+										<strong>{{ after_slo }}</strong>
+									</button><br/>
+								{% endif %}
+							{% endfor %}
+						</td>
+						{% endfor %}
+					</tr>
+					<tr>
+						{% for ket,item in arr_data.evening_slots %}
+							<td>
+							{% for key,ev_slo in item %}
+								{% for ev,object in ev_slo %}
+									<div class="">
+										<strong class="time">{{ key }} <br></strong>
+										<button type="button" class="btn-time text-primary nameBtn open_booking_popup" data-bs-toggle="modal" data-bs-target="#cancel_appoiment" data-id="{{ev}}">
+										<strong> {{object[0]}} </strong>
+										</button>
+									</div>
+								{% endfor %}
+								{% if arr_data.doctor_availability[ket] is not empty %}
+									<button type="button" class="btn-time text-primary" id="morningBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-time-slot-name="Evening" data-date="{{ ket }}" disabled="disabled">
+										<strong class="leave_doctor">{{ ev_slo }}</strong>
+									</button><br/>
+								{% else %}
+									<button type="button" class="btn-time text-primary" id="morningBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-time-slot-name="Evening" data-date="{{ ket }}">
+										<strong>{{ ev_slo }}</strong>
+									</button><br/>
+								{% endif %}
+							{% endfor %}
+							</td>
+						{% endfor %}
+					</tr>
+					</table>
+				</div>
+				<table style="min-height:413px;">
+					<tr>
+						<th style="height: 38%;">
+							<button class="nav-button" id="nextBtn">
+							<i class="fa-solid fa-circle-arrow-right"></i>
+							</button>
+						</th>
+					</tr>
+					<tr>
+						<th style="padding: 0 0 61px 0"></th>
+					</tr>
+					<tr>
+						<th style="padding: 0 0 62px 0"></th>
+					</tr>
+					<tr>
+						<th style="padding: 0 0 61px 0"></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

@@ -464,349 +464,150 @@
 </section>
 
 
+
+
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class="p-5 pb-3">
 	{% if arr_data.profile_theme == 'theme2' %}
 		<div class="secondtheme">
 	{% endif %}
 
 
-    <div class="container">
-    <h2>Book Appointment</h2>
-    <ul class="nav nav-pills">
-        {% for k, clinic in arr_data.profile_theme1.field_logos %}
-            {% if k == '0' %}
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="pill" href="#{{ k }}">{{ clinic.field_clinicname }}</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#{{ k }}">{{ clinic.field_clinicname }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
-
-            <div class="tab-content">
-                <div id="0" class=" tab-pane active"><br>
-                    <div id="brain" class=" tab-pane active"><br>
-                        <div class="col-lg-12 col-sm-12 pt-4">
-                            <div class="row">
-
-                                <div class="owl-carousel dateslider">
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">MON</div>
-                                        <div class="date text-center">16</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Tue</div>
-                                        <div class="date text-center">17</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Wed</div>
-                                        <div class="date text-center">18</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Thu</div>
-                                        <div class="date text-center">19</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Fri</div>
-                                        <div class="date text-center">20</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Sat</div>
-                                        <div class="date text-center">21</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Sun</div>
-                                        <div class="date text-center">22</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Mon</div>
-                                        <div class="date text-center">23</div>
-                                    </div>
-
-                                    <div class="date-wrapper">
-                                        <div class="day text-center">Tue</div>
-                                        <div class="date text-center">24</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        <div class="d-flex sm-block">
-                            <div class="col-sm-1 pt-3">
-                                <div class="location-wrapper">
-                                    <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
-                                </div>
-                            </div>
-                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
-                            {% set Clinic = arr_data.profile_theme1.field_logos[0] %}
-                                <div class="col-lg-8  pt-1">
-                                    <p class="fw-400 fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
-                                </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-sm-12">
-                                <div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
-                                <button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="fs-3 pt-5"><b>After Noon </b></div>
-                                <button class="ap-book p-3 mt-2"><b>12 noon - 2PM </b> <span class="text-danger">Doctor On Leave</span></button>
-                            </div>
-
-                            <div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
-                            <div class="sm-4">
-
-
-                                <ul class="time-wrap">
-                                    <li class="time">
-                                        <button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
-                                    </li>
-                                    <li class="time">
-                                        <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
-                                    </li>
-                                    <li class="time">
-                                        <button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
-                                    </li>
-                                    <li class="time">
-                                        <button class="ap-book p-3 mt-2"><b>5:30 PM</b></button>
-                                    </li>
-                                    <li class="time">
-                                        <button class="ap-book p-3 mt-2"><b>6:00 PM</b></button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div id="1" class=" tab-pane fade"><br>
-                    <div id="home" class=" tab-pane active"><br>
-                        <div id="brain" class=" tab-pane active"><br>
-                            <div class="col-lg-12 col-sm-12 pt-4">
-                                <div class="row">
-
-                                    <div class="owl-carousel dateslider">
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">MON</div>
-                                            <div class="date text-center">16</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Tue</div>
-                                            <div class="date text-center">17</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Wed</div>
-                                            <div class="date text-center">18</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Thu</div>
-                                            <div class="date text-center">19</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Fri</div>
-                                            <div class="date text-center">20</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Sat</div>
-                                            <div class="date text-center">21</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Sun</div>
-                                            <div class="date text-center">22</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Mon</div>
-                                            <div class="date text-center">23</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Tue</div>
-                                            <div class="date text-center">24</div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="d-flex sm-block">
-                                <div class="col-sm-1 pt-3">
-                                    <div class="location-wrapper">
-                                        <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
-                                    </div>
-                                </div>
-
-                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
-                            {% set Clinic = arr_data.profile_theme1.field_logos[1] %}
-                                <div class="col-lg-8 pt-1">
-                                    <p class="fw-400  fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
-                                </div>
-                            {% endif %}
-                            </div>
-
-                            <div class="row">
-                                <div class="fs-3 pt-5"><b>Evening (5 slots) </b></div>
-                                <div class="sm-4">
-
-
-                                    <ul class="time-wrap">
-                                        <li class="time">
-                                            <button class="ap-book p-3 mt-2"><b>4:00 PM</b></button>
-                                        </li>
-                                        <li class="time">
-                                            <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
-                                        </li>
-                                        <li class="time">
-                                            <button class="ap-book p-3 mt-2"><b>5:00 PM</b></button>
-                                        </li>
-                                        <li class="time">
-                                            <button class="ap-book p-3 mt-2"><b>4:30 PM</b></button>
-                                        </li>
-                                        <li class="time">
-                                            <button class="ap-book p-3 mt-2"><b>2:00 PM</b></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-                <div id="2" class=" tab-pane fade"><br>
-                    <div id="home" class=" tab-pane active"><br>
-                        <div id="brain" class=" tab-pane active"><br>
-                            <div class="col-lg-12 col-sm-12 pt-4">
-                                <div class="row">
-
-                                    <div class="owl-carousel dateslider">
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">MON</div>
-                                            <div class="date text-center">16</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Tue</div>
-                                            <div class="date text-center">17</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Wed</div>
-                                            <div class="date text-center">18</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Thu</div>
-                                            <div class="date text-center">19</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Fri</div>
-                                            <div class="date text-center">20</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Sat</div>
-                                            <div class="date text-center">21</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Sun</div>
-                                            <div class="date text-center">22</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Mon</div>
-                                            <div class="date text-center">23</div>
-                                        </div>
-
-                                        <div class="date-wrapper">
-                                            <div class="day text-center">Tue</div>
-                                            <div class="date text-center">24</div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="d-flex sm-block">
-                                <div class="col-sm-1 pt-3">
-                                    <div class="location-wrapper">
-                                        <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
-                                    </div>
-                                </div>
-
-                            {% if arr_data.profile_theme1.field_logos is defined and arr_data.profile_theme1.field_logos|length > 0 %}
-                            {% set Clinic = arr_data.profile_theme1.field_logos[2] %}
-                                <div class="col-lg-8 pt-1 ">
-                                    <p class=" fw-400 fs-5"><b>{{Clinic.field_clinicname}}</b><br><span>{{ Clinic.field_address }}</span></p>
-                                </div>
-                            {% endif %}
-
-
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-sm-12">
-                                    <div class="fs-3 pt-5"><b>Morning (5 slots)</b></div>
-                                    <button class="ap-book p-3 mt-2"><b>9AM - 12 noon </b> <span class="text-danger">No Slot Available</span></button>
-                                </div>
-
-                                <div class="col-sm-12">
-                                    <div class="fs-3 pt-5"><b>After Noon </b></div>
-                                    <button class="ap-book p-3 mt-2"><b>12 noon - 5PM </b> <span class="text-danger">Doctor On Leave</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-
-
-    </div>
-
+	<div class="container">
+		<h2>Book Appointment</h2>
+		<ul class="nav nav-pills">
+		{% set i  = 1 %}
+			{% for k, clinic in arr_data.doctor_clinic_appointment %}
+				<li class="nav-item book_appointment">
+					<a class="nav-link {{ i ==1 ? 'active' : ''}}" data-bs-toggle="pill" href="#{{ k }}" data-target_id = "{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
+					</li>
+					{% set i = i+1 %}
+			{% endfor %}
+		</ul>
+
+
+			<div class="tab-content">
+			{% for k, clinic in arr_data.doctor_clinic_appointment %}
+				<div id="{{k}}" class=" tab-pane {{ k ==0 ? 'active' : ''}}"><br>
+					<div id="brain" class=" tab-pane active"><br>
+						<div class="col-lg-12 col-sm-12 pt-4">
+							<div class="row">
+
+								<div class="owl-carousel dateslider">
+								{% for k, date in arr_data.dates %}
+									<div class="date-wrapper current_date_select" data-date="{{date}}" data-target_id = "{{ clinic.target_id }}">
+										<div class="day text-center">{{k}}</div>
+										<div class="date text-center">{{date}}</div>
+									</div>
+								{% endfor %}
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="d-flex sm-block">
+							<div class="col-sm-1 pt-3">
+								<div class="location-wrapper">
+									<p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
+								</div>
+							</div>
+								<div class="col-lg-8  pt-1">
+									<p class="fw-400 fs-5"><b>{{clinic.address}}</b></p>
+								</div>
+						</div>
+
+						<div class="row time_slots">
+							
+						</div>
+						
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+	</div>
+
+	
+<div class="container">
+    <div id="overlay" class="overlay"></div>
+<div id="bookAppointmentPopup" class="popup">
+	<form name="booking_form" id="booking_form" method="post">
+		<h2>Book Appointment</h2>
+		<p>Please fill in details to confirm an appointment with Dr. Murali Mohan on 21/06 at 2:30PM.</p>
+		<div class="otp_msg"></div>
+		<label for="mobile">Your 10 digit mobile number*</label>
+		<div style="display: flex;">
+			<input type="number" id="phonenumber" name="phonenumber" minlength="10" maxlength="10">
+			<button type="button" id="otp" class="generate_otp" data-type="1">Generate OTP</button>
+			<button type="button" id="otp" class="resend_otp" data-type="2" style="display: none;">Resend OTP</button>
+		</div>
+		<label id="phonenumber-error" class="error" for="phonenumber"></label><br/>
+		<div class="otp_cls" style="display: none;">
+			<label for="otp">Please enter the 4 digit OTP received as SMS</label>
+			<input type="text" name="otp" id="verify_otp">
+			<div class="otp_msg1"></div>
+			<label id="verify_otp-error" class="error" for="verify_otp"></label>
+		</div>
+		<label for="pname">Patient Name</label>
+		<input type="text" id="fullname" name="fullname" placeholder="Name">
+		<div class="checkbox-cont">
+			<input type="checkbox" id="first-time" name="first-time" style="width: auto">
+			<label for="first-time">Visiting for the First Time?</label>
+		</div>
+		<label for="reason">Reason for Doctor Visit</label>
+		<input type="text" name="reason" id="reason">
+		<div class="checkbox-cont">
+			<input type="checkbox" id="terms" name="terms" style="width: auto" value="1">
+			<label for="terms">I agree to receive calls and messages from linqMD regarding this appointment</label>
+		</div>
+		<label id="terms-error" class="error" for="terms"></label>
+		<div style="display: flex;">
+			<input type="hidden" id="clinicname" name="clinicname" value="">
+			<input type="hidden" id="clinic_target_id" name="clinic_target_id" value="">
+			<input type="hidden" id="bookingtimeslot" name="bookingtimeslot" value="">
+			<input type="hidden" id="bookingtime" name="bookingtime" value="">
+			<input type="hidden" id="booking_date" name="booking_date" value="">
+			<input type="hidden" id="user_id" name="user_id" value="{{ arr_data.user_id }}">
+			<input type="hidden" id="doctor_type" name="doctor_type" value="{{ arr_data.doctor_type }}">
+			<button type="submit" class="btn btn-primary" name="otpdubmit" id="bookAppointmentButton">Book Appointment</button>
+			<input type="button" id="otp" class="closePop btn btn-danger" value="Cancel">
+		</div>
+	</form>
+</div>
+</div>
+
+	<div id="popupForm1" class="popup1">
+		<h2>Booking Confirmation</h2>
+		<div class="confirmation">
+		</div>
+	</div> 
 	
 	{% if arr_data.profile_theme == 'theme2' %}
 		</div>
 	{% endif %}
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec4' : 'p2sec4' }}" class="pt-0">
 	{% if arr_data.profile_theme == 'theme2' %}

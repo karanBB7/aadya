@@ -337,13 +337,12 @@ a{
 
 
   
-
   #sec3 h2 {
     color: var(--c3);
     font-weight: 800;
 }
 
-#sec3 .date-wrapper {
+#sec3 .date-wrapper, .month-wrapper{
     border: 1px solid var(--c4);
     border-radius: 25px;
     /* padding: 20px 2px 20px 2px; */
@@ -376,25 +375,25 @@ a{
 
 }
 
+#sec3 .month-wrapper{
+    background: var(--c3);
+    color: var(--c1)!important;
+}
 
 #sec3 .date-wrapper:hover {
     background-color: var(--c3);
     transition: .5s;
 }
 
-#sec3 .fa-location-dot{
-    color: var(--c1);
+
+.loc-icon {
+    height: 80px;
+    width: 80px;
 }
 
-
-#sec3 .location-wrapper{
-    width: 70px;
-    height: 70px;
-    background-color: var(--c3);
-    border-radius: 100px;
+.loctext {
+    margin-left: 30px;
 }
-
-
 
 #sec3 .ap-book {
     background: transparent;
@@ -426,26 +425,146 @@ a{
 }
 
 
-.loc-icon {
-	height: 80px;
-	width: 80px;
+#sec3 .fa-location-dot {
+    color: var(--c1);
 }
 
 
-#sec3 .ap-book{
-	background: transparent;
-	border: 1px solid var(--c3);
-	padding: 10px;
-	border-radius: 5px;
-	transition: 300ms;
+#sec3 .location-wrapper {
+    width: 70px;
+    height: 70px;
+    background-color: var(--c3);
+    border-radius: 100px;
 }
 
 
-#sec3 .ap-book:hover{
-	background: var(--c3);
-	color: var(--c1);
-	transition: 300ms;
+
+#sec3 .closed{
+    background-color: red !important;
+    color: var(--c1);
 }
+
+
+#sec3 .docOnLeave{
+    background-color: #E7E00A !important;
+    color: var(--c1);
+}
+
+
+
+
+
+.otp-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 22rem;
+    height: 13rem;
+}
+.otp-form input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.otp-form button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 36rem;
+}
+.popup input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 60%;
+    box-sizing: border-box;
+}
+.popup button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+#otp {
+    padding: 0;
+    height: 3rem;
+    width: 8rem;
+    align-self: center;
+    margin-left: 2rem;
+    border-radius: 0.5rem;
+}
+.checkbox-cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
+
+
+.confirmation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    padding: 4rem;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 45rem;
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.confirmation p {
+    margin: 10px 0;
+    font-size: large;
+}
+.confirmation h2{
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.confirmation button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.confirmation .btn{
+    align-self: center;
+    margin-top: 4rem;
+}
+
+
+
+
+
 
 
 
@@ -1560,6 +1679,36 @@ button:hover{
 
 
 
+
+
+.popup {
+    display: none;
+    position: fixed;
+    height:70vh;
+    overflow: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.error{
+    color: red;
+}
+.popup1 {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.otp_msg,.otp_msg1{color: green;font-weight: bold;}
 
 /* .patient .owl-prev, .owl-next {
 	position: absolute;

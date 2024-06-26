@@ -7,6 +7,9 @@ global-styling:
       assets/css/blog.css: {}
       assets/css/login.css: {}
   js:
+    assets/js/jquery.validate.min.js: {}
     assets/js/main.js: {}
   dependencies:
     - core/jquery
+  images:
+    images/: {}

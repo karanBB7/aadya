@@ -7,3 +7,8 @@ userprofile:
     - core/jquery
     - core/drupalSettings
     - core/jquery.cookie
+    
+custom-styles:
+  css:
+    theme:
+      css/dr.css: {}

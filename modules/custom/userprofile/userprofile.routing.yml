@@ -105,3 +105,133 @@ userprofile.getallblog:
     _permission: 'access content'
   options:
     no_cache: 'TRUE'
+
+
+
+userprofile.get_booking_time_slot:
+  path: '/get_booking_time_slot'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::getBookingTimeSlot'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
+
+userprofile.booking_appointment:
+  path: '/booking-appointment'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::bookingAppointmentSlot'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.otp_verify_booking_appointment:
+  path: '/otp-verify-booking-appointment'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::OtpVerifyBookingAppointment'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.webhook_appointment:
+  path: '/webhook-appointment'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::webhookAppointment'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.book_appointment_data:
+  path: '/admin/book-appointment-data'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::bookAppointmentData'
+    _title: 'Book Appointment Data'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.generate_otp:
+  path: '/generate-otp'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::generateOtp'
+    _title: 'Profile'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
+
+
+
+userprofile.doctor_dashboard:
+  path: '/doctor-dashboard'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::doctorDashboard'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _role: 'doctor_admin'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.get_hospital:
+  path: '/get-hospital'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::getHospital'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.get_appointment_data:
+  path: '/get-appointment-data'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::getAppointmentData'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.cancel_appointment:
+  path: '/cancel-appointment'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::cancelAppointment'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.doctor_availability:
+  path: '/doctor-availability'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::doctorAvailability'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.admin_booking_appointment:
+  path: '/admin-booking-appointment'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorDashboard::adminBookingAppointment'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
