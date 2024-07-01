@@ -106,25 +106,20 @@ userprofile.getallblog:
   options:
     no_cache: 'TRUE'
 
-
-
 userprofile.get_booking_time_slot:
   path: '/get_booking_time_slot'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getBookingTimeSlot'
+    _controller: '\Drupal\userprofile\Controller\Appointment::getBookingTimeSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
   options:
     no_cache: 'TRUE'
 
-
-
-
 userprofile.booking_appointment:
   path: '/booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::bookingAppointmentSlot'
+    _controller: '\Drupal\userprofile\Controller\Appointment::bookingAppointmentSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -134,7 +129,7 @@ userprofile.booking_appointment:
 userprofile.otp_verify_booking_appointment:
   path: '/otp-verify-booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::OtpVerifyBookingAppointment'
+    _controller: '\Drupal\userprofile\Controller\Appointment::OtpVerifyBookingAppointment'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -144,7 +139,7 @@ userprofile.otp_verify_booking_appointment:
 userprofile.webhook_appointment:
   path: '/webhook-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::webhookAppointment'
+    _controller: '\Drupal\userprofile\Controller\Webhook::webhookAppointment'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -154,7 +149,7 @@ userprofile.webhook_appointment:
 userprofile.book_appointment_data:
   path: '/admin/book-appointment-data'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::bookAppointmentData'
+    _controller: '\Drupal\userprofile\Controller\Appointment::bookAppointmentData'
     _title: 'Book Appointment Data'
   requirements:
     _permission: 'administer site configuration'
@@ -164,17 +159,12 @@ userprofile.book_appointment_data:
 userprofile.generate_otp:
   path: '/generate-otp'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::generateOtp'
+    _controller: '\Drupal\userprofile\Controller\Appointment::generateOtp'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
   options:
     no_cache: 'TRUE'
-
-
-
-
-
 
 userprofile.doctor_dashboard:
   path: '/doctor-dashboard'
@@ -230,6 +220,16 @@ userprofile.admin_booking_appointment:
   path: '/admin-booking-appointment'
   defaults:
     _controller: '\Drupal\userprofile\Controller\DoctorDashboard::adminBookingAppointment'
+    _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.comment_save:
+  path: '/comment-save'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\UserProfile::commentSave'
     _title: 'Doctor Dashboard'
   requirements:
     _permission: 'access content'

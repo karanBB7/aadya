@@ -904,4 +904,3 @@ $databases['default']['default'] = array (
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_Uo8rz9APLni_fscu9h7Mpi7Uumh-we-_WhL2SZe3eN8YIhv2g4O5LEyaiFoxby0Cp7yCQR6NrA/sync';
 $config['system.logging']['error_level'] = 'verbose';
-// $config['system.logging']['error_level'] = 'hide';

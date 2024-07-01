@@ -9,6 +9,7 @@ global-styling:
   js:
     assets/js/jquery.validate.min.js: {}
     assets/js/main.js: {}
+    assets/js/dates.js: {}
   dependencies:
     - core/jquery
   images:

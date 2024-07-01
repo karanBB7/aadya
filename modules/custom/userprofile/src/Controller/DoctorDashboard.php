@@ -69,12 +69,7 @@ class DoctorDashboard extends ControllerBase
 			$current_date = new DrupalDateTime();
 		}
 		
-		$query = $connection->select('doctor_availability','ba')
-			->fields('ba');
-		$query->condition('user_id', $user_id);
-		$query->condition('in_out', '2');
-		$result = $query->execute();
-		$doctor_availability = $result->fetchAll();
+		
 		for ($i = 0; $i < 7; $i++) {
 			$dates[$i]['date'] = $current_date->format('d');
 			$dates[$i]['day'] = $current_date->format('l');
@@ -97,6 +92,7 @@ class DoctorDashboard extends ControllerBase
 			}
 			$current_date->modify('+1 day');
 		}
+		
 		if(!empty($user_id)){
 			$user = \Drupal\user\Entity\User::load($user_id);
 			if(!empty($clinic)){
@@ -208,7 +204,6 @@ class DoctorDashboard extends ControllerBase
 			$doctor_availability = [];
 			foreach($dates as $value){
 				$booking_dates = (!empty($month) && !empty($year)) ? $year.'-'.$month.'-'.$value['date'] : date("Y-m-".$value['date']);
-
 				$query = $connection->select('doctor_availability','ba')
 					->fields('ba');
 				$query->condition('user_id', $user_id);
@@ -273,7 +268,6 @@ class DoctorDashboard extends ControllerBase
 						$evening_data[$booking_dates][$row->time_slot][$row->id][] = $row->patient_name;
 					}
 				}
-
 				foreach($field_morning_slots as $key => $morning_slot){
 					$mr_slot = Term::load($morning_slot['target_id']);
 					if (!empty($mornig_data[$booking_dates][$mr_slot->getName()])) {
@@ -304,7 +298,6 @@ class DoctorDashboard extends ControllerBase
 		$response['morning_slots'] = !empty($morning_slots) ? $morning_slots : '';
 		$response['afternoon_slots'] = !empty($afternoon_slots) ? $afternoon_slots : '';
 		$response['evening_slots'] = !empty($evening_slots) ? $evening_slots : '';
-		
 		$months = [];
 		$years = [];
 		$currentMonth = (int) date('n'); // Current month as a number (1-12)
@@ -322,6 +315,9 @@ class DoctorDashboard extends ControllerBase
 		    $months[$month] = $monthName; // Store month name with its index (1-12)
 		}
 		$years = date('Y');
+		// for($z = date("Y"); $z >= date("Y") - 10; $z--){
+		// 	$years[$z] = $z;
+		// }
 		// Whole month date get
 		// $currentDate = new DrupalDateTime('now');
 	
@@ -508,7 +504,7 @@ class DoctorDashboard extends ControllerBase
 						</label>
 					</div>
 				</div>
-				<button type="submit" class="bg-danger cancel_appoiment" data-id="'.$id.'">Cancel appointment</button>
+				<button type="button" class="bg-danger cancel_appoiment" data-id="'.$id.'">Cancel appointment</button>
 			</form>';
 		}
 		$ajax_resp = new JsonResponse(array("html"=>$html));
@@ -518,12 +514,43 @@ class DoctorDashboard extends ControllerBase
 	public function cancelAppointment(Request $request){
 		$id = !empty($request->get('id')) ? $request->get('id') : '';
 		$connection = Database::getConnection();
+		$query1 = $connection->select('booking_appointment','ba')
+		->fields('ba');
+		$query1->condition('id', $id);
+		$result = $query1->execute();
+		$rows = $result->fetchAll();
+
 		$query = $connection->update('booking_appointment')
 		  ->fields([
 			'status' => '2',
 		])
 		->condition('id', $id)
 		->execute();
+		$usera = \Drupal\user\Entity\User::load($rows[0]->user_id);
+		$usernames = $usera->getAccountName();
+		$date = new DrupalDateTime($rows[0]->booking_date);
+	    $date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
+		$text_sms = 'Dear '.$rows[0]->patient_name.', your appointment with Dr.'.$usernames.' at  on '.$date_booking.' at '.$rows[0]->time_slot.' is cancelled. WhatsApp us on 9376005515 to book an appointment. Aadya Health Sciences.';
+		$mob_text = str_replace('+', '%20', urlencode($text_sms));
+		$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$rows[0]->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930774075419&UNICODE=TEXT';
+		try {
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+			  CURLOPT_URL => $url_sms,
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => '',
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 0,
+			  CURLOPT_FOLLOWLOCATION => true,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => 'GET',
+			));
+
+			$response = curl_exec($curl);
+			curl_close($curl);
+		}
+		catch (RequestException $e) {
+		}
 		$ajax_resp = new JsonResponse(array("success"=>"Appointment Cancel Successfully."));
 		return ($ajax_resp);
 		exit;
@@ -555,6 +582,32 @@ class DoctorDashboard extends ControllerBase
 		\Drupal::database()->insert($table)
 			->fields($fields)
 			->execute();
+		$usera = \Drupal\user\Entity\User::load($doctor);
+		$usernames = $usera->getAccountName();
+		$date = new DrupalDateTime($booking_date);
+	    $date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
+		$text_sms = 'Dear '.$paitent_name.'!, your appointment with Dr.'.$usernames.' at '.$date_booking.' on '.$time_slot.' at '.$hospital_name.' is confirmed. WhatsApp us on 9376005515 to cancel or reschedule. Aadya Health Sciences.';
+		$mob_text = str_replace('+', '%20', urlencode($text_sms));
+		$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$phone_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930778294643&UNICODE=TEXT';
+		try {
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+			  CURLOPT_URL => $url_sms,
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => '',
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 0,
+			  CURLOPT_FOLLOWLOCATION => true,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => 'GET',
+			));
+
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+		}
+		catch (RequestException $e) {
+		}
 		$ajax_resp = new JsonResponse(array("success"=>"Booking Appointment Successfully."));
 		return ($ajax_resp);
 		exit;

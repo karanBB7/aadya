@@ -1,0 +1,82 @@
+<section id="blogsec">
+	<section class="main-content">
+		<div class="container pt-5">
+			<div class="row">
+				<div class="col-sm-8">
+					<article>
+						<h1 class="fw-bolder">{{ node.title.value }}</h1>
+						<div class="col-sm-12">
+							<img src="{{file_url(node.field_image.entity.fileuri)}}" alt="Article Thumbnail" width="100%">
+						</div>
+						<div class="main-conntent">
+							<div class="pt-4"><b>By:</b> {{ node.field_author.value }} </div>
+							{{ node.body.value|raw }}
+						</div>
+						<a href="youtube.com">Youtube</a>
+					</article>
+					<div class="comment-section">
+						<h3>Comments</h3>
+						<div id="comments-list" class="mb-4">
+							<div class="comment mb-3">
+								<h5>John Doe</h5>
+								<p class="text-muted">Posted on: April 1, 2024</p>
+								<p>This article is very informative. I learned a lot about osteoporosis and its effects on the spine.</p>
+							</div>
+							<div class="comment mb-3">
+								<h5>Jane Smith</h5>
+								<p class="text-muted">Posted on: March 30, 2024</p>
+								<p>Thank you for raising awareness about this important health issue. It's crucial for elderly people to take care of their bone health.</p>
+							</div>
+							<!-- More comments can be added here -->
+						</div>
+						<!-- Comment form -->
+						<h4>Add a Comment</h4>
+						<form id="comment-form" name="comment-form" action="post">
+							<div class="mb-3">
+								<label for="name" class="form-label">Name</label>
+								<input type="text" name="username" class="form-control" id="name" required>
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label">Email</label>
+								<input type="email" name="email" class="form-control" id="email" required>
+							</div>
+							<div class="mb-3">
+								<label for="comment" class="form-label">Comment</label>
+								<textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
+							</div>
+							<input type="hidden" name="node_id" id="node_id" value="{{ node_id }}">
+							<button type="submit" class="btn btn-primary">Submit Comment</button>
+						</form>
+					</div>
+					<div class="sticky-social">
+						<ul class="social">
+							<li class="fb"><a class="fbshare" target="_blank"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
+							<li class="whatsapp"><a class="whatsappshare" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
+							<li class="linkedin"><a class="linkedinshare" target="_blank"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+							<li class="twitter"><a class="twittershare" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-4 other-blog">
+					<h5 class="pt-5 fw-bolder">Other Articles you might Like</h5>
+					<hr>
+					<div class="row">
+					{% if blog_might is not empty %}
+						{% for key,item in blog_might %}
+							<div class="col-sm-5 mx-auto p-3 small-img-size">
+								<img src="{{ item.article_img }}" width="100%">
+							</div>
+							<div class="col-sm-7 small-content-center">
+								<p class="fw-bold fs-5 m-0 pt-3">{{ item.title }}</p>
+								<p class="p-0 m-0 pb-2">By: {{ item.author }}</p>
+								<a href="{{ item.url_alias }}"><button class="btn btn-primary mb-3">Read More</button></a>
+							</div>
+							<hr>
+						{% endfor %}
+					{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

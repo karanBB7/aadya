@@ -102,6 +102,7 @@ jQuery(document).ready(function($) {
 		$(".time_slots").html('');
 		$('.current_date_select').removeClass('activedates');
 	});
+
 	$('.current_date_select').on('click',function(){
 		var current_date = $(this).attr('data-date');
 		var target_id = $(this).attr('data-target_id');
@@ -120,6 +121,8 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
+
+
 	
 	$(document).on("click",".openPopup",function(){
 		$(".overlay").show();
@@ -210,21 +213,6 @@ jQuery(document).ready(function($) {
 			}
 		});
 	}
-
-
-	$(document).on("click", ".closePop", function(e){
-		e.preventDefault();
-		closePopup();
-	});
-	
-	function closePopup() {
-		$("#bookAppointmentPopup").hide();
-		$(".overlay").hide();
-		$("#booking_form")[0].reset();
-	}
-	
-
-	
 	$(".generate_otp").click(function(){
 		var phonenumber = $("#phonenumber").val();
 		console.log(phonenumber);
@@ -505,8 +493,73 @@ jQuery(document).ready(function($) {
 		  container.scrollLeft += 200; // Adjust scrolling distance as needed
 		});
 	}
-	
-	document.getElementById('switch').classList.add('on');
+	if($('#switch').length > 0){
+		document.getElementById('switch').classList.add('on');
+	}
+	const link = encodeURI(window.location.href);
+	console.log(link)
+    const msg = encodeURIComponent('Hey, I found this article');
+    const title = encodeURIComponent('Article');
+    
+    const fb = document.querySelector('.fbshare');
+    fb.href = `https://www.facebook.com/share.php?u=${link}`;
+    
+    const whatsapp = document.querySelector('.whatsappshare');
+    whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
+    
+    const linkedIn = document.querySelector('.linkedinshare');
+    linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+    
+    const twitter = document.querySelector('.twittershare');
+    twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+    if($("#comment-form").length > 0){
+		$('#comment-form').validate({
+			rules: {
+				username: {
+					required: true,
+				},
+				email: {
+					required: true,
+					email:true,
+				},
+				comment:{
+					required: true,
+				}
+			},
+			messages: {
+				username: {
+					required: "Please enter name.",
+				},
+				email: {
+					required: "Please enter email.",
+					email:"Pleae enter valid email."
+				},
+				comment:{
+					required: "Please enter comment.",
+				}
+			},
+			submitHandler: function(form) {
+				var username = $("#name").val();
+				var email = $("#email").val();
+				var comment = $("#comment").val();
+				var node_id = $("#node_id").val();
+				$.ajax({
+					url: "/linqmd/comment-save",
+					method: "POST",
+					cache: false,
+					data: {
+						username:username,
+						email:email,
+						comment:comment,
+						node_id:node_id,
+					}, 
+					success: function (data) {
+						
+					}
+				});
+			}
+		});
+	}
 });
 function toggleSwitch(element) {
 	if(confirm("Are you sure you want switch?")){

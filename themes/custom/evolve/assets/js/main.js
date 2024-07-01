@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Owl-carousel for doctor Videos
   $(document).ready(function () {
 
-
+if($(".docslider").length > 0){
 $('.docslider').owlCarousel({
     loop:false,
     margin:10,
@@ -31,9 +31,10 @@ $('.docslider').owlCarousel({
         }
     }
 })
+}
    
   
-    
+    if($(".dateslider").length > 0){
     $('.dateslider').owlCarousel({
         center: true,
         items: 2,
@@ -50,7 +51,8 @@ $('.docslider').owlCarousel({
             }
         }
     });
-  
+}
+  if($(".expslider").length > 0){
     $('.expslider').owlCarousel({
         center: false,
         loop: false,
@@ -70,7 +72,8 @@ $('.docslider').owlCarousel({
             }
         }
     });
-  
+}
+  if($(".blogslider").length > 0){
     $('.blogslider').owlCarousel({
         center: true,
         loop: true,
@@ -82,9 +85,10 @@ $('.docslider').owlCarousel({
             }
         }
     });
+}
 
     
-  
+    if($(".testimonial-slider").length > 0){
     $('.testimonial-slider').owlCarousel({
         loop: false,
         margin: 5,
@@ -103,8 +107,9 @@ $('.docslider').owlCarousel({
             }
         }
     });
+}
 
-        
+       if($(".patient").length > 0){ 
     $('.patient').owlCarousel({
         center: true,
         loop: true,
@@ -112,6 +117,7 @@ $('.docslider').owlCarousel({
         items:1,
         nav:true
     });
+}
   
   });
   
@@ -164,9 +170,10 @@ $('.docslider').owlCarousel({
       });
   });
     
-  
-    $('#blogfix').trigger('destroy.owl.carousel');
-    $('#blogfix').owlCarousel();
+    if($("#blogfix").length > 0){
+        $('#blogfix').trigger('destroy.owl.carousel');
+        $('#blogfix').owlCarousel();
+    }
   
   
     $(document).ready(function() {
@@ -456,16 +463,3 @@ $('.docslider').owlCarousel({
             }
         });
     });
-    
-
-
-
-
-
-
-
-
-
-
-
-

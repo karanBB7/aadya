@@ -83,8 +83,8 @@
 
                     <div class="col-sm-5 d-none d-sm-block">
     
-                              <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank">
-                            <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button>
+                              <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank">
+                            <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button>
                             </a>
                         <p class="exp mt-3 col-10">{{ arr_data.profile_theme1.field_experiences}}</p>
                        
@@ -117,7 +117,7 @@
 
                     <div class="sm-fl d-block d-sm-none" style="background:var(--c1);">
                             <button class="btn appbtn mb-2 order-lg-2 order-sm-2 ">Book an appointment</button>
-                            <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+                            <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
 
                         </div>
                 </div>
@@ -184,7 +184,7 @@
 
                                 <div class="col-4">
                                     <button class="btn appbtnred   float-end">Book an appointment</button>
-                                    <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank"><button class="whatsappbtn btn  float-end"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+                                    <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank"><button class="whatsappbtn btn  float-end"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
                                 </div>
 
 
@@ -216,9 +216,9 @@
                         </p>
                     </div>
                     <button class="btn appbtnred mx-auto d-block">Book an appointment</button>
-                    <a href="https://api.whatsapp.com/send?phone={{arr_data.profile_theme1.field_phone_number}}&text=Hello! {{ arr_data.username}}" target="_blank">
+                    <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.username}}" target="_blank">
                     
-                    <button class="whatsappbtn btn mx-auto d-block"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">SHARE</span></button></a>
+                    <button class="whatsappbtn btn mx-auto d-block"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
                     
 
                     <div class="col-lg-4">
@@ -462,6 +462,132 @@
 	{% endif %}
 
 </section>
+
+
+
+
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class="p-5 pb-3">
+	{% if arr_data.profile_theme == 'theme2' %}
+		<div class="secondtheme">
+	{% endif %}
+
+
+<div class="container">
+    <h2>Book Appointment</h2>
+    <ul class="nav nav-pills">
+    {% set i = 1 %}
+        {% for k, clinic in arr_data.doctor_clinic_appointment %}
+            <li class="nav-item book_appointment">
+                <a class="nav-link {{ i == 1 ? 'active' : ''}}" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
+            </li>
+            {% set i = i + 1 %}
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        <div class="col-sm-3 pt-4">
+            <div id="month-carousel" class="owl-carousel owl-theme monthslider2"></div>
+        </div>
+        {% for k, clinic in arr_data.doctor_clinic_appointment %}
+            <div id="{{k}}" class="tab-pane {{ k == 0 ? 'active' : ''}}"><br>
+                <div id="brain" class="tab-pane active"><br>
+                    <div class="col-lg-12 col-sm-12 pt-4">
+                        <div class="row">
+                            <div class="owl-carousel dateslider" data-target_id="{{ clinic.target_id }}">
+                                <!-- Dates will be populated here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex sm-block">
+                        <div class="col-sm-1 pt-3">
+                            <div class="location-wrapper">
+                                <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot"></i></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 pt-1">
+                            <p class="fw-400 fs-5"><b>{{clinic.address}}</b></p>
+                        </div>
+                    </div>
+
+                    <div class="row time_slots">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+	
+<div class="container">
+    <div id="overlay" class="overlay"></div>
+<div id="bookAppointmentPopup" class="popup">
+	<form name="booking_form" id="booking_form" method="post">
+		<h2>Book Appointment</h2>
+		<p>Please fill in details to confirm an appointment with Dr. Murali Mohan on 21/06 at 2:30PM.</p>
+		<div class="otp_msg"></div>
+		<label for="mobile">Your 10 digit mobile number*</label>
+		<div style="display: flex;">
+			<input type="number" id="phonenumber" name="phonenumber" minlength="10" maxlength="10">
+			<button type="button" id="otp" class="generate_otp" data-type="1">Generate OTP</button>
+			<button type="button" id="otp" class="resend_otp" data-type="2" style="display: none;">Resend OTP</button>
+		</div>
+		<label id="phonenumber-error" class="error" for="phonenumber"></label><br/>
+		<div class="otp_cls" style="display: none;">
+			<label for="otp">Please enter the 4 digit OTP received as SMS</label>
+			<input type="text" name="otp" id="verify_otp">
+			<div class="otp_msg1"></div>
+			<label id="verify_otp-error" class="error" for="verify_otp"></label>
+		</div>
+		<label for="pname">Patient Name</label>
+		<input type="text" id="fullname" name="fullname" placeholder="Name">
+		<div class="checkbox-cont">
+			<input type="checkbox" id="first-time" name="first-time" style="width: auto">
+			<label for="first-time">Visiting for the First Time?</label>
+		</div>
+		<label for="reason">Reason for Doctor Visit</label>
+		<input type="text" name="reason" id="reason">
+		<div class="checkbox-cont">
+			<input type="checkbox" id="terms" name="terms" style="width: auto" value="1">
+			<label for="terms">I agree to receive calls and messages from linqMD regarding this appointment</label>
+		</div>
+		<label id="terms-error" class="error" for="terms"></label>
+		<div style="display: flex;">
+			<input type="hidden" id="clinicname" name="clinicname" value="">
+			<input type="hidden" id="clinic_target_id" name="clinic_target_id" value="">
+			<input type="hidden" id="bookingtimeslot" name="bookingtimeslot" value="">
+			<input type="hidden" id="bookingtime" name="bookingtime" value="">
+			<input type="hidden" id="booking_date" name="booking_date" value="">
+			<input type="hidden" id="user_id" name="user_id" value="{{ arr_data.user_id }}">
+			<input type="hidden" id="doctor_type" name="doctor_type" value="{{ arr_data.doctor_type }}">
+			<button type="submit" class="btn btn-primary" name="otpdubmit" id="bookAppointmentButton">Book Appointment</button>
+			<input type="button" id="otp" class="closePop btn btn-danger" value="Cancel">
+		</div>
+	</form>
+</div>
+</div>
+
+	<div id="popupForm1" class="popup1">
+		<h2>Booking Confirmation</h2>
+		<div class="confirmation">
+		</div>
+	</div> 
+	
+	{% if arr_data.profile_theme == 'theme2' %}
+		</div>
+	{% endif %}
+
+</section>
+
+
+
+
+
+
+
+
+
+
 
 
 

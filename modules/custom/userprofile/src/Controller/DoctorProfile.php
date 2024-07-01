@@ -20,6 +20,8 @@ use Drupal\Core\Url;
 use Drupal\Core\Database\Database;
 use Drupal\user\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
+use Drupal\Core\Datetime\DrupalDateTime;
+
 
 class DoctorProfile extends ControllerBase
 {
@@ -123,6 +125,83 @@ class DoctorProfile extends ControllerBase
 				}
 				unset($data);
 			}
+
+
+
+
+			$para1 = $user->get("field_book_appointment")->getValue();
+			$getParaCount1 = $this->loadfields->getCount($para1);
+			foreach ($para1 as $value) {
+				$paragraph = Paragraph::load($value["target_id"]);
+				// Paragraph type could be also useful.
+				$prgTypeId = $paragraph->getType();
+	
+				//load Paragraph type & field
+				$get_paragraph = $this->loadfields->getFieldDetails(
+					"paragraph",
+					$prgTypeId
+				);
+				foreach ($get_paragraph as $name => $type) {
+					//field type is paragraph
+					if ($type["type"] == "entity_reference_revisions") {
+						$childPara = $paragraph->get($name)->getValue();
+						$getSubParaCount = $this->loadfields->getCount(
+							$childPara
+						);
+						$name1 = $name;
+						if (!empty($getSubParaCount)) {
+							$getSubParaCountCnt =
+								$getSubParaCount[$name1]["count"] ?? 0;
+						} else {
+							$getSubParaCountCnt = 0;
+						}
+						
+						foreach ($childPara as $key =>$valuechild) {
+							$paragraph = Paragraph::load($valuechild["target_id"]);
+							$clinctarget_id = !empty($paragraph->get('field_clinic_name')->getValue()) ? $paragraph->get('field_clinic_name')->getValue()[0]['target_id']: '';
+							$clincterm = Term::load($clinctarget_id);
+							$clinic_name = $clincterm->getName();
+							$address = $clincterm->get('field_address')->getValue()[0]['value'];
+							$data[$key]['clinic_name'] = $clinic_name;
+							$data[$key]['target_id'] = $valuechild["target_id"];
+							$data[$key]['address'] = $address;
+						}
+					}  else {
+						$data[$name] = $this->loadfields->getFieldValue(
+							$paragraph,
+							$name,
+							$type["type"],
+							$value["target_id"]
+						);
+					}
+				}
+	
+				if ($getParaCount1[$prgTypeId]["count"] != 1) {
+					$response[$prgTypeId] = $data;
+				} else {
+					$response[$prgTypeId] = $data;
+				}
+				unset($data);
+			}
+			
+			//$currentDate = new DrupalDateTime();
+
+			
+			$dates = array();
+			$current_date = new DrupalDateTime();
+			for ($i = 0; $i < 7; $i++) {
+				$dates[$current_date->format('D')] = $current_date->format('d');
+				$current_date->modify('+1 day');
+			}
+			$response['dates'] = $dates;
+
+
+
+			$response['user_id'] = $uid;
+			$response['doctor_type'] = $doctor_type;
+			$search = !empty($request->get('search')) ? $request->get('search'): array();
+
+
 
 
 
@@ -338,12 +417,9 @@ class DoctorProfile extends ControllerBase
 			$response['node_count_faq'] = $filtered_node_count;
 			$response['profile_theme'] = $profile_theme;
 
-
-
-
 		}
 
-
+		$response['username'] = $username;
 		
 		// echo "<pre>";
 		// print_r($response);
