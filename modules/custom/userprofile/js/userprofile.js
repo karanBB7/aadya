@@ -103,24 +103,119 @@ jQuery(document).ready(function($) {
 		$('.current_date_select').removeClass('activedates');
 	});
 
-	$('.current_date_select').on('click',function(){
-		var current_date = $(this).attr('data-date');
-		var target_id = $(this).attr('data-target_id');
-		$('.current_date_select').removeClass('activedates');
-		$(this).addClass('activedates');
-		$.ajax({
-			url: "/linqmd/get_booking_time_slot",
-			method: "POST",
-			cache: false,
-			data:{
-				"target_id":target_id,
-				"current_date":current_date,
-			},
-			success: function (data) {
-				$(".time_slots").html(data.html);
-			}
-		});
+
+
+
+
+
+
+
+
+$(document).on('click', '.current_date_select', function() {
+    var current_date = $(this).attr('data-date');
+    var target_id = $(this).attr('data-target_id');
+    $('.current_date_select').removeClass('activedates date-highlight');
+    $(this).addClass('activedates date-highlight');
+    $.ajax({
+        url: "/linqmd/get_booking_time_slot",
+        method: "POST",
+        cache: false,
+        data: {
+            "target_id": target_id,
+            "current_date": current_date,
+        },
+        success: function (data) {
+            $(".time_slots").html(data.html);
+            setTimeout(hidePassedSlots, 0);
+        }
+    });
+});
+	
+	$(document).ready(function() {
+		hidePassedSlots();
 	});
+
+	function hidePassedSlots() {
+		const now = new Date();
+		const selectedDateElement = $('.current_date_select.activedates');
+		const selectedDate = selectedDateElement.data('date');
+		const selectedMonth = selectedDateElement.data('month');
+		const selectedYear = selectedDateElement.data('year');
+		const selectedDateTime = new Date(selectedYear, selectedMonth, selectedDate);
+	
+		const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+		const selectedDateOnly = new Date(selectedDateTime.getFullYear(), selectedDateTime.getMonth(), selectedDateTime.getDate());
+	
+		if (selectedDateOnly.getTime() === nowDate.getTime()) {
+			const currentHour = now.getHours();
+			if (currentHour >= 12) {
+				$('.morning-slot').addClass('slot-section-hidden');
+			}
+	
+			if (currentHour >= 16) {
+				$('.afternoon-slot').addClass('slot-section-hidden');
+			}
+	
+			$('.ap-book').each(function() {
+				const slotTime = $(this).data('time-slot');
+				const [time, period] = slotTime.split(' ');
+				let [hours, minutes] = time.split(':');
+				hours = parseInt(hours);
+				minutes = parseInt(minutes);
+	
+				if (period.toLowerCase() === 'pm' && hours !== 12) {
+					hours += 12;
+				} else if (period.toLowerCase() === 'am' && hours === 12) {
+					hours = 0;
+				}
+	
+				const slotDateTime = new Date(selectedYear, selectedMonth, selectedDate, hours, minutes);
+	
+				if (slotDateTime <= now) {
+					$(this).hide();
+				} else {
+					$(this).show();
+				}
+			});
+		} else {
+			$('.ap-book').show();
+			$('.morning-slot, .afternoon-slot, .evening-slot').removeClass('slot-section-hidden');
+		}
+	
+		updateSlotSection('morning-slot', 0, 11);
+		updateSlotSection('afternoon-slot', 12, 15);
+		updateSlotSection('evening-slot', 16, 23);
+	}
+	
+	function updateSlotSection(sectionClass, startHour, endHour) {
+		const sectionElement = $(`.${sectionClass}`);
+		const visibleSlots = sectionElement.find('.ap-book:visible').filter(function() {
+			const slotTime = $(this).data('time-slot');
+			const [time, period] = slotTime.split(' ');
+			let [hours, ] = time.split(':');
+			hours = parseInt(hours);
+			if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
+			if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
+			return hours >= startHour && hours <= endHour;
+		});
+	
+		const count = visibleSlots.length;
+		if (count === 0) {
+			sectionElement.addClass('slot-section-hidden');
+		} else {
+			sectionElement.removeClass('slot-section-hidden');
+			const headingElement = sectionElement.find('.fs-3 b');
+			const sectionName = headingElement.text().split('(')[0].trim();
+			headingElement.text(`${sectionName} (${count} slots)`);
+		}
+	}
+
+
+
+	
+
+
+
 
 
 	

@@ -1764,6 +1764,29 @@ button:hover{
     background-color: #ffc107 !important;
 }
 
+.slot-section-hidden {
+    display: none !important;
+}
 
 
 
+
+#sec3 .date-highlight {
+    background-color: var(--c3);
+    color: #fff !important;
+}
+
+#sec3 .date-highlight .day,
+#sec3 .date-highlight .date {
+    color: #fff !important;
+}
+
+#p2sec3 .secondtheme .date-highlight {
+    background-color: var(--p2c3);
+    color: #fff !important;
+}
+
+#p2sec3 .secondtheme .date-highlight .day,
+#p2sec3 .secondtheme .date-highlight .date {
+    color: #fff !important;
+}

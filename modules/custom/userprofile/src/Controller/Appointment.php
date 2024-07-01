@@ -144,7 +144,7 @@ class Appointment extends ControllerBase
 		$clinic_name = $clincterm->getName();
 		$field_morning_slots = !empty($paragraph->get('field_morning_slots')->getValue()) ? $paragraph->get('field_morning_slots')->getValue(): '';
 		$morning_slot_count = count($field_morning_slots);
-		$html .='<div class="col-sm-12"><div class="fs-3 pt-5"><b>Morning ('.$morning_slot_count.' slots)</b></div>';
+		$html .='<div class="col-sm-12 morning-slot"><div class="fs-3 pt-5"><b>Morning ('.$morning_slot_count.' slots)</b></div>';
 		foreach($field_morning_slots as $morning_slot){
 			$mr_slot = Term::load($morning_slot['target_id']);
 			if(!empty($unavailability_morning) && in_array($mr_slot->getName(), $unavailability_morning)){
@@ -159,7 +159,7 @@ class Appointment extends ControllerBase
 		$html .='</div>';
 		$field_afternoon_slots = !empty($paragraph->get('field_afternoon_slots')->getValue()) ? $paragraph->get('field_afternoon_slots')->getValue(): '';
 		$afternoon_slot_count = count($field_afternoon_slots);
-		$html .='<div class="col-sm-12"><div class="fs-3 pt-5"><b>After Noon ('.$afternoon_slot_count.' slots)</b></div>';
+		$html .='<div class="col-sm-12 afternoon-slot"><div class="fs-3 pt-5"><b>After Noon ('.$afternoon_slot_count.' slots)</b></div>';
 		foreach($field_afternoon_slots as $afternoon_slot){
 			$after_slot = Term::load($afternoon_slot['target_id']);
 			if(!empty($unavailability_afternoon) && in_array($after_slot->getName(), $unavailability_afternoon)){
@@ -173,7 +173,7 @@ class Appointment extends ControllerBase
 		$html .='</div>';
 		$field_evening_slots = !empty($paragraph->get('field_evening_slots')->getValue()) ? $paragraph->get('field_evening_slots')->getValue(): '';
 		$evening_slot_count = count($field_evening_slots);
-		$html .='<div class="col-sm-12"><div class="fs-3 pt-5"><b>Evening ('.$evening_slot_count.' slots)</b></div>';
+		$html .='<div class="col-sm-12 evening-slot"><div class="fs-3 pt-5"><b>Evening ('.$evening_slot_count.' slots)</b></div>';
 		foreach($field_evening_slots as $evening_slot){
 			$ev_slot = Term::load($evening_slot['target_id']);
 			if(!empty($unavailability_evening) && in_array($ev_slot->getName(), $unavailability_evening)){
