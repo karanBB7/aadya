@@ -54,9 +54,17 @@ class DoctorProfile extends ControllerBase
 		$query->addField('u', 'uid');
 		$query->condition('u.name', $username);
 		$uid = $query->execute()->fetchField();
+
+		if (empty($uid)) {
+			return $this->redirect('userprofile.error_404');
+		}
+
 		if(!empty($uid)){
 			$user = \Drupal\user\Entity\User::load($uid);
 			$para = $user->get("field_paragraphtheme1")->getValue();
+
+			$appointment_type = $user->get("field_type")->getValue();
+
 			$profile_theme = !empty($user->get("field_profile_theme")->getValue()) ? $user->get("field_profile_theme")->getValue()[0]['value'] : '';
 			$getParaCount = $this->loadfields->getCount($para);
 			foreach ($para as $value) {
@@ -185,8 +193,6 @@ class DoctorProfile extends ControllerBase
 			}
 			
 			//$currentDate = new DrupalDateTime();
-
-			
 			$dates = array();
 			$current_date = new DrupalDateTime();
 			for ($i = 0; $i < 7; $i++) {
@@ -194,9 +200,6 @@ class DoctorProfile extends ControllerBase
 				$current_date->modify('+1 day');
 			}
 			$response['dates'] = $dates;
-
-
-
 			$response['user_id'] = $uid;
 			$response['doctor_type'] = $doctor_type;
 			$search = !empty($request->get('search')) ? $request->get('search'): array();
@@ -347,15 +350,46 @@ class DoctorProfile extends ControllerBase
 		// echo "<pre>";
 		// print_r($response);
 
+		$terms2 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('patient_testimonials');
 
-			$terms2 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('patient_testimonials');
+			foreach ($terms2 as $key1 => $term) {
+			  $term_news = Term::load($term->tid);
+			  $term_name = $term_news->getName();
+			  $term_id = $term_news->id();
+
+			  // Retrieve nodes that have this taxonomy term selected
+			  $node_query = \Drupal::entityQuery('node')
+				->condition('status', 1)
+				->condition('type', 'patient_testimonials', '=')
+				->condition('uid', $uid)
+				->condition('field_patientcategory', $term_id, '=')
+				->accessCheck(TRUE);
+
+			  $node_ids = $node_query->execute();
+			  // Load the nodes
+			  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($node_ids);
+
+			  // Add the nodes to the response
+			  $response['patient_testimonialstags'][$key1]['term_name'] = $term_name;
+			  $response['patient_testimonialstags'][$key1]['term_id'] = $term_id;
+			  $response['patient_testimonialstags'][$key1]['nodes'] = [];
+
+				foreach ($nodes as $node) {
+					$response['patient_testimonialstags'][$key1]['nodes'][] = [
+				  		'nid' => $node->id(),
+				  		'title' => $node->getTitle(),
+				  		// Add other node fields as needed
+					];
+			  	}
+			}
+			/*$terms2 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('patient_testimonials');
 			foreach ($terms2 as $key1 => $term) {
 				$term_news = Term::load($term->tid);
 				$term_name = $term_news->getName();
 				$term_id = $term_news->id();
 				$response['patient_testimonialstags'][$key1]['term_name'] = $term_name;
 				$response['patient_testimonialstags'][$key1]['term_id'] = $term_id;
-			}
+			}*/
 
 			$filtered_node_count = count($response['patient_testimonials']);
 			$response['testimonialuid'] = $uid;
@@ -400,15 +434,46 @@ class DoctorProfile extends ControllerBase
 				}
 			}
 
-			
 			$terms3 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('faq');
+
 			foreach ($terms3 as $key1 => $term) {
-				$term_news = Term::load($term->tid);
-				$term_name = $term_news->getName();
-				$term_id = $term_news->id();
-				$response['faqtags'][$key1]['term_name'] = $term_name;
-				$response['faqtags'][$key1]['term_id'] = $term_id;
+			  $term_news = Term::load($term->tid);
+			  $term_name = $term_news->getName();
+			  $term_id = $term_news->id();
+
+			  // Retrieve nodes that have this taxonomy term selected
+			  $node_query = \Drupal::entityQuery('node')
+				->condition('status', 1)
+				->condition('uid', $uid)
+				->condition('type', 'faq', '=')
+				->condition('field_faqcategory', $term_id, '=')
+				->accessCheck(TRUE);
+
+			  $node_ids = $node_query->execute();
+			  // Load the nodes
+			  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($node_ids);
+
+			  // Add the nodes to the response
+			  $response['faqtags'][$key1]['term_name'] = $term_name;
+			  $response['faqtags'][$key1]['term_id'] = $term_id;
+			  $response['faqtags'][$key1]['nodes'] = [];
+
+				foreach ($nodes as $node) {
+					$response['faqtags'][$key1]['nodes'][] = [
+				  		'nid' => $node->id(),
+				  		'title' => $node->getTitle(),
+				  		// Add other node fields as needed
+					];
+			  	}
 			}
+			// $terms3 = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('faq');
+			// foreach ($terms3 as $key1 => $term) {
+			// 	$term_news = Term::load($term->tid);
+			// 	$term_name = $term_news->getName();
+			// 	$term_id = $term_news->id();
+			// 	$response['faqtags'][$key1]['term_name'] = $term_name;
+			// 	$response['faqtags'][$key1]['term_id'] = $term_id;
+			// }
 
 
 			
@@ -416,6 +481,8 @@ class DoctorProfile extends ControllerBase
 			$response['faquid'] = $uid;
 			$response['node_count_faq'] = $filtered_node_count;
 			$response['profile_theme'] = $profile_theme;
+			$type_value = $appointment_type[0]['value'];
+			$response['appointmentType'] = $type_value;
 
 		}
 
@@ -429,8 +496,20 @@ class DoctorProfile extends ControllerBase
 			'#theme' => 'profile_doctor_template',
 			'#arr_data' => $response,
 		);
+
+
+
 	}
 	
+
+		public function notfound() {
+		return [
+			'#theme' => 'error_page',
+			'#arr_data' => [
+				'message' => 'The requested doctor profile was not found.',
+			],
+		];
+	}
 
 
 }

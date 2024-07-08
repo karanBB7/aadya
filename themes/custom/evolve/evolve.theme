@@ -23,9 +23,19 @@ function evolve_preprocess_node(&$variables) {
 	}
 	if ($node instanceof \Drupal\node\NodeInterface) {
 		if($node->getType() == 'article'){
+			$currentNode = Node::load($node_id);
+			$tags = $currentNode->get('field_tags')->getValue();
+			$tag_arr = [];
+			if(!empty($tags)){
+				foreach($tags as $value){
+					$tag_arr[] = $value['target_id'];
+				}
+			}
+
 			$query = \Drupal::entityQuery("node");
 			$query->condition("type", "article");
 			$query->condition("nid", $node_id,'!=');
+			//$query->condition('field_tags.target_id', $tag_arr);
 			$query->sort('created', 'DESC');
 			$query->accessCheck(TRUE);
 			$results = $query->execute();
@@ -36,14 +46,44 @@ function evolve_preprocess_node(&$variables) {
 				$author = !empty($val->get("field_author")->getValue()) ? $val->get("field_author")->getValue()[0]['value'] : '';
 				$short_description = !empty($val->get("field_short_description")->getValue()) ? $val->get("field_short_description")->getValue()[0]['value'] : '';
 				$image = !empty($val->get("field_image")->getValue()) ? $val->get("field_image")->getValue()[0]['target_id'] : '';
-				$article_img = \Drupal\file\Entity\File::load($image)->createFileUrl();
+				if(!empty($image)){
+					$article_img = \Drupal\file\Entity\File::load($image)->createFileUrl();
+
+				}
 				$url_alias = Url::fromRoute('entity.node.canonical', ['node' => $val->id()])->toString();
-				$blog_might[$key]['title'] = $title;
-				$blog_might[$key]['author'] = $author;
-				$blog_might[$key]['url_alias'] = $url_alias;
-				$blog_might[$key]['article_img'] = $article_img;
+				$blog_might[$key]['title'] = !empty($title) ? $title : '';
+				$blog_might[$key]['author'] = !empty($author) ? $author : '';
+				$blog_might[$key]['url_alias'] = !empty($url_alias) ? $url_alias : '';
+				$blog_might[$key]['article_img'] = !empty($article_img) ? $article_img : '';
+			}
+
+			$entityTypeManager = \Drupal::service('entity_type.manager');
+
+			  // Load comments associated with the node.
+			$query = $entityTypeManager->getStorage('comment')->getQuery();
+			$query->condition('entity_type', 'node')
+			    ->condition('entity_id', $node_id)
+			    ->condition('status', \Drupal\comment\Entity\Comment::PUBLISHED);
+			  // Execute the query and fetch comment IDs.
+			$query->accessCheck(TRUE);
+			$comment_ids = $query->execute();
+			$comments = $entityTypeManager->getStorage('comment')->loadMultiple($comment_ids);
+			$comments_info = [];
+			foreach ($comments as $comment) {
+			    $name = $comment->get('field_fullname')->value;
+			    $email = $comment->get('field_email_address')->value;
+			    $comment_body = $comment->get('comment_body')->value;
+			    $created = $comment->getCreatedTime();
+
+			    $comments_info[] = [
+			      'name' => $name,
+			      'email' => $email,
+			      'comment_body' => $comment_body,
+			      'created' => date('F d,Y',$created),
+			    ];
 			}
 			$variables['blog_might'] = $blog_might;
+			$variables['comments_info'] = $comments_info;
 		}
 	}
 	

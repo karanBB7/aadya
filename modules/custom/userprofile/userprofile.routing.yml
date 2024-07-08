@@ -109,7 +109,7 @@ userprofile.getallblog:
 userprofile.get_booking_time_slot:
   path: '/get_booking_time_slot'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\Appointment::getBookingTimeSlot'
+    _controller: '\Drupal\userprofile\Controller\UserProfile::getBookingTimeSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -119,7 +119,7 @@ userprofile.get_booking_time_slot:
 userprofile.booking_appointment:
   path: '/booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\Appointment::bookingAppointmentSlot'
+    _controller: '\Drupal\userprofile\Controller\UserProfile::bookingAppointmentSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -129,7 +129,7 @@ userprofile.booking_appointment:
 userprofile.otp_verify_booking_appointment:
   path: '/otp-verify-booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\Appointment::OtpVerifyBookingAppointment'
+    _controller: '\Drupal\userprofile\Controller\UserProfile::OtpVerifyBookingAppointment'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -149,7 +149,7 @@ userprofile.webhook_appointment:
 userprofile.book_appointment_data:
   path: '/admin/book-appointment-data'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\Appointment::bookAppointmentData'
+    _controller: '\Drupal\userprofile\Controller\UserProfile::bookAppointmentData'
     _title: 'Book Appointment Data'
   requirements:
     _permission: 'administer site configuration'
@@ -159,7 +159,7 @@ userprofile.book_appointment_data:
 userprofile.generate_otp:
   path: '/generate-otp'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\Appointment::generateOtp'
+    _controller: '\Drupal\userprofile\Controller\UserProfile::generateOtp'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -231,6 +231,16 @@ userprofile.comment_save:
   defaults:
     _controller: '\Drupal\userprofile\Controller\UserProfile::commentSave'
     _title: 'Doctor Dashboard'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.error_404:
+  path: '/error-404'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\DoctorProfile::notfound'
+    _title: '404 Not Found'
   requirements:
     _permission: 'access content'
   options:

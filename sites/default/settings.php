@@ -891,7 +891,7 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'dempdrupal2',
+  'database' => 'linqmd',
   'username' => 'root',
   'password' => '',
   'prefix' => '',

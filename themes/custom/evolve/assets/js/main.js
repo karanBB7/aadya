@@ -52,27 +52,32 @@ $('.docslider').owlCarousel({
         }
     });
 }
-  if($(".expslider").length > 0){
-    $('.expslider').owlCarousel({
-        center: false,
-        loop: false,
-        margin: 5,
-        responsive: {
-            0: {
-                items: 1,
-                nav:true
-            },
-             600:{
-                items:2,
-                nav:true
-            },
-            1000:{
-                items:2,
-                nav:true
-            }
-        }
-    });
-}
+
+
+
+//   if($(".expslider").length > 0){
+//     $('.expslider').owlCarousel({
+//         center: false,
+//         loop: true,
+//         margin: 5,
+//         responsive: {
+//             0: {
+//                 items: 1,
+//                 nav:true
+//             },
+//              600:{
+//                 items:3,
+//                 nav:true
+//             },
+//             1000:{
+//                 items:3,
+//                 nav:true
+//             }
+//         }
+//     });
+// }
+
+
   if($(".blogslider").length > 0){
     $('.blogslider').owlCarousel({
         center: true,

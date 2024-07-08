@@ -1,5 +1,4 @@
 userprofile:
-  version: 3.9
   js:
     js/userprofile.js: {}
   dependencies:

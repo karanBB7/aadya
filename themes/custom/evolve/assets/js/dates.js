@@ -8,6 +8,7 @@ let currentViewDate = new Date();
 $(document).ready(function() {
     loadMonthsCarousel();
     loadDatesCarousel();
+    hidePassedSlots();
 });
 
 function loadMonthsCarousel() {
@@ -45,19 +46,19 @@ function loadDatesCarousel() {
 
         const today = new Date();
         let startDate = new Date(Math.max(today, currentViewDate));
-
         for (let i = 0; i < 7; i++) {
             const date = new Date(startDate);
             date.setDate(startDate.getDate() + i);
-
             const dateWrapper = $('<div class="item date-wrapper current_date_select text-center"></div>');
-            const dayElement = $('<div class="day text-center"></div>').text(date.toLocaleString('en-us', {
-                weekday: 'short'
-            }).toUpperCase());
-            const dateElement = $('<div class="date text-center"></div>').text(date.getDate());
+           
+            const dayElement = $('<div class="day text-center"></div>').html(`
+                <span class="day-month">${date.toLocaleString('en-us', { weekday: 'short' }).toUpperCase()} / ${date.toLocaleString('en-us', { month: 'short' }).toUpperCase()}</span><br>
+                <span class="date-number">${date.getDate()}</span>
+            `);
+            const dateElement = $('<div class="date text-center"></div>').append(dayElement);
 
             dateWrapper.attr('data-date', date.getDate());
-            dateWrapper.attr('data-month', date.getMonth());
+            dateWrapper.attr('data-month', date.getMonth() + 1);
             dateWrapper.attr('data-year', date.getFullYear());
             dateWrapper.attr('data-target_id', targetId);
 
@@ -74,7 +75,7 @@ function loadDatesCarousel() {
             loop: false,
             margin: 10,
             nav: true,
-            navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+            navText: ['<i class="fas fa-chevron-left owl-left"></i>', '<i class="owl-right fas fa-chevron-right"></i>'],
             items: 7,
             dots: false,
             responsive: {
@@ -108,7 +109,7 @@ function addCustomNavigation(event) {
 
 function updateDates(offset) {
     const today = new Date();
-    currentViewDate.setDate(currentViewDate.getDate() + offset * 7);
+    currentViewDate.setDate(currentViewDate.getDate() + offset);
     if (currentViewDate < today) {
         currentViewDate = new Date(today);
     }
@@ -119,58 +120,27 @@ function updateMonthCarousel() {
     $('.monthslider2').trigger('to.owl.carousel', [currentViewDate.getMonth(), 300]);
 }
 
-function attachDateSelectListener() {
-    $(document).off('click', '.current_date_select').on('click', '.current_date_select', function() {
-        var current_date = $(this).attr('data-date');
-        var target_id = $(this).attr('data-target_id');
-        $('.current_date_select').removeClass('activedates date-highlight');
-        $(this).addClass('activedates date-highlight');
-        $.ajax({
-            url: "/linqmd/get_booking_time_slot",
-            method: "POST",
-            cache: false,
-            data: {
-                "target_id": target_id,
-                "current_date": current_date,
-            },
-            success: function (data) {
-                $(".time_slots").html(data.html);
-                setTimeout(hidePassedSlots, 0);
-            }
-        });
-    });
-}
-
-
-
-
-
-
-
-
-$('.current_date_select').on('click', function() {
-    var current_date = $(this).attr('data-date');
-    var target_id = $(this).attr('data-target_id');
-    $('.current_date_select').removeClass('activedates');
-    $(this).addClass('activedates');
-    $.ajax({
-        url: "/linqmd/get_booking_time_slot",
-        method: "POST",
-        cache: false,
-        data: {
-            "target_id": target_id,
-            "current_date": current_date,
-        },
-        success: function (data) {
-            $(".time_slots").html(data.html);
-            setTimeout(hidePassedSlots, 0);
-        }
-    });
-});
-
-$(document).ready(function() {
-    hidePassedSlots();
-});
+// function attachDateSelectListener() {
+//     $(document).off('click', '.current_date_select').on('click', '.current_date_select', function() {
+//         var current_date = $(this).attr('data-date');
+//         var target_id = $(this).attr('data-target_id');
+//         $('.current_date_select').removeClass('activedates date-highlight');
+//         $(this).addClass('activedates date-highlight');
+//         $.ajax({
+//             url: "/get_booking_time_slot",
+//             method: "POST",
+//             cache: false,
+//             data: {
+//                 "target_id": target_id,
+//                 "current_date": current_date,
+//             },
+//             success: function (data) {
+//                 $(".time_slots").html(data.html);
+//                 setTimeout(hidePassedSlots, 0);
+//             }
+//         });
+//     });
+// }
 
 function hidePassedSlots() {
     const now = new Date();
@@ -246,4 +216,3 @@ function updateSlotSection(sectionClass, startHour, endHour) {
         headingElement.text(`${sectionName} (${count} slots)`);
     }
 }
-

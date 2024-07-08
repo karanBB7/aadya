@@ -83,7 +83,7 @@
 
                     <div class="col-sm-5 d-none d-sm-block">
     
-                              <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank">
+                              <a href="https://api.whatsapp.com/send?phone=919113843892&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank">
                             <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button>
                             </a>
                         <p class="exp mt-3 col-10">{{ arr_data.profile_theme1.field_experiences}}</p>
@@ -117,7 +117,7 @@
 
                     <div class="sm-fl d-block d-sm-none" style="background:var(--c1);">
                             <button class="btn appbtn mb-2 order-lg-2 order-sm-2 ">Book an appointment</button>
-                            <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
+                            <a href="https://api.whatsapp.com/send?phone=919113843892&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
 
                         </div>
                 </div>
@@ -184,7 +184,7 @@
 
                                 <div class="col-4">
                                     <button class="btn appbtnred   float-end">Book an appointment</button>
-                                    <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{arr_data.username}}" target="_blank"><button class="whatsappbtn btn  float-end"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
+                                    <a href="https://api.whatsapp.com/send?phone=919113843892&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank"><button class="whatsappbtn btn  float-end"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
                                 </div>
 
 
@@ -216,7 +216,7 @@
                         </p>
                     </div>
                     <button class="btn appbtnred mx-auto d-block">Book an appointment</button>
-                    <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.username}}" target="_blank">
+                    <a href="https://api.whatsapp.com/send?phone=919113843892&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank">
                     
                     <button class="whatsappbtn btn mx-auto d-block"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
                     
@@ -328,19 +328,20 @@
 
             {% if arr_data.profile_theme1.field_awards_honors %}
                 <li class="nav-item">
-                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#awandh"> Awards & Honors</a>
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#awandh"> Awards & Publication</a>
                 </li>
             {% endif %}
+{# 
             {% if arr_data.profile_theme1.field_publication %}
                 <li class="nav-item">
                     <a class="nav-link fw-bold" data-bs-toggle="pill" href="#publication">Publication</a>
                 </li>
-            {% endif %}
+            {% endif %} #}
 
 
             {% if arr_data.profile_theme1.field_education_in_details %}
                 <li class="nav-item">
-                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#eductaion">Education</a>
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#eductaion">Qualifiction</a>
                 </li>
             {% endif %}
            
@@ -411,7 +412,7 @@
             <div id="summary" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
-                        <div class="overview-content">{{arr_data.profile_theme1.field_expertise_summary|raw}}</div>                       
+                        <div class="overview-contents">{{arr_data.profile_theme1.field_expertise_summary|raw}}</div>                       
                     </div>
                     
                 </div>
@@ -420,20 +421,20 @@
             <div id="awandh" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
-                        <div class="overview-content">{{arr_data.profile_theme1.field_awards_honors|raw}}</div>                       
+                        <div class="overview-contents">{{arr_data.profile_theme1.field_awards_honors|raw}}</div>                       
                     </div>
                     
                 </div>
             </div>
 
-            <div id="publication" class="container tab-pane fade pt-4">
+            {# <div id="publication" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
                         <div class="overview-content">{{arr_data.profile_theme1.field_publication|raw}}</div>                      
                     </div>
                    
                 </div>
-            </div>
+            </div> #}
 
 
 
@@ -448,9 +449,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 
@@ -465,114 +463,127 @@
 
 
 
-
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class="p-5 pb-3">
 	{% if arr_data.profile_theme == 'theme2' %}
 		<div class="secondtheme">
 	{% endif %}
 
 
-	<div class="container">
-		<h2>Book Appointment</h2>
-		<ul class="nav nav-pills">
-		{% set i  = 1 %}
-			{% for k, clinic in arr_data.doctor_clinic_appointment %}
-				<li class="nav-item book_appointment">
-					<a class="nav-link {{ i ==1 ? 'active' : ''}}" data-bs-toggle="pill" href="#{{ k }}" data-target_id = "{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
-					</li>
-					{% set i = i+1 %}
-			{% endfor %}
-		</ul>
+<div class="container">
+    <h2>Book Appointment</h2>
+    <ul class="nav nav-pills">
+    {% set i = 1 %}
+        {% for k, clinic in arr_data.doctor_clinic_appointment %}
+            <li class="nav-item book_appointment">
+                <a class="nav-link {{ i == 1 ? 'active' : ''}}" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
+            </li>
+            {% set i = i + 1 %}
+        {% endfor %}
+    </ul>
 
+    <div class="tab-content">
+        <div class="col-sm-3 pt-4">
+            <div id="month-carousel" class="owl-carousel owl-theme monthslider2"></div>
+        </div>
+        {% for k, clinic in arr_data.doctor_clinic_appointment %}
+            <div id="{{k}}" class="tab-pane {{ k == 0 ? 'active' : ''}}"><br>
+                <div id="brain" class="tab-pane active"><br>
+                    <div class="col-lg-12 col-sm-12 pt-4">
+                        <div class="row">
+                            <div class="owl-carousel dateslider" data-target_id="{{ clinic.target_id }}">
+                                <!-- Dates will be populated here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
 
-			<div class="tab-content">
-			{% for k, clinic in arr_data.doctor_clinic_appointment %}
-				<div id="{{k}}" class=" tab-pane {{ k ==0 ? 'active' : ''}}"><br>
-					<div id="brain" class=" tab-pane active"><br>
-						<div class="col-lg-12 col-sm-12 pt-4">
-							<div class="row">
+                    <div class="d-flex sm-block">
+                        <div class="col-sm-1 pt-3">
+                            <div class="location-wrapper">
+                                <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot"></i></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 pt-2">
+                            <p class="fw-400 fs-5 pt-4"><b>{{clinic.address}}</b></p>
+                        </div>
+                    </div>
 
-								<div class="owl-carousel dateslider">
-								{% for k, date in arr_data.dates %}
-									<div class="date-wrapper current_date_select" data-date="{{date}}" data-target_id = "{{ clinic.target_id }}">
-										<div class="day text-center">{{k}}</div>
-										<div class="date text-center">{{date}}</div>
-									</div>
-								{% endfor %}
-								</div>
-
-							</div>
-						</div>
-
-
-						<div class="d-flex sm-block">
-							<div class="col-sm-1 pt-3">
-								<div class="location-wrapper">
-									<p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot "></i></p>
-								</div>
-							</div>
-								<div class="col-lg-8  pt-1">
-									<p class="fw-400 fs-5"><b>{{clinic.address}}</b></p>
-								</div>
-						</div>
-
-						<div class="row time_slots">
-							
-						</div>
-						
-					</div>
-				</div>
-			{% endfor %}
-			</div>
-	</div>
+                    <div class="row time_slots">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 	
 <div class="container">
     <div id="overlay" class="overlay"></div>
-<div id="bookAppointmentPopup" class="popup">
-	<form name="booking_form" id="booking_form" method="post">
-		<h2>Book Appointment</h2>
-		<p>Please fill in details to confirm an appointment with Dr. Murali Mohan on 21/06 at 2:30PM.</p>
-		<div class="otp_msg"></div>
-		<label for="mobile">Your 10 digit mobile number*</label>
-		<div style="display: flex;">
-			<input type="number" id="phonenumber" name="phonenumber" minlength="10" maxlength="10">
-			<button type="button" id="otp" class="generate_otp" data-type="1">Generate OTP</button>
-			<button type="button" id="otp" class="resend_otp" data-type="2" style="display: none;">Resend OTP</button>
-		</div>
-		<label id="phonenumber-error" class="error" for="phonenumber"></label><br/>
-		<div class="otp_cls" style="display: none;">
-			<label for="otp">Please enter the 4 digit OTP received as SMS</label>
-			<input type="text" name="otp" id="verify_otp">
-			<div class="otp_msg1"></div>
-			<label id="verify_otp-error" class="error" for="verify_otp"></label>
-		</div>
-		<label for="pname">Patient Name</label>
-		<input type="text" id="fullname" name="fullname" placeholder="Name">
-		<div class="checkbox-cont">
-			<input type="checkbox" id="first-time" name="first-time" style="width: auto">
-			<label for="first-time">Visiting for the First Time?</label>
-		</div>
-		<label for="reason">Reason for Doctor Visit</label>
-		<input type="text" name="reason" id="reason">
-		<div class="checkbox-cont">
-			<input type="checkbox" id="terms" name="terms" style="width: auto" value="1">
-			<label for="terms">I agree to receive calls and messages from linqMD regarding this appointment</label>
-		</div>
-		<label id="terms-error" class="error" for="terms"></label>
-		<div style="display: flex;">
-			<input type="hidden" id="clinicname" name="clinicname" value="">
-			<input type="hidden" id="clinic_target_id" name="clinic_target_id" value="">
-			<input type="hidden" id="bookingtimeslot" name="bookingtimeslot" value="">
-			<input type="hidden" id="bookingtime" name="bookingtime" value="">
-			<input type="hidden" id="booking_date" name="booking_date" value="">
-			<input type="hidden" id="user_id" name="user_id" value="{{ arr_data.user_id }}">
-			<input type="hidden" id="doctor_type" name="doctor_type" value="{{ arr_data.doctor_type }}">
-			<button type="submit" class="btn btn-primary" name="otpdubmit" id="bookAppointmentButton">Book Appointment</button>
-			<input type="button" id="otp" class="closePop btn btn-danger" value="Cancel">
-		</div>
-	</form>
-</div>
+    <div id="bookAppointmentPopup" class="popup">
+        <form name="booking_form" id="booking_form" method="post">
+            <h2>Book Appointment</h2> 
+
+            <span class="appointmentType" data-field-type="{{arr_data.appointmentType}}" style="display:none;"></span>
+            {% if arr_data.appointmentType == 'request' %}
+            
+            <p>Please fill in details to Request an appointment with <b>{{ arr_data.profile_theme1.field_name }}</b> on <b><span class="selecteddate"></span></b> at <b><span class="selectedtimename"></span> <span class="selectedtime"></span></b>.</p>
+            {% else %}
+            <p>Please fill in details to Book an appointment with {{ arr_data.profile_theme1.field_name }} on <span class="selecteddate"></span> at <span class="selectedtimename"></span> <span class="selectedtime"></span>.</p>
+            {% endif %}
+
+            <div class="otp_msg"></div>
+            <label for="mobile">Your 10 digit mobile number*</label>
+
+            <div style="display: flex;">
+                <input type="tel" class="form-control mt-2 p-2" id="phonenumber" name="phonenumber" pattern="[0-9]{10}" placeholder="Please enter your phone number..." required>
+
+                <button type="button" id="generate_otp" data-field-name="{{ arr_data.profile_theme1.field_name }}" class="col-sm-4 generate_otp btn btn-primary mx-2 mt-2 p-2" data-type="1" disabled>Generate OTP</button>
+
+                <button type="button" id="resend_otp" class="resend_otp btn btn-primary mx-2 mt-2 p-2" data-type="2" style="display: none;">Resend OTP</button>
+
+            </div>
+            <span id="phonenumber-error" class="error-message"></span>
+
+            <label id="phonenumber-error" class="error" for="phonenumber"></label><br/>
+            <div class="otp_cls" style="display: none;">
+                <label for="otp">Please enter the 4 digit OTP received as SMS</label>
+                <div style="display: flex; margin-bottom: 10px;">
+                    <input class="form-control p-2" type="text" name="otp" id="verify_otp">
+                    <button class="form-control p-2 btn btn-primary" type="button" id="verify_otp_btn" style="margin-left: 10px;">Verify OTP</button>
+                </div>
+                <div class="otp_msg1"></div>
+                <label id="verify_otp-error" class="error" for="verify_otp"></label>
+            </div>
+            <div id="additional_fields" style="display: none;">
+                <label for="pname">Patient Name</label>
+                <input class="form-control p-2" type="text" id="fullname" name="fullname" placeholder="Name">
+                <div class="checkbox-cont">
+                    <input class="" type="checkbox" id="first-time" name="first-time" style="width: auto">
+                    <label for="first-time">Visiting for the First Time?</label>
+                </div>
+                <label for="reason">Reason for Doctor Visit</label>
+                <input class="form-control" type="text" name="reason" id="reason" placeholder="Please specify your reason in short">
+                <div class="checkbox-cont">
+                    <input class="" type="checkbox" id="terms" name="terms" style="width: auto" value="1">
+                    <label for="terms" class="pt-1">I agree to receive calls and messages from linqMD regarding this appointment</label>
+                </div>
+                <label id="terms-error" class="error" for="terms"></label>
+                <div style="display: flex;">
+                    <input class="form-control p-2" type="hidden" id="clinicname" name="clinicname" value="">
+                    <input class="form-control p-2" type="hidden" id="clinic_target_id" name="clinic_target_id" value="">
+                    <input class="form-control p-2" type="hidden" id="bookingtimeslot" name="bookingtimeslot" value="">
+                    <input class="form-control p-2" type="hidden" id="bookingtime" name="bookingtime" value="">
+                    <input class="form-control p-2" type="hidden" id="booking_date" name="booking_date" value="">
+                    <input class="form-control p-2" type="hidden" id="user_id" name="user_id" value="{{ arr_data.user_id }}">
+                    <input class="form-control p-2" type="hidden" id="doctor_type" name="doctor_type" value="{{ arr_data.appointmentType }}">
+                    <button type="submit" class="btn btn-primary" name="otpdubmit" id="bookAppointmentButton">Book Appointment</button>
+                </div>
+            </div>
+                <div class="d-grid">
+                  <input type="button" id="cancel_btn" class="mt-3 closePop btn btn-danger btn-block close-btn mx-center valid" value="Cancel" aria-invalid="false">
+                </div>
+
+        </form>
+    </div>
 </div>
 
 	<div id="popupForm1" class="popup1">
@@ -586,7 +597,6 @@
 	{% endif %}
 
 </section>
-
 
 
 
@@ -626,7 +636,7 @@
         <div class="owl-carousel expslider ">
 
             {% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
-            <div class="col-lg-12 col-md-6 col-sm-4 p-5">
+            <div class="col-lg-12  p-5">
                 <div class="p-4 shadow" style="border-radius: 10px;" >
                 <div class="exp-imag-wrapper">
                     <div class="col-sm-12 mx-auto">
@@ -698,7 +708,7 @@
                     </div>
 
 
-                    <a href="/linqmd/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" >
+                    <a href="/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" >
                          <button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
                     </a>
 
@@ -726,7 +736,7 @@
                                      <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
                                           {{ news_article.body|raw }}
                                       </div>
-                                      <a href="/linqmd/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" traget="_blank"><button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button></a>
+                                      <a href="/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" traget="_blank"><button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button></a>
 
                                 </div>
                             </div>
@@ -808,7 +818,9 @@
 
                 <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.testimonialuid}}">All Patient Experiences</button>
                 {% for key,categorey in arr_data.patient_testimonialstags %}
-                    <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.testimonialuid}}">{{ categorey. term_name}} </button>
+                    {% if categorey.nodes is not empty %}
+                        <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.testimonialuid}}">{{ categorey. term_name}} </button>
+                    {% endif %}
                 {% endfor %}
 
             </div>
@@ -886,7 +898,9 @@
         <div class="col-sm-12 border border-dark-subtle rounded p-3 mt-5">
             <button class="exp rounded-pill p-3 me-4 mt-3 faq-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.faquid}}">All</button>
             {% for key,categorey in arr_data.faqtags %}
-					<button class="exp rounded-pill p-3 me-4 mt-3 faq-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.faquid}}">{{ categorey.term_name}} </button>
+					{% if categorey.nodes is not empty %}
+                    <button class="exp rounded-pill p-3 me-4 mt-3 faq-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.faquid}}">{{ categorey.term_name}} </button>
+                {% endif %}
 			{% endfor %}
         </div>
 
@@ -954,6 +968,30 @@
         </div>
 <p class="text-center p-2 fs-6 pb-0">Copyright © 2024, Linqmd. All rights reserved.</p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('.expslider').owlCarousel({
+        center: false,
+        loop: true,
+        margin: 5,
+        responsive: {
+            0: {
+                items: 1,
+                nav:true
+            },
+             600:{
+                items:3,
+                nav:true
+            },
+            1000:{
+                items:3,
+                nav:true
+            }
+        }
+    });
+});
+
+</script>
 
 
 

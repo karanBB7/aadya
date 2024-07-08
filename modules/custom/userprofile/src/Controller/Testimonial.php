@@ -238,8 +238,12 @@ class Testimonial extends ControllerBase
 		global $base_url;
 		$cat_id = !empty($request->get('cat_id')) ? $request->get('cat_id'): array();
 		$username = $request->get('username');
-		$user = \Drupal\user\Entity\User::load($username);
-		$uid = $user->id();
+		if(!empty($username )){
+			$user = \Drupal\user\Entity\User::load($username);
+			$uid = $user->id();
+		}else{
+			$uid = \Drupal::currentUser()->id();
+		}
 		$ea_query = \Drupal::entityQuery('node')
 			->range(0, 6)
 			->condition('status', 1)

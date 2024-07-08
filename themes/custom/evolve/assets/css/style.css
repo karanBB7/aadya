@@ -353,36 +353,36 @@ a{
     transition: .5s;
 }
 
-#sec3 .date {
+
+#sec3 .date-number {
     font-size: 1.8em;
     font-weight: bolder;
     color: var(--c3);
+    transition: color .5s; 
 }
 
-#sec3 .day {
+#sec3 .day-month {
     font-size: 13px;
     font-weight: 400;
     color: var(--c4);
+    transition: color .5s; 
 }
 
-#sec3 .date-wrapper:hover > .day {
-    color: var(--c1);
-
+#sec3 .date-wrapper:hover {
+    background-color: var(--c3);
 }
 
-#sec3 .date-wrapper:hover > .date {
-    color: var(--c1);
+#sec3 .date-wrapper:hover .date-number {
+    color: var(--c1) !important;
+}
 
+#sec3 .date-wrapper:hover .day-month {
+    color: var(--c1) !important;
 }
 
 #sec3 .month-wrapper{
     background: var(--c3);
     color: var(--c1)!important;
-}
-
-#sec3 .date-wrapper:hover {
-    background-color: var(--c3);
-    transition: .5s;
 }
 
 
@@ -466,7 +466,7 @@ a{
     width: 22rem;
     height: 13rem;
 }
-.otp-form input {
+/* .otp-form input {
     display: block;
     margin: 10px 0;
     padding: 10px;
@@ -479,7 +479,7 @@ a{
     color: #fff;
     border: none;
     cursor: pointer;
-}
+} */
 
 .popup {
     display: none;
@@ -493,20 +493,8 @@ a{
     z-index: 1000;
     width: 36rem;
 }
-.popup input {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    width: 60%;
-    box-sizing: border-box;
-}
-.popup button {
-    padding: 10px 20px;
-    background: #007BFF;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
+
+
 #otp {
     padding: 0;
     height: 3rem;
@@ -1096,27 +1084,29 @@ button:hover{
     transition: .5s;
 }
 
-#p2sec3 .secondtheme .date {
+#p2sec3 .secondtheme .date-number {
     font-size: 1.8em;
     font-weight: bolder;
     color: var(--p2c3);
+    transition: color .5s; 
 }
 
-#p2sec3 .secondtheme .day {
+#p2sec3 .secondtheme .day-month {
     font-size: 13px;
     font-weight: 400;
     color: var(--p2c3);
+    transition: color .5s; 
 }
 
-#p2sec3 .secondtheme .date-wrapper:hover > .day {
+
+#p2sec3 .secondtheme .date-wrapper:hover .day-month {
     color: var(--c1);
-
 }
 
-#p2sec3 .secondtheme .date-wrapper:hover > .date {
+#p2sec3 .secondtheme .date-wrapper:hover .date-number {
     color: var(--c1);
-
 }
+
 
 
 #p2sec3 .secondtheme .date-wrapper:hover {
@@ -1538,7 +1528,7 @@ button:hover{
 
 .about-wrap{
     width: 100%;
-    height:43vh;
+    height:50vh;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -1708,7 +1698,9 @@ button:hover{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
-.otp_msg,.otp_msg1{color: green;font-weight: bold;}
+
+
+/* .otp_msg,.otp_msg1{color: green;font-weight: bold;} */
 
 /* .patient .owl-prev, .owl-next {
 	position: absolute;
@@ -1739,29 +1731,53 @@ button:hover{
 
 
 
-  .monthslider2 .owl-prev, .owl-next{
-    font-size: 50px !important;
-}
 
-.dateslider2 .owl-prev, .owl-next{
-    
-   cursor: pointer;
-}
 
-.dateslider2 .owl-prev{
-   font-size: 30px !important;
-   left: -20px;
-   color:var(--c2)!important;
-}
 
-.dateslider2 .owl-next{
-   font-size: 30px !important;
-   right: -20px;
-   color:var(--c2)!important;
-}
 
+
+
+
+
+  .monthslider2 .owl-prev, 
+  .monthslider2 .owl-next {
+      font-size: 25px !important;
+      cursor: pointer;
+      color: var(--c2) !important;
+  }
+  
+  .dateslider .owl-prev,   .monthslider2 .owl-prev{
+      left: -20px;
+  }
+  
+  .dateslider .owl-next,   .monthslider2 .owl-next {
+      right: -20px;
+  }
+
+  .owl-left, .owl-right{
+    font-size: 20px !important;
+  }
+
+  /* .day-month{
+    font-size: 0.6em;
+  }
+  
+  .date-number{
+    font-size: 1.2em;
+  } */
+
+
+
+
+
+  
 .highlight-today {
     background-color: #ffc107 !important;
+}
+
+.highlight-today .day-month,
+.highlight-today .date-number {
+    color: #fff !important;
 }
 
 .slot-section-hidden {
@@ -1776,8 +1792,8 @@ button:hover{
     color: #fff !important;
 }
 
-#sec3 .date-highlight .day,
-#sec3 .date-highlight .date {
+#sec3 .date-highlight .day-month,
+#sec3 .date-highlight .date-number {
     color: #fff !important;
 }
 
@@ -1789,4 +1805,22 @@ button:hover{
 #p2sec3 .secondtheme .date-highlight .day,
 #p2sec3 .secondtheme .date-highlight .date {
     color: #fff !important;
+}
+
+
+
+
+
+.btn-resize{
+    width: 100%;
+    height: 40px;
+}
+
+.error-message {
+    color: red;
+    display: block;
+    margin-top: 5px;
+}
+.success-message {
+    color: green;
 }

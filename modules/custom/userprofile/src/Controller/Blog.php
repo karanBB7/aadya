@@ -87,9 +87,37 @@ class Blog extends ControllerBase
                 'date' => $final_date,
                 'author' => $author_name,
                 'body' => $body,
+                'node_id' => $node_id,
+            ];
+            $response['node_id'] = $node_id;
+        }
+        
+        $entityTypeManager = \Drupal::service('entity_type.manager');
+
+              // Load comments associated with the node.
+        $query = $entityTypeManager->getStorage('comment')->getQuery();
+        $query->condition('entity_type', 'node')
+            ->condition('entity_id', $node_id)
+            ->condition('status', \Drupal\comment\Entity\Comment::PUBLISHED);
+          // Execute the query and fetch comment IDs.
+        $query->accessCheck(TRUE);
+        $comment_ids = $query->execute();
+        $comments = $entityTypeManager->getStorage('comment')->loadMultiple($comment_ids);
+        $comments_info = [];
+        foreach ($comments as $comment) {
+            $name = $comment->get('field_fullname')->value;
+            $email = $comment->get('field_email_address')->value;
+            $comment_body = $comment->get('comment_body')->value;
+            $created = $comment->getCreatedTime();
+
+            $comments_info[] = [
+              'name' => $name,
+              'email' => $email,
+              'comment_body' => $comment_body,
+              'created' => date('F d,Y',$created),
             ];
         }
-    
+        $response['comments_info'] = $comments_info;
         $connection = Database::getConnection();
         $query = $connection->select('node_field_data', 'nfd')
             ->fields('nfd', ['nid'])

@@ -52,6 +52,10 @@ function userprofile_theme() {
             'variables' => array('arr_data' => NULL),
             'template' => 'dashboard-custom-template',
         ),
+        'error_page' => array(
+            'variables' => array('arr_data' => NULL),
+            'template' => 'error-page',
+        ),
 
   	);
 }

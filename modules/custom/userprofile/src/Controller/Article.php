@@ -94,7 +94,7 @@ class Article extends ControllerBase
 				$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
 
 				$sanitized_title = str_replace(' ', '-', $title);
-				$url = "/linqmd/blog/" . $author_name . "/" . $sanitized_title;
+				$url = "/blog/" . $author_name . "/" . $sanitized_title;
 
 				$html .='<div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
 							<div class="articele-wrapper pb-5">
@@ -195,8 +195,13 @@ class Article extends ControllerBase
 		global $base_url;
 		$cat_id = !empty($request->get('cat_id')) ? $request->get('cat_id'): array();
 		$username = $request->get('username');
-		$user = \Drupal\user\Entity\User::load($username);
-		$uid = $user->id();
+		if(!empty($username)){
+			$user = \Drupal\user\Entity\User::load($username);
+			$uid = $user->id();
+
+		}else{
+			$uid = \Drupal::currentUser()->id();
+		}
 		$ea_query = \Drupal::entityQuery('node')
 			->range(0, 6)
 			->condition('status', 1)
@@ -245,7 +250,7 @@ class Article extends ControllerBase
 				$alias_url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
 
 				$sanitized_title = str_replace(' ', '-', $title);
-				$url = "/linqmd/blog/" . $author_name . "/" . $sanitized_title;
+				$url = "/blog/" . $author_name . "/" . $sanitized_title;
 
 				$html .='
 				<div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
@@ -297,7 +302,7 @@ class Article extends ControllerBase
 				$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
 
 				$sanitized_title = str_replace(' ', '-', $title);
-				$url = "/linqmd/blog/" . $author_name . "/" . $sanitized_title;
+				$url = "/blog/" . $author_name . "/" . $sanitized_title;
 
 				$html .= '
 					  <div class="articele-wrapper pb-5 mx-auto">
@@ -338,7 +343,7 @@ class Article extends ControllerBase
 			
 
 			if ($node_count > 6) {
-				$html .= '<a href="/linqmd/blog/'.$author_name.'" traget="_blank"><button class="readMore mx-auto d-block  p-2 col-sm-2 mt-3">More Blogs</button></a>';
+				$html .= '<a href="/blog/'.$author_name.'" traget="_blank"><button class="readMore mx-auto d-block  p-2 col-sm-2 mt-3">More Blogs</button></a>';
 			}
 
 		}else{

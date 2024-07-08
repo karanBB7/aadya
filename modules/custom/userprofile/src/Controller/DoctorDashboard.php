@@ -49,8 +49,53 @@ class DoctorDashboard extends ControllerBase
 	{
 		return new static($container->get("userprofile.field_details"));
 	}
+	public function generateTimesInInterval($start, $end, $interval) {
+		$times = [];
+		$currentTime = strtotime($start);
+		$endTime = strtotime($end);
+		
+		while ($currentTime <= $endTime) {
+			$times[] = date('g:i A', $currentTime);
+			$currentTime += $interval * 60; // Add interval in seconds
+		}
+		
+		return $times;
+	}
+	public function durationwiseslot($slot,$duration){
+		$adjustedTimes = [];
+		for ($i = 0; $i < count($slot) - 1; $i++) {
+			$start = strtotime($slot[$i]);
+			$end = strtotime($slot[$i + 1]);
+			
+			// Generate times in 10-minute intervals between $times[$i] and $times[$i + 1]
+			$generatedTimes = $this->generateTimesInInterval($slot[$i], $slot[$i + 1], $duration);
+			
+			// Merge generated times into adjustedTimes array
+			$adjustedTimes = array_merge($adjustedTimes, $generatedTimes);
+		}
+		return $adjustedTimes;
+	}
 	public function doctorDashboard(Request $request){
 		global $base_url;
+		$current_user = \Drupal::currentUser();
+		$current_user = $current_user->id();
+		$current_user_load = \Drupal\user\Entity\User::load($current_user);
+		$doctors = $current_user_load->get("field_doctores")->getValue();
+		$doctor_clinic = !empty($current_user_load->get("field_doctor_clinic")->getValue()) ? $current_user_load->get("field_doctor_clinic")->getValue()[0]['target_id'] : '';
+
+		$clincterm = Term::load($doctor_clinic);
+		$clinic_name = $clincterm->getName();
+		$address = $clincterm->get('field_address')->getValue()[0]['value'];
+		$response['clinic_name'] = !empty($clinic_name) ? $clinic_name : '';
+		$response['target_id'] = !empty($doctor_clinic) ? $doctor_clinic : '';
+		$usernames = array();
+		if (!empty($doctors)) {
+			foreach ($doctors as $user) {
+				$usera = \Drupal\user\Entity\User::load($user['target_id']);
+				$usernames[$user['target_id']] = $usera->getAccountName();
+			}
+		}
+		
 		$connection = Database::getConnection();
 		$user_id = !empty($request->get('doctor')) ? $request->get('doctor') : '';
 		$clinic = !empty($request->get('hospital')) ? $request->get('hospital') : '';
@@ -191,10 +236,20 @@ class DoctorDashboard extends ControllerBase
 				unset($data);
 			}
 			$clinicparagraph = Paragraph::load($clinic);
-			
-			$field_morning_slots = !empty($clinicparagraph->get('field_morning_slots')->getValue()) ? $clinicparagraph->get('field_morning_slots')->getValue(): '';
-			$field_afternoon_slots = !empty($clinicparagraph->get('field_afternoon_slots')->getValue()) ? $clinicparagraph->get('field_afternoon_slots')->getValue(): '';
-			$field_evening_slots = !empty($clinicparagraph->get('field_evening_slots')->getValue()) ? $clinicparagraph->get('field_evening_slots')->getValue(): '';
+			if(!empty($clinicparagraph)){
+				$field_morning_slots = !empty($clinicparagraph->get('field_morning_slots')->getValue()) ? $clinicparagraph->get('field_morning_slots')->getValue(): '';
+				$field_afternoon_slots = !empty($clinicparagraph->get('field_afternoon_slots')->getValue()) ? $clinicparagraph->get('field_afternoon_slots')->getValue(): '';
+				$field_evening_slots = !empty($clinicparagraph->get('field_evening_slots')->getValue()) ? $clinicparagraph->get('field_evening_slots')->getValue(): '';
+				$duration = !empty($clinicparagraph->get('field_duration')->getValue()) ? $clinicparagraph->get('field_duration')->getValue()[0]['value']: '';
+				$weekdays = !empty($clinicparagraph->get('field_weekdays')->getValue()) ? $clinicparagraph->get('field_weekdays')->getValue(): '';
+				$weekdays_select = [];
+				if(!empty($weekdays)){
+					foreach($weekdays as $value){
+						$weekday_slot = Term::load($value['target_id']);
+						$weekdays_select[] = $weekday_slot->getName();
+					}
+				}
+			}
 			$morning_slots = [];
 			$afternoon_slots = [];
 			$evening_slots = [];
@@ -202,8 +257,12 @@ class DoctorDashboard extends ControllerBase
 			$afternoon_data = [];
 			$evening_data = [];
 			$doctor_availability = [];
+			$morningslots= [];
+			$afternoonslots= [];
+			$eveningslots= [];
 			foreach($dates as $value){
 				$booking_dates = (!empty($month) && !empty($year)) ? $year.'-'.$month.'-'.$value['date'] : date("Y-m-".$value['date']);
+				$select_day = date("l",strtotime($booking_dates));
 				$query = $connection->select('doctor_availability','ba')
 					->fields('ba');
 				$query->condition('user_id', $user_id);
@@ -268,30 +327,101 @@ class DoctorDashboard extends ControllerBase
 						$evening_data[$booking_dates][$row->time_slot][$row->id][] = $row->patient_name;
 					}
 				}
-				foreach($field_morning_slots as $key => $morning_slot){
-					$mr_slot = Term::load($morning_slot['target_id']);
-					if (!empty($mornig_data[$booking_dates][$mr_slot->getName()])) {
-						$morning_slots[$booking_dates][$mr_slot->getName()] = $mornig_data[$booking_dates][$mr_slot->getName()];
-					} else {
-						$morning_slots[$booking_dates][$mr_slot->getName()] = $mr_slot->getName();
+
+				if(!empty($duration)){
+					foreach($field_morning_slots as $key => $morning_slot){
+						$mr_slot = Term::load($morning_slot['target_id']);
+						$morningslots[] = $mr_slot->getName();
+					}
+					$duation_slots = $this->durationwiseslot($morningslots,$duration);
+					foreach($duation_slots as $value){
+						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+							if (!empty($mornig_data[$booking_dates][$value])) {
+								$morning_slots[$booking_dates][$value] = $mornig_data[$booking_dates][$value];
+							} else {
+								$morning_slots[$booking_dates][$value] = $value;
+							}
+						}else{
+							$morning_slots[$booking_dates][$value] = '--';
+						}
+					}
+				}else{
+					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+						foreach($field_morning_slots as $key => $morning_slot){
+							$mr_slot = Term::load($morning_slot['target_id']);
+							if (!empty($mornig_data[$booking_dates][$mr_slot->getName()])) {
+								$morning_slots[$booking_dates][$mr_slot->getName()] = $mornig_data[$booking_dates][$mr_slot->getName()];
+							} else {
+								$morning_slots[$booking_dates][$mr_slot->getName()] = $mr_slot->getName();
+							}
+						}
+					}else{
+						$morning_slots[$booking_dates][$value] = '--';
 					}
 				}
-				foreach($field_afternoon_slots as $key1 => $afternoon_slot){
-					$aft_slot = Term::load($afternoon_slot['target_id']);
-					if (!empty($afternoon_data) && !empty($afternoon_data[$booking_dates][$aft_slot->getName()])) {
-						$afternoon_slots[$booking_dates][$aft_slot->getName()] = $afternoon_data[$booking_dates][$aft_slot->getName()];
-					} else {
-						$afternoon_slots[$booking_dates][$aft_slot->getName()] = $aft_slot->getName();
+				if(!empty($duration)){
+					foreach($field_afternoon_slots as $key1 => $afternoon_slot){
+						$aft_slot = Term::load($afternoon_slot['target_id']);
+						$afternoonslots[] = $aft_slot->getName();
+					}
+					$duation_slots = $this->durationwiseslot($afternoonslots,$duration);
+					foreach($duation_slots as $value){
+						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+							if (!empty($afternoon_data[$booking_dates][$value])) {
+								$afternoon_slots[$booking_dates][$value] = $afternoon_data[$booking_dates][$value];
+							} else {
+								$afternoon_slots[$booking_dates][$value] = $value;
+							}
+						}else{
+							$afternoon_slots[$booking_dates][$value] = '--';
+						}
+					}
+				}else{
+					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+						foreach($field_afternoon_slots as $key1 => $afternoon_slot){
+							$aft_slot = Term::load($afternoon_slot['target_id']);
+							if (!empty($afternoon_data) && !empty($afternoon_data[$booking_dates][$aft_slot->getName()])) {
+								$afternoon_slots[$booking_dates][$aft_slot->getName()] = $afternoon_data[$booking_dates][$aft_slot->getName()];
+							} else {
+								$afternoon_slots[$booking_dates][$aft_slot->getName()] = $aft_slot->getName();
+							}
+						}
+					}else{
+						$afternoon_slots[$booking_dates][$value] = '--';
 					}
 				}
-				foreach($field_evening_slots as $key2 => $evening_slot){
-					$ev_slot = Term::load($evening_slot['target_id']);
-					if (!empty($evening_data[$booking_dates][$ev_slot->getName()])) {
-						$evening_slots[$booking_dates][$ev_slot->getName()] = $evening_data[$booking_dates][$ev_slot->getName()];
-					} else {
-						$evening_slots[$booking_dates][$ev_slot->getName()] = $ev_slot->getName();
+				if(!empty($duration)){
+					foreach($field_evening_slots as $key2 => $evening_slot){
+						$ev_slot = Term::load($evening_slot['target_id']);
+						$eveningslots[] = $ev_slot->getName();
+					}
+					$duation_slots = $this->durationwiseslot($eveningslots,$duration);
+					foreach($duation_slots as $value){
+						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+							if (!empty($evening_data[$booking_dates][$value])) {
+								$evening_slots[$booking_dates][$value] = $evening_data[$booking_dates][$value];
+							} else {
+								$evening_slots[$booking_dates][$value] = $value;
+							}
+						}else{
+							$evening_slots[$booking_dates][$value] = '--';
+						}
+					}
+				}else{
+					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+						foreach($field_evening_slots as $key2 => $evening_slot){
+							$ev_slot = Term::load($evening_slot['target_id']);
+							if (!empty($evening_data[$booking_dates][$ev_slot->getName()])) {
+								$evening_slots[$booking_dates][$ev_slot->getName()] = $evening_data[$booking_dates][$ev_slot->getName()];
+							} else {
+								$evening_slots[$booking_dates][$ev_slot->getName()] = $ev_slot->getName();
+							}
+						}
+					}else{
+						$evening_slots[$booking_dates][$value] = '--';
 					}
 				}
+				
 			}
 		}
 		$response['doctor_availability'] = !empty($doctor_availability) ? $doctor_availability : '';
@@ -347,19 +477,6 @@ class DoctorDashboard extends ControllerBase
 		$entity_type_manager = \Drupal::entityTypeManager();
 		$user_storage = $entity_type_manager->getStorage('user');
 		
-		// Query to fetch users except admin
-		$query = $user_storage->getQuery()
-			->condition('status', 1) // Optional: Filter by user status (active)
-			->condition('uid', 1, '<>'); // Exclude user ID 1 (admin user)
-		$query->accessCheck(TRUE);
-		$user_ids = $query->execute();
-		$usernames = array();
-		if (!empty($user_ids)) {
-			 foreach ($user_ids as $user) {
-				$usera = \Drupal\user\Entity\User::load($user);
-				$usernames[$user] = $usera->getAccountName();
-			}
-		}
 		
 		$response['months'] = $months;
 		$response['years'] = $years;
@@ -402,7 +519,49 @@ class DoctorDashboard extends ControllerBase
 				\Drupal::database()->insert($table)
 					->fields($fields)
 					->execute();
+			}
+			$query = $connection->update('booking_appointment')->fields([
+				'status' => '2',
+			])
+			->condition('user_id', $user_id)
+			->condition('booking_date', $date)
+			->execute();
+			$query1 = $connection->select('booking_appointment','ba')
+			->fields('ba')
+			->condition('status', '2')
+			->condition('user_id', $user_id)
+			->condition('booking_date', $date);
+			$result1 = $query1->execute();
+			$rows = $result1->fetchAll();
+			if(!empty($rows)){
+				foreach($rows as $value){
+					$usera = \Drupal\user\Entity\User::load($value->user_id);
+					$usernames = $usera->getAccountName();
+					$date = new DrupalDateTime($value->booking_date);
+					$date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
+					$text_sms = 'Dear '.$value->patient_name.', your appointment with Dr.'.$usernames.' at  on '.$date_booking.' at '.$value->time_slot.' is cancelled. WhatsApp us on 9376005515 to book an appointment. Aadya Health Sciences.';
+					$mob_text = str_replace('+', '%20', urlencode($text_sms));
+					$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$value->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930774075419&UNICODE=TEXT';
+					try {
+						$curl = curl_init();
+						curl_setopt_array($curl, array(
+						  CURLOPT_URL => $url_sms,
+						  CURLOPT_RETURNTRANSFER => true,
+						  CURLOPT_ENCODING => '',
+						  CURLOPT_MAXREDIRS => 10,
+						  CURLOPT_TIMEOUT => 0,
+						  CURLOPT_FOLLOWLOCATION => true,
+						  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						  CURLOPT_CUSTOMREQUEST => 'GET',
+						));
+
+						$response = curl_exec($curl);
+						curl_close($curl);
+					}
+					catch (RequestException $e) {
+					}
 				}
+			}
 		}else{
 			$query = $connection->update('doctor_availability')
 			  ->fields([
@@ -413,22 +572,21 @@ class DoctorDashboard extends ControllerBase
 			->execute();
 		}
 		
-		$query = $connection->update('booking_appointment')
-		  ->fields([
-			'status' => '2',
-		])
-		->condition('user_id', $user_id)
-		->condition('booking_date', $date)
-		->execute();
+		
 		$ajax_resp = new JsonResponse(array("status"=>'success'));
 		return ($ajax_resp);
 		exit;
 	}
 
 	public function getHospital(Request $request){
+		$current_user = \Drupal::currentUser();
+		$current_user = $current_user->id();
+		$current_user_load = \Drupal\user\Entity\User::load($current_user);
+		$doctor_clinics = !empty($current_user_load->get("field_doctor_clinic")->getValue()) ? $current_user_load->get("field_doctor_clinic")->getValue()[0]['target_id'] : '';
 		$user_id = !empty($request->get('user_id')) ? $request->get('user_id') : '';
 		$user = \Drupal\user\Entity\User::load($user_id);
 		$para1 = $user->get("field_book_appointment")->getValue();
+		
 		$html = '';
 		foreach ($para1 as $value) {
 			$paragraph = Paragraph::load($value["target_id"]);
@@ -445,22 +603,25 @@ class DoctorDashboard extends ControllerBase
 				foreach ($childPara as $key =>$valuechild) {
 					$paragraph = Paragraph::load($valuechild["target_id"]);
 					$clinctarget_id = !empty($paragraph->get('field_clinic_name')->getValue()) ? $paragraph->get('field_clinic_name')->getValue()[0]['target_id']: '';
-					$clincterm = Term::load($clinctarget_id);
-					$clinic_name = $clincterm->getName();
-					$address = $clincterm->get('field_address')->getValue()[0]['value'];
-					$data[$key]['clinic_name'] = $clinic_name;
-					$data[$key]['target_id'] = $valuechild["target_id"];
+					if($doctor_clinics == $clinctarget_id){
+						$clincterm = Term::load($clinctarget_id);
+						$clinic_name = $clincterm->getName();
+						$address = $clincterm->get('field_address')->getValue()[0]['value'];
+						$data[$key]['clinic_name'] = $clinic_name;
+						$data[$key]['target_id'] = $valuechild["target_id"];
+						$data[$key]['clinctarget_id'] = $clinctarget_id;
+					}
 				}
 			}
 		}
 		$html .='<option value="">Select Hospital</option>';
 		if(!empty($data)){
 			foreach($data as $row){
-				$selected = ($row['target_id'] == '34') ? 'selected' : '';
-				$html .='<option value="'.$row['target_id'].'">'.$row['clinic_name'].'</option>';
+				$selected = ($row['clinctarget_id'] == $doctor_clinics) ? 'selected' : '';
+				$html .='<option value="'.$row['target_id'].'" '.$selected.'>'.$row['clinic_name'].'</option>';
 			}
 		}
-		$ajax_resp = new JsonResponse(array("html"=>$html));
+		$ajax_resp = new JsonResponse(array("html"=>$html,'doctor_clinics'=>$data[0]['target_id']));
 		return ($ajax_resp);
 		exit;
 	}

@@ -108,128 +108,103 @@ jQuery(document).ready(function($) {
 
 
 
-
-
-
-$(document).on('click', '.current_date_select', function() {
-    var current_date = $(this).attr('data-date');
-    var target_id = $(this).attr('data-target_id');
-    $('.current_date_select').removeClass('activedates date-highlight');
-    $(this).addClass('activedates date-highlight');
-    $.ajax({
-        url: "/linqmd/get_booking_time_slot",
-        method: "POST",
-        cache: false,
-        data: {
-            "target_id": target_id,
-            "current_date": current_date,
-        },
-        success: function (data) {
-            $(".time_slots").html(data.html);
-            setTimeout(hidePassedSlots, 0);
-        }
-    });
-});
+	$(document).on('click', '.current_date_select', function() {
+		var current_date = $(this).attr('data-date');
+		var month = $(this).attr('data-month');
+		var year = $(this).attr('data-year');
+		var target_id = $(this).attr('data-target_id');
+		$('.current_date_select').removeClass('activedates date-highlight');
+		$(this).addClass('activedates date-highlight');
 	
-	$(document).ready(function() {
-		hidePassedSlots();
+		$.ajax({
+			url: "/linqmd/get_booking_time_slot",
+			method: "POST",
+			cache: false,
+			data: {
+				"target_id": target_id,
+				"current_date": current_date,
+				"month": month,
+				"year": year,
+			},
+			success: function (data) {
+				$(".time_slots").html(data.html);
+				filterAndUpdateTimeSlots(year, month, current_date);
+			}
+		});
 	});
-
-	function hidePassedSlots() {
-		const now = new Date();
-		const selectedDateElement = $('.current_date_select.activedates');
-		const selectedDate = selectedDateElement.data('date');
-		const selectedMonth = selectedDateElement.data('month');
-		const selectedYear = selectedDateElement.data('year');
-		const selectedDateTime = new Date(selectedYear, selectedMonth, selectedDate);
+	function filterAndUpdateTimeSlots(year, month, current_date) {
+		var now = new Date();
+		var selectedDate = new Date(year, month - 1, current_date);
+		var isToday = selectedDate.toDateString() === now.toDateString();
+		var clinicName = $('.clinicname.active').text().trim();
+		var formattedDate = selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 	
-		const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-		const selectedDateOnly = new Date(selectedDateTime.getFullYear(), selectedDateTime.getMonth(), selectedDateTime.getDate());
+		if (isToday) {
+			var currentTime = now.getHours() * 60 + now.getMinutes();
 	
-		if (selectedDateOnly.getTime() === nowDate.getTime()) {
-			const currentHour = now.getHours();
-			if (currentHour >= 12) {
-				$('.morning-slot').addClass('slot-section-hidden');
-			}
-	
-			if (currentHour >= 16) {
-				$('.afternoon-slot').addClass('slot-section-hidden');
-			}
-	
-			$('.ap-book').each(function() {
-				const slotTime = $(this).data('time-slot');
-				const [time, period] = slotTime.split(' ');
-				let [hours, minutes] = time.split(':');
-				hours = parseInt(hours);
-				minutes = parseInt(minutes);
-	
-				if (period.toLowerCase() === 'pm' && hours !== 12) {
-					hours += 12;
-				} else if (period.toLowerCase() === 'am' && hours === 12) {
-					hours = 0;
+			$(".time_slots .ap-book").each(function() {
+				var slotTime = $(this).find('b').text().trim();
+				var [hours, minutes, period] = slotTime.match(/(\d+):(\d+)\s*(AM|PM)/).slice(1);
+				var slotMinutes = parseInt(hours) * 60 + parseInt(minutes);
+				if (period === 'PM' && hours != '12') {
+					slotMinutes += 12 * 60;
 				}
-	
-				const slotDateTime = new Date(selectedYear, selectedMonth, selectedDate, hours, minutes);
-	
-				if (slotDateTime <= now) {
-					$(this).hide();
-				} else {
-					$(this).show();
+				if (slotMinutes <= currentTime) {
+					$(this).remove();
 				}
 			});
-		} else {
-			$('.ap-book').show();
-			$('.morning-slot, .afternoon-slot, .evening-slot').removeClass('slot-section-hidden');
 		}
 	
-		updateSlotSection('morning-slot', 0, 11);
-		updateSlotSection('afternoon-slot', 12, 15);
-		updateSlotSection('evening-slot', 16, 23);
-	}
+		var totalVisibleSlots = 0;
 	
-	function updateSlotSection(sectionClass, startHour, endHour) {
-		const sectionElement = $(`.${sectionClass}`);
-		const visibleSlots = sectionElement.find('.ap-book:visible').filter(function() {
-			const slotTime = $(this).data('time-slot');
-			const [time, period] = slotTime.split(' ');
-			let [hours, ] = time.split(':');
-			hours = parseInt(hours);
-			if (period.toLowerCase() === 'pm' && hours !== 12) hours += 12;
-			if (period.toLowerCase() === 'am' && hours === 12) hours = 0;
-			return hours >= startHour && hours <= endHour;
+		$('.morning-slot, .afternoon-slot, .evening-slot').each(function() {
+			var $section = $(this);
+			var $header = $section.find('.fs-3 b');
+			var sectionName = $header.text().split('(')[0].trim();
+			var visibleSlots = $section.find('.ap-book').length;
+	
+			totalVisibleSlots += visibleSlots;
+	
+			if (visibleSlots === 0) {
+				$section.hide();
+			} else {
+				$section.show();
+				$header.text(sectionName + ' (' + visibleSlots + ' slots)');
+			}
 		});
 	
-		const count = visibleSlots.length;
-		if (count === 0) {
-			sectionElement.addClass('slot-section-hidden');
+		if (totalVisibleSlots === 0) {
+			$('.no-slots-message').remove();
+			$('.time_slots').append('<p class="no-slots-message fs-5 text-center pt-4">No slots available on the selected <b>' + formattedDate + '</b> at the <b>' + clinicName + '</b>.</p>');
 		} else {
-			sectionElement.removeClass('slot-section-hidden');
-			const headingElement = sectionElement.find('.fs-3 b');
-			const sectionName = headingElement.text().split('(')[0].trim();
-			headingElement.text(`${sectionName} (${count} slots)`);
+			$('.no-slots-message').remove();
 		}
 	}
 
 
 
-	
 
 
 
-
-
-	
 	$(document).on("click",".openPopup",function(){
 		$(".overlay").show();
-		$(".popup").show();
+		$(".popup").show(); 
 		var clinicname =$(this).attr('data-clinicname');
 		var target_id =$(this).attr('data-target_id');
 		var time_slot =$(this).attr('data-time-slot');
 		var slot_name =$(this).attr('data-slot-name');
+		var date =$(this).attr('data-date');
+
+
+		$('.selecteddate').text(date);
+		$('.selectedtimename').text(slot_name);
+		$('.selectedtime').text(time_slot);
+
 		$("#clinicname").val(clinicname);
 		$("#clinic_target_id").val(target_id);
 		$("#bookingtimeslot").val(time_slot);
 		$("#bookingtime").val(slot_name);
+		$(".booking_details").html('Please fill in details to Request an appointment with Dr. Murali Mohan S on '+date+' at '+time_slot+'.')
 	});
 	if($("#booking_form").length > 0){
 		$('#booking_form').validate({
@@ -308,48 +283,129 @@ $(document).on('click', '.current_date_select', function() {
 			}
 		});
 	}
-	$(".generate_otp").click(function(){
-		var phonenumber = $("#phonenumber").val();
-		console.log(phonenumber);
-		var type = $(this).attr('data-type');
-		$("#phonenumber-error").html('');
-		if(phonenumber == undefined){
-			$("#phonenumber-error").html('Please enter your phone number.');
-		}else{
-			$.ajax({
-				url: "/linqmd/generate-otp",
-				method: "POST",
-				cache: false,
-				data: {
-					phonenumber:phonenumber,
-					type:type
-				}, 
-				success: function (data) {
-					$(".generate_otp").hide();
-					$(".resend_otp").show();
-					$(".otp_cls").show();
-					$(".otp_msg").html(data.message);
-				}
-			});
-		}
-		
-	});
-	$(document).on("focusout","#verify_otp",function(){
-		var otp = $(this).val();
-		$.ajax({
-			url: "/linqmd/otp-verify-booking-appointment",
-			method: "POST",
-			cache: false,
-			data: {
-				otp:otp,
-			}, 
-			success: function (data) {
-				$("#verify_otp-error").show();
-				$("#verify_otp-error").html(data.error);
-				$(".otp_msg1").html(data.message);
-			}
-		});
-	});
+
+
+
+	
+
+
+
+	
+	var otpVerified = false;
+
+    function isValidPhoneNumber(phone) {
+        return /^[6-9]\d{9}$/.test(phone);
+    }
+
+    function toggleOtpButton() {
+        var phone = $("#phonenumber").val();
+        $("#generate_otp").prop("disabled", !isValidPhoneNumber(phone));
+    }
+
+    $("#phonenumber").on("input", function() {
+        var phone = $(this).val();
+        if (!isValidPhoneNumber(phone)) {
+            $("#phonenumber-error").text("Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.").show();
+        } else {
+            $("#phonenumber-error").hide();
+        }
+        toggleOtpButton();
+    });
+
+    $(".generate_otp").click(function(){
+        var phonenumber = $("#phonenumber").val();
+        var type = $(this).attr('data-type');
+		var doc_name = $(this).data('field-name');
+        $("#phonenumber-error").html('');
+
+        if(!isValidPhoneNumber(phonenumber)){
+            $("#phonenumber-error").html('Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.').addClass("error-message");
+            return; 
+        }
+
+        $.ajax({
+            url: "/linqmd/generate-otp",
+            method: "POST",
+            cache: false,
+            data: {
+                phonenumber: phonenumber,
+                type: type,
+				doc_name: doc_name
+            }, 
+            success: function (data) {
+                $(".generate_otp").hide();
+                $(".resend_otp").show();
+                $(".otp_cls").show();
+                $(".otp_msg").html(data.message);
+            }
+        });
+    });
+
+  
+
+    $("#verify_otp").keypress(function(e){
+        if(e.which == 13) { 
+            e.preventDefault();  
+            $("#verify_otp_btn").click();  
+            return false;
+        }
+    });
+
+    $("#verify_otp_btn").click(function(){
+        var otp = $("#verify_otp").val();
+        $.ajax({
+            url: "/linqmd/otp-verify-booking-appointment",
+            method: "POST",
+            cache: false,
+            data: {
+                otp: otp,
+            }, 
+            success: function (data) {
+                if(data.status === "success" || data.message === "OTP verify.") {
+                    $(".otp_msg1").html("OTP verified successfully").removeClass("error-message").addClass("success-message");
+                    $(".otp_cls").hide();
+                    $("#additional_fields").show();
+                    otpVerified = true;  
+                    $("#bookAppointmentButton").prop('disabled', false);  
+                } else {
+                    $("#verify_otp-error").show();
+                    $("#verify_otp-error").html(data.error || "Invalid OTP");
+                    $(".otp_msg1").html(data.message || "OTP verification failed").removeClass("success-message").addClass("error-message");
+                    otpVerified = false;  
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX error:", textStatus, errorThrown); 
+                $("#verify_otp-error").show();
+                $("#verify_otp-error").html("An error occurred while verifying OTP").addClass("error-message");
+                otpVerified = false;  
+            }
+        });
+    });
+
+    $("#booking_form").submit(function(e) {
+        var phone = $("#phonenumber").val();
+        if (!isValidPhoneNumber(phone)) {
+            e.preventDefault();
+            $("#phonenumber-error").text("Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.").show();
+            return false;
+        }
+        if(!otpVerified){
+            e.preventDefault();  
+            alert("Please verify your OTP before booking an appointment.");
+            return false;
+        }
+    });
+    $("#bookAppointmentButton").prop('disabled', true);
+
+
+
+
+
+
+
+
+
 	$(".resend_otp").click(function(){
 		var phonenumber = $("#phonenumber").val();
 		var type = $(this).attr('data-type');
@@ -373,7 +429,8 @@ $(document).on('click', '.current_date_select', function() {
 			}
 		});
 	});
-	$('#otp_verify_form').validate({
+	if($('#otp_verify_form').length > 0){
+		$('#otp_verify_form').validate({
 		rules: {
 			otp: {
 				required: true,
@@ -423,6 +480,8 @@ $(document).on('click', '.current_date_select', function() {
 			});
 		}
 	});
+	}
+	
 	$(document).on('click',".close-btn",function(){
 		$(".confirmation").html('');
 		$(".popup1").hide();
@@ -531,7 +590,7 @@ $(document).on('click', '.current_date_select', function() {
 			}
 		});
 	});
-	var base_url = window.location.origin+'/linqmd/doctor-dashboard/';
+	var base_url = window.location.origin+'/doctor-dashboard/';
 	$(document).on("change", ".years, .hospital, #months", function() {
 		var hospital = $(".hospital option:selected").val();
 		var years = $(".years option:selected").val();
@@ -572,6 +631,16 @@ $(document).on('click', '.current_date_select', function() {
 			}, 
 			success: function (data) {
 				$(".hospital").html(data.html);
+				var query_url = '';
+
+				if (user_id !== undefined) {
+					query_url += '&doctor=' + user_id;
+				}
+				if (data.doctor_clinics !== undefined) {
+					query_url += '&hospital=' + data.doctor_clinics;
+				}
+				var full_url = base_url + '?' + query_url.substring(1);
+				window.location.href = full_url;
 			}
 		});
 	});
@@ -607,6 +676,8 @@ $(document).on('click', '.current_date_select', function() {
     
     const twitter = document.querySelector('.twittershare');
     twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+
+	
     if($("#comment-form").length > 0){
 		$('#comment-form').validate({
 			rules: {
@@ -647,9 +718,10 @@ $(document).on('click', '.current_date_select', function() {
 						email:email,
 						comment:comment,
 						node_id:node_id,
-					}, 
+					},
 					success: function (data) {
-						
+						$('#comment-form')[0].reset();
+						location.reload();
 					}
 				});
 			}
