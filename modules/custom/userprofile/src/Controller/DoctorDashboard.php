@@ -167,7 +167,6 @@ class DoctorDashboard extends ControllerBase
 				}
 				$response['hospitals'] = $data;
 			}
-			
 			$para = $user->get("field_paragraphtheme1")->getValue();
 			foreach ($para as $value) {
 				$paragraph = Paragraph::load($value["target_id"]);
@@ -250,7 +249,7 @@ class DoctorDashboard extends ControllerBase
 					}
 				}
 			}
-			$morning_slots = [];
+			$morning_slots = array();
 			$afternoon_slots = [];
 			$evening_slots = [];
 			$mornig_data = [];
@@ -333,18 +332,23 @@ class DoctorDashboard extends ControllerBase
 						$mr_slot = Term::load($morning_slot['target_id']);
 						$morningslots[] = $mr_slot->getName();
 					}
-					$duation_slots = $this->durationwiseslot($morningslots,$duration);
-					foreach($duation_slots as $value){
-						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
-							if (!empty($mornig_data[$booking_dates][$value])) {
-								$morning_slots[$booking_dates][$value] = $mornig_data[$booking_dates][$value];
-							} else {
-								$morning_slots[$booking_dates][$value] = $value;
+					if(!empty($morningslots)){
+						$duation_slots = $this->durationwiseslot($morningslots,$duration);
+						foreach($duation_slots as $value){
+							if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+								if (!empty($mornig_data[$booking_dates][$value])) {
+									$morning_slots[$booking_dates][$value] = $mornig_data[$booking_dates][$value];
+								} else {
+									$morning_slots[$booking_dates][$value] = $value;
+								}
+							}else{
+								$morning_slots[$booking_dates][$value] = '--';
 							}
-						}else{
-							$morning_slots[$booking_dates][$value] = '--';
 						}
+					}else{
+						$morning_slots[$booking_dates] = '--';
 					}
+					
 				}else{
 					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
 						foreach($field_morning_slots as $key => $morning_slot){
@@ -364,18 +368,23 @@ class DoctorDashboard extends ControllerBase
 						$aft_slot = Term::load($afternoon_slot['target_id']);
 						$afternoonslots[] = $aft_slot->getName();
 					}
-					$duation_slots = $this->durationwiseslot($afternoonslots,$duration);
-					foreach($duation_slots as $value){
-						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
-							if (!empty($afternoon_data[$booking_dates][$value])) {
-								$afternoon_slots[$booking_dates][$value] = $afternoon_data[$booking_dates][$value];
-							} else {
-								$afternoon_slots[$booking_dates][$value] = $value;
+					if(!empty($afternoonslots)){
+						$duation_slots = $this->durationwiseslot($afternoonslots,$duration);
+						foreach($duation_slots as $value){
+							if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+								if (!empty($afternoon_data[$booking_dates][$value])) {
+									$afternoon_slots[$booking_dates][$value] = $afternoon_data[$booking_dates][$value];
+								} else {
+									$afternoon_slots[$booking_dates][$value] = $value;
+								}
+							}else{
+								$afternoon_slots[$booking_dates][$value] = '--';
 							}
-						}else{
-							$afternoon_slots[$booking_dates][$value] = '--';
 						}
+					}else{
+						$afternoon_slots[$booking_dates] = '--';
 					}
+					
 				}else{
 					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
 						foreach($field_afternoon_slots as $key1 => $afternoon_slot){
@@ -395,18 +404,23 @@ class DoctorDashboard extends ControllerBase
 						$ev_slot = Term::load($evening_slot['target_id']);
 						$eveningslots[] = $ev_slot->getName();
 					}
-					$duation_slots = $this->durationwiseslot($eveningslots,$duration);
-					foreach($duation_slots as $value){
-						if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
-							if (!empty($evening_data[$booking_dates][$value])) {
-								$evening_slots[$booking_dates][$value] = $evening_data[$booking_dates][$value];
-							} else {
-								$evening_slots[$booking_dates][$value] = $value;
+					if(!empty($eveningslots)){
+						$duation_slots = $this->durationwiseslot($eveningslots,$duration);
+						foreach($duation_slots as $value){
+							if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+								if (!empty($evening_data[$booking_dates][$value])) {
+									$evening_slots[$booking_dates][$value] = $evening_data[$booking_dates][$value];
+								} else {
+									$evening_slots[$booking_dates][$value] = $value;
+								}
+							}else{
+								$evening_slots[$booking_dates][$value] = '--';
 							}
-						}else{
-							$evening_slots[$booking_dates][$value] = '--';
 						}
+					}else{
+						$evening_slots[$booking_dates] = '--';
 					}
+					
 				}else{
 					if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
 						foreach($field_evening_slots as $key2 => $evening_slot){
@@ -421,7 +435,6 @@ class DoctorDashboard extends ControllerBase
 						$evening_slots[$booking_dates][$value] = '--';
 					}
 				}
-				
 			}
 		}
 		$response['doctor_availability'] = !empty($doctor_availability) ? $doctor_availability : '';
@@ -600,17 +613,19 @@ class DoctorDashboard extends ControllerBase
 			);
 			foreach ($get_paragraph as $name => $type) {
 				$childPara = $paragraph->get($name)->getValue();
+				$i = 0;
 				foreach ($childPara as $key =>$valuechild) {
 					$paragraph = Paragraph::load($valuechild["target_id"]);
 					$clinctarget_id = !empty($paragraph->get('field_clinic_name')->getValue()) ? $paragraph->get('field_clinic_name')->getValue()[0]['target_id']: '';
-					if($doctor_clinics == $clinctarget_id){
+					//if($doctor_clinics == $clinctarget_id){
 						$clincterm = Term::load($clinctarget_id);
 						$clinic_name = $clincterm->getName();
 						$address = $clincterm->get('field_address')->getValue()[0]['value'];
-						$data[$key]['clinic_name'] = $clinic_name;
-						$data[$key]['target_id'] = $valuechild["target_id"];
-						$data[$key]['clinctarget_id'] = $clinctarget_id;
-					}
+						$data[$i]['clinic_name'] = $clinic_name;
+						$data[$i]['target_id'] = $valuechild["target_id"];
+						$data[$i]['clinctarget_id'] = $clinctarget_id;
+					//}
+					$i++;
 				}
 			}
 		}

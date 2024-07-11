@@ -82,7 +82,7 @@ class Webhook extends ControllerBase
 
             if (!empty($mobilenumber) && count($decode_body) == 1) {
                 $query = $connection->select('booking_appointment', 'ba')
-                    ->fields('ba', ['user_id', 'booking_date', 'time_slot', 'created_date', 'time_slot_name', 'status'])
+                    ->fields('ba', ['user_id', 'booking_date', 'time_slot', 'created_date', 'time_slot_name', 'status', 'patient_name'])
                     ->condition('mobile_number', $mobilenumber)
                     ->orderBy('created_date', 'DESC')
                     ->range(0, 1);
@@ -121,6 +121,7 @@ class Webhook extends ControllerBase
                         "date" => $appointment['booking_date'],
                         "slotName" => $appointment['time_slot_name'],
                         "slotTime" => $appointment['time_slot'],
+                        "patient_name" => $appointment['patient_name'],
                     ];
                 } else {
                     $response = [
@@ -609,14 +610,15 @@ class Webhook extends ControllerBase
             }
             if($list_type == '3'){
                 $current_date = date('Y-m-d');
-                $query = $connection->select('booking_appointment','ba')
-                ->fields('ba');
-                $query->condition('mobile_number', $mobilenumber);
-                $condition_group = $query->orConditionGroup()
-                ->condition('status', '1')
-                ->condition('status', '3', '=');
-                $query->condition('booking_date',$current_date,'>=');
-                $query->condition($condition_group);
+                $query = $connection->select('booking_appointment', 'ba')
+                    ->fields('ba', ['id', 'patient_name', 'user_id', 'booking_date', 'time_slot', 'time_slot_name'])
+                    ->condition('mobile_number', $mobilenumber)
+                    ->condition('booking_date', $current_date, '>=')
+                    ->condition(
+                        $query->orConditionGroup()
+                            ->condition('status', '1')
+                            ->condition('status', '3')
+                    );
                 $result = $query->execute();
                 $booking_rows = $result->fetchAll();
                 $booking_dates = array();
@@ -632,6 +634,7 @@ class Webhook extends ControllerBase
                         ])
                         ->condition('id', $booking_date)
                         ->execute();
+                        $appointment = $booking_rows[array_search($booking_date, array_column($booking_rows, 'id'))];
                         $query2 = $connection->select('booking_appointment','ba')->fields('ba');
                         $query2->condition('id',$booking_date);
                         $result1 = $query2->execute();
@@ -640,9 +643,38 @@ class Webhook extends ControllerBase
                         $usernames = $usera->getAccountName();
                         $date = new DrupalDateTime($rows[0]->booking_date);
                         $date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
-                        $text_sms = 'Dear '.$rows[0]->patient_name.', your appointment with Dr.'.$usernames.' at  on '.$date_booking.' at '.$rows[0]->time_slot.' is cancelled. WhatsApp us on 9376005515 to book an appointment. Aadya Health Sciences';
+
+
+                        $user = \Drupal\user\Entity\User::load($appointment->user_id);
+                        $para = $user->get("field_paragraphtheme1")->getValue();
+                        $field_name_value = '';
+                        if (!empty($para) && isset($para[0]['target_id'])) {
+                            $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+                            if ($paragraph) {
+                                $field_name_value = $paragraph->get('field_name')->value;
+                            }
+                        }
+
+
+
+                        $text_sms = 'Dear '.$rows[0]->patient_name.', your appointment with Dr.'.$field_name_value.' at  on '.$date_booking.' at '.$rows[0]->time_slot.' is cancelled. WhatsApp us on 9376005515 to book an appointment. Aadya Health Sciences';
                         $mob_text = str_replace('+', '%20', urlencode($text_sms));
                         $url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$rows[0]->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930774075419&UNICODE=TEXT';
+
+                        $user = \Drupal\user\Entity\User::load($appointment->user_id);
+                        $para = $user->get("field_paragraphtheme1")->getValue();
+                        $field_name_value = '';
+                        if (!empty($para) && isset($para[0]['target_id'])) {
+                            $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+                            if ($paragraph) {
+                                $field_name_value = $paragraph->get('field_name')->value;
+                            }
+                        }
+            
+                        $formatted_date = date('jS F', strtotime($appointment->booking_date));
+            
+
+
                         try {
                             $curl = curl_init();
                             curl_setopt_array($curl, array(
@@ -660,9 +692,11 @@ class Webhook extends ControllerBase
                         }
                         catch (RequestException $e) {
                         }
+
+
                         $responseData = [
-                            "status" => "sucess",
-                            "message" => "Booking cancel successfully.",
+                            "status" => "success",
+                            "message" => "Dear *{$appointment->patient_name}*, your appointment with *{$field_name_value}* at *{$appointment->time_slot_name}* on *{$formatted_date}* at *{$appointment->time_slot}* is cancelled. \n\n_Thank you for choosing our services. We look forward to seeing you._",
                         ];
                     }
                 }else{

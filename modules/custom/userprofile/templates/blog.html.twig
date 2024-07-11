@@ -17,7 +17,7 @@
                                     </div>
                                     <div class="main-conntent">
                                         
-                               <div class="pt-4"><b>By:</b> {{article.author}} </div>
+                               <div class="pt-4"><b>By:</b> {{article.user_full_name}} </div>
                                <div><b>Date:</b> {{article.date}}</div>
                                         {{ article.body|raw }}
                                     </div>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-7 small-content-center">
                                     <p class="fw-bold  m-0 pt-3">{{random_article.title}}</p>
-                                    <p class="p-0 m-0 pb-2">By: {{random_article.author}}</p>
+                                    <p class="p-0 m-0 pb-2">By: {{random_article.random_user_full_name}}</p>
                                     <a href="{{random_article.base_url}}/blog/{{ random_article.author }}/{{ random_article.title | replace({' ': '-'}) }}" target="_blank">
                                          <button class="btn btn-primary mb-3" >Read More</button>
                                      </a>

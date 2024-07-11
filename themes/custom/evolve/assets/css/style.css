@@ -439,7 +439,7 @@ a{
 
 
 
-#sec3 .closed{
+.closed{
     background-color: red !important;
     color: var(--c1);
 }
@@ -1802,8 +1802,8 @@ button:hover{
     color: #fff !important;
 }
 
-#p2sec3 .secondtheme .date-highlight .day,
-#p2sec3 .secondtheme .date-highlight .date {
+#p2sec3 .secondtheme .date-highlight .day-month,
+#p2sec3 .secondtheme .date-highlight .date-number {
     color: #fff !important;
 }
 

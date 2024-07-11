@@ -86,9 +86,9 @@
                               <a href="https://api.whatsapp.com/send?phone=919113843892&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank">
                             <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button>
                             </a>
-                        <p class="exp mt-3 col-10">{{ arr_data.profile_theme1.field_experiences}}</p>
+                        <p class="exp mt-3 col-8">{{ arr_data.profile_theme1.field_experiences}}</p>
                        
-                        <p class="exp mb-4 col-10">{{ arr_data.profile_theme1.field_patients}}</p>
+                        <p class="exp mb-4 col-8">{{ arr_data.profile_theme1.field_patients}}</p>
                     </div>
 
 
@@ -341,7 +341,7 @@
 
             {% if arr_data.profile_theme1.field_education_in_details %}
                 <li class="nav-item">
-                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#eductaion">Qualifiction</a>
+                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#eductaion">Qualification</a>
                 </li>
             {% endif %}
            
@@ -475,7 +475,7 @@
     {% set i = 1 %}
         {% for k, clinic in arr_data.doctor_clinic_appointment %}
             <li class="nav-item book_appointment">
-                <a class="nav-link {{ i == 1 ? 'active' : ''}}" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
+                <a class="nav-link {{ i == 1 ? 'active' : ''}} clinicname" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
             </li>
             {% set i = i + 1 %}
         {% endfor %}
@@ -608,17 +608,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec4' : 'p2sec4' }}" class="pt-0">
 	{% if arr_data.profile_theme == 'theme2' %}
 		<div class="secondtheme">
@@ -636,7 +625,7 @@
         <div class="owl-carousel expslider ">
 
             {% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
-            <div class="col-lg-12  p-5">
+            <div class="col-lg-12 p-2 p-0 m-0">
                 <div class="p-4 shadow" style="border-radius: 10px;" >
                 <div class="exp-imag-wrapper">
                     <div class="col-sm-12 mx-auto">
@@ -697,7 +686,7 @@
                     <img src="{{ news_article.thumb }}" width="100%">
                 </div>
                 <div class="d-flex mx-4 mt-2">
-                    <div class="offset-lg-0 text-capitalize">By {{ news_article.author }}</div>
+                    <div class="offset-lg-0 text-capitalize">By {{ news_article.user_full_name }}</div>
                     <div class="offset-lg-1">{{ news_article.date }}</div>
                 </div>
                 <div class="p-4 pt-0">
@@ -973,7 +962,7 @@ $(document).ready(function () {
     $('.expslider').owlCarousel({
         center: false,
         loop: true,
-        margin: 5,
+        margin: 0,
         responsive: {
             0: {
                 items: 1,

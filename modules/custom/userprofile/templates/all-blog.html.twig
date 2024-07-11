@@ -1,6 +1,6 @@
 <div class="blog-container">
     <div class="container pt-5">
-        <h1 class="text-center">{{blog_data.creator}}</h1>
+        <h1 class="text-center">{{blog_data.user_full_name}}</h1>
         <h3>Blogs</h3>
         <div class="row">
             {% for article in blog_data.article %}
@@ -18,7 +18,7 @@
                                     </div>
                                 </a>
                                 <hr>
-                                <div class="text-center p-2 pb-0">ON <u>{{ article.date }}</u> | BY <u>{{ article.author }}</u></div>
+                                <div class="text-center p-2 pb-0">ON <u>{{ article.date }}</u> | BY <u>{{ article.user_full_name }}</u></div>
                                 <div id="article-body-{{ loop.index }}" class="text-center p-5">{{ article.body|raw }}</div>
                             </div>
                         </div>

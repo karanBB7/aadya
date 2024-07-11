@@ -108,30 +108,56 @@ jQuery(document).ready(function($) {
 
 
 
-	$(document).on('click', '.current_date_select', function() {
-		var current_date = $(this).attr('data-date');
-		var month = $(this).attr('data-month');
-		var year = $(this).attr('data-year');
-		var target_id = $(this).attr('data-target_id');
-		$('.current_date_select').removeClass('activedates date-highlight');
-		$(this).addClass('activedates date-highlight');
+	$(document).ready(function() {
+		function clickTodayAndSelect() {
+			$('.highlight-today').click();
+			setTimeout(function() {
+				$('.highlight-today.current_date_select').click();
+			}, 100);
+		}
 	
-		$.ajax({
-			url: "/linqmd/get_booking_time_slot",
-			method: "POST",
-			cache: false,
-			data: {
-				"target_id": target_id,
-				"current_date": current_date,
-				"month": month,
-				"year": year,
-			},
-			success: function (data) {
-				$(".time_slots").html(data.html);
-				filterAndUpdateTimeSlots(year, month, current_date);
+		clickTodayAndSelect();
+	
+		$(document).on('click', '.clinicname', function() {
+			var targetId = $(this).data('target_id');
+			$('.dateslider').attr('data-active-target-id', targetId);
+			clickTodayAndSelect();
+		});
+	
+		$(document).on('click', '.highlight-today', function() {
+			if (!$(this).hasClass('current_date_select')) {
+				$(this).click();
 			}
 		});
+	
+		$(document).on('click', '.current_date_select', function() {
+			var current_date = $(this).attr('data-date');
+			var month = $(this).attr('data-month');
+			var year = $(this).attr('data-year');
+			var target_id = $('.nav-link.clinicname.active').data('target_id');
+			$('.current_date_select').removeClass('activedates date-highlight');
+			$(this).addClass('activedates date-highlight');
+	
+			$.ajax({
+				url: "/linqmd/get_booking_time_slot",
+				method: "POST",
+				cache: false,
+				data: {
+					"target_id": target_id,
+					"current_date": current_date,
+					"month": month,
+					"year": year,
+				},
+				success: function (data) {
+					$(".time_slots").html(data.html);
+					filterAndUpdateTimeSlots(year, month, current_date);
+				}
+			});
+		});
+	
 	});
+
+
 	function filterAndUpdateTimeSlots(year, month, current_date) {
 		var now = new Date();
 		var selectedDate = new Date(year, month - 1, current_date);
@@ -180,6 +206,8 @@ jQuery(document).ready(function($) {
 			$('.no-slots-message').remove();
 		}
 	}
+
+
 
 
 

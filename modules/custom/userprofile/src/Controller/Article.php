@@ -96,13 +96,24 @@ class Article extends ControllerBase
 				$sanitized_title = str_replace(' ', '-', $title);
 				$url = "/blog/" . $author_name . "/" . $sanitized_title;
 
+				$user_full_name = '';
+				if ($author) {
+					$para = $author->get("field_paragraphtheme1")->getValue();
+					if (!empty($para) && isset($para[0]['target_id'])) {
+						$paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+						if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+							$user_full_name = $paragraph->get('field_name')->value;
+						}
+					}
+				}
+
 				$html .='<div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
 							<div class="articele-wrapper pb-5">
 							<div class="article-image">
 								<img src="'.$article_img.'" width="100%">
 							</div>	
 								<div class="d-flex mx-4 mt-2">
-									<div class="offset-lg-0 text-capitalize">By '.$author_name.' </div>
+									<div class="offset-lg-0 text-capitalize">By '.$user_full_name.' </div>
 									<div class="offset-lg-1">'.$final_date.'</div>
 								</div>
 								<div class="p-4 pt-0">
@@ -243,6 +254,17 @@ class Article extends ControllerBase
 				$author_uid = $node->getOwnerId();
 				$author = \Drupal\user\Entity\User::load($author_uid);
 				$author_name = $author ? $author->getDisplayName() : 'Unknown';
+
+				$user_full_name = '';
+				if ($author) {
+					$para = $author->get("field_paragraphtheme1")->getValue();
+					if (!empty($para) && isset($para[0]['target_id'])) {
+						$paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+						if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+							$user_full_name = $paragraph->get('field_name')->value;
+						}
+					}
+				}
 				
 				if(!empty($article_id)){
 					$article_img = \Drupal\file\Entity\File::load($article_id)->createFileUrl();
@@ -260,7 +282,7 @@ class Article extends ControllerBase
 								</div>
 
 								<div class="d-flex mx-4 mt-2">
-									<div class="offset-lg-0 text-capitalize">By '.$author_name.' </div>
+									<div class="offset-lg-0 text-capitalize">By '.$user_full_name.' </div>
 									<div class="offset-lg-1">'.$final_date.'</div>
 								</div>
 								<div class="p-4 pt-0">
