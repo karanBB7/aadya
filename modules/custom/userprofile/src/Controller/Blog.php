@@ -65,8 +65,6 @@ class Blog extends ControllerBase
     
         if ($node) {
 
-
-
             $title = $node->getTitle();
             $body = $node->get('body')->value;
             $date = $node->getCreatedTime();
@@ -106,6 +104,9 @@ class Blog extends ControllerBase
                 'user_full_name' => $user_full_name,
             ];
             $response['node_id'] = $node_id;
+            $response['username'] = $username;
+            $response['title'] = $title;
+            $response['base_url'] = $base_url;
 
 
         }
@@ -274,6 +275,7 @@ class Blog extends ControllerBase
         $response['node_count'] = $filtered_node_count_article;
         $response['total_pages'] = $total_pages;
         $response['current_page'] = $page;
+        $response['username'] = $username;
     
         return [
             '#theme' => 'profile_all_blog_template',

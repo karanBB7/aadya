@@ -1,4 +1,28 @@
 
+<style>
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+</style>
 {% for article in arr_data.article %}
     <title>{{article.title}}</title>
 {% endfor %}
@@ -8,7 +32,14 @@
                 <div class="row">
 
                     <div class="col-sm-8">
-                        {% if arr_data.article is not empty %}
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ url('userprofile.getprofile', {'username': arr_data.username}) }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Home</a></li>
+  <li><a href="{{ url('<front>') }}blog/{{ arr_data.username }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Blogs</a></li>
+  <li>{{ arr_data.title }}</li>
+</ul>
+            {% if arr_data.article is not empty %}
                             {% for article in arr_data.article %}
                                 <article>
                                     <h1 class="fw-bolder">{{article.title}}</h1>
@@ -54,7 +85,7 @@
                                 <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
                             </div>
                             <input type="hidden" name="node_id" id="node_id" value="{{ arr_data.node_id }}">
-                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+                            <button type="submit" class="btn btn-primary mb-5">Submit Comment</button>
                         </form>
                     </div>
 

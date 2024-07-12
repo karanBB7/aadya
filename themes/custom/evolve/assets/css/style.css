@@ -626,7 +626,7 @@ a{
 
 #sec5 .search-wrapper{
 	background-color: var(--c3);
-	
+	border-radius: 5px;
 }
 
 #sec5 .searchBtn {
@@ -1245,7 +1245,7 @@ button:hover{
 
 #p2sec5 .secondtheme .search-wrapper {
     background-color: var(--p2c3);
-
+    border-radius: 5px;
 }
 
 #p2sec5 .secondtheme .searchBtn {
@@ -1952,3 +1952,62 @@ button:hover{
 .content-overflow {
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+
+
+
+
+@keyframes slide {
+	from {
+	  transform: translateX(0);
+	}
+	to {
+	  transform: translateX(-100%);
+	}
+  }
+  
+  
+  .text-scroll {
+	overflow: hidden;
+	padding: 3px 0;
+	background-color: rgba(0,0,0,0.5);
+	white-space: nowrap;
+	position: relative;
+  }
+  
+  .text-scroll:before,
+  .text-scroll:after {
+	position: absolute;
+	top: 0;
+	width: 250px;
+	height: 100%;
+	content: "";
+	z-index: 2;
+  }
+  
+  .text-scroll:before {
+	left: 0;
+  /*  background: linear-gradient(to left, rgba(255, 255, 255, 0), black);*/
+  }
+  
+  .text-scroll:after {
+	right: 0;
+  /*  background: linear-gradient(to right, rgba(255, 255, 255, 0), black);*/
+  }
+  
+  .text-scroll:hover .text-slide {
+	animation-play-state: paused;
+  }
+  
+  .text-slide {
+	display: inline-block;
+	animation: 35s slide infinite linear;
+  }
+  
+  .text-slide span {
+	display: inline-block;
+	font-size: 20px;
+	/* font-weight: bold; */
+	padding: 0 40px;
+	color: #fff;
+  }

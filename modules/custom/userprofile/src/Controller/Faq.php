@@ -136,7 +136,7 @@ class Faq extends ControllerBase
 			$uid = \Drupal::currentUser()->id();
 		}
 		$ea_query = \Drupal::entityQuery('node')
-			->range(0, 6)
+			->range(0, 50)
 			->condition('status', 1)
 			->condition('type', 'faq')
 			->condition('uid', $uid);

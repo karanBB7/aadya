@@ -428,9 +428,17 @@ class DoctorProfile extends ControllerBase
 
 
 
+			// $ea_query3 = \Drupal::entityQuery('node')
+			// ->condition('status', 1)
+			// ->condition('type', 'faq', '=');
+
 			$ea_query3 = \Drupal::entityQuery('node')
+			->range(0, 6)
 			->condition('status', 1)
-			->condition('type', 'faq', '=');
+			->condition('type', 'faq')
+			->condition('uid', $uid);
+
+
 			if(!empty($search)){
 				$ea_query3->condition('title', $search);
 			}
