@@ -25,6 +25,7 @@ function loadMonthsCarousel() {
         loop: false,
         margin: 10,
         nav: true,
+        navText: ['<i class="fas fa-chevron-left owl-left"></i>', '<i class="owl-right fas fa-chevron-right"></i>'],
         items: 1,
         dots: false,
         startPosition: new Date().getMonth()

@@ -283,7 +283,7 @@
             
         </div>
 
-    <div class="slides">
+    <div class="slides mt-3">
         <div class="p-1 move">
             <span class="mx-1 blog-scroll2">Blog</span> /
             <span class="mx-1 blog-scroll2">Status</span>/
@@ -463,7 +463,7 @@
 
 
 
-<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class="p-5 pb-3">
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec3' : 'p2sec3' }}" class=" pb-3">
 	{% if arr_data.profile_theme == 'theme2' %}
 		<div class="secondtheme">
 	{% endif %}
@@ -471,24 +471,26 @@
 
 <div class="container">
     <h2>Book Appointment</h2>
-    <ul class="nav nav-pills">
+<div class="clinic-nav-container">
+  <ul class="nav nav-pills clinic-list">
     {% set i = 1 %}
-        {% for k, clinic in arr_data.doctor_clinic_appointment %}
-            <li class="nav-item book_appointment">
-                <a class="nav-link {{ i == 1 ? 'active' : ''}} clinicname" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
-            </li>
-            {% set i = i + 1 %}
-        {% endfor %}
-    </ul>
-
-    <div class="tab-content">
-        <div class="col-sm-3 pt-4">
+    {% for k, clinic in arr_data.doctor_clinic_appointment %}
+      <li class="nav-item book_appointment">
+        <a class="nav-link {{ i == 1 ? 'active' : ''}} clinicname" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
+      </li>
+      {% set i = i + 1 %}
+    {% endfor %}
+  </ul>
+  <button class="nav-arrow next-clinic d-md-none  btn" aria-label="Next clinic">Next</button>
+</div>
+    <div class="tab-content p-3">
+        <div class="col-sm-1 pt-4">
             <div id="month-carousel" class="owl-carousel owl-theme monthslider2"></div>
         </div>
         {% for k, clinic in arr_data.doctor_clinic_appointment %}
             <div id="{{k}}" class="tab-pane {{ k == 0 ? 'active' : ''}}"><br>
                 <div id="brain" class="tab-pane active"><br>
-                    <div class="col-lg-12 col-sm-12 pt-4">
+                    <div class="col-lg-12 col-sm-12 ">
                         <div class="row">
                             <div class="owl-carousel dateslider" data-target_id="{{ clinic.target_id }}">
                                 <!-- Dates will be populated here by JavaScript -->
@@ -496,14 +498,14 @@
                         </div>
                     </div>
 
-                    <div class="d-flex sm-block">
-                        <div class="col-sm-1 pt-3">
+                    <div class="d-flex pt-4">
+                        <div class="col-sm-1  p-0 m-0">
                             <div class="location-wrapper">
-                                <p class="text-center p-2 pt-2 fs-1"><i class="fa-solid fa-location-dot"></i></p>
+                                <p class="text-center p-2 fs-4"><i class="fa-solid fa-location-dot"></i></p>
                             </div>
                         </div>
-                        <div class="col-lg-8 pt-2">
-                            <p class="fw-400 fs-5 pt-4"><b>{{clinic.address}}</b></p>
+                        <div class="col-lg-8 p-0 m-0">
+                            <p class="mx-2">{{clinic.address}}</p>
                         </div>
                     </div>
 
@@ -608,39 +610,38 @@
 
 
 
-<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec4' : 'p2sec4' }}" class="pt-0">
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec4' : 'p2sec4' }}" class="pt-0 pb-4">
 	{% if arr_data.profile_theme == 'theme2' %}
 		<div class="secondtheme">
 	{% endif %}
     <div class="container">
-        <div class="row p-2 sm-center">
+        <div class="row  pt-5 sm-center">
             <h2 class="text-center">Areas of expertise</h2>
         </div>
         <div class="row pt-5 sm-hide">
 
         </div>
 
-        {# <!------------Expertise Mobile view--------------------> #}
 
         <div class="owl-carousel expslider ">
-
             {% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
-            <div class="col-lg-12 p-2 p-0 m-0">
+            <div class="col-lg-12 expcontent p-2 m-0 pb-4">
                 <div class="p-4 shadow" style="border-radius: 10px;" >
                 <div class="exp-imag-wrapper">
                     <div class="col-sm-12 mx-auto">
                         <img src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
                     </div>
                 </div>
-                <h6 class="text-center p-3"><b>{{data.field_expertisehead}}</b></h6>
+                <h6 class="text-center p-3 expertise-title"><b>{{data.field_expertisehead}}</b></h6>
                 <div class="exp-cont">{{data.field_expertisecontent}}</div>
             </div>
             </div>
 
             {% endfor %}
 
-
         </div>
+
+
     </div>
 
 	
@@ -660,16 +661,16 @@
 			<div class="col-sm-12 search-wrapper p-3">
 				<div class="row">
 					<div class="col-sm-12 col-md-12">
-						<div class="d-flex">
+						<div class="search-wrapp">
 							<input class="form-control flex-grow-1 p-3" type="search" name="search" id="search" placeholder="Search for news">
 							<button class="searchBtn p-3 ml-2 search_news_btn">Search</button>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-12 mt-3 mt-md-0">
 						<div class="tags text-white d-flex flex-wrap">
-							<p class="tag mx-2 my-1 cat-news-load {{ arr_data.profile_theme == 'theme1' ? 'active-tag1' : 'active-tag2' }}" data-id="" data-username="{{arr_data.auth_na}}">Latest</p>
+							<p class="tag mx-2 my-3 cat-news-load {{ arr_data.profile_theme == 'theme1' ? 'active-tag1' : 'active-tag2' }}" data-id="" data-username="{{arr_data.auth_na}}">Latest</p>
 							{% for key,categorey in arr_data.news_categoery %}
-								<p class="tag mx-2 my-1 cat-news-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.auth_na}}">{{ categorey. term_name}} </p>
+								<p class="tag mx-2 my-3 cat-news-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.auth_na}}">{{ categorey. term_name}} </p>
 							{% endfor %}
 						</div>
 					</div>
@@ -681,7 +682,7 @@
 				<div class="row">
                     {% for key,news_article in arr_data.article %}
                        <div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
-            <div class="articele-wrapper pb-5">
+            <div class="articele-wrapper mb-5">
                 <div class="article-image">
                     <img src="{{ news_article.thumb }}" width="100%">
                 </div>
@@ -747,7 +748,7 @@
         <div class="owl-carousel docslider ">
             {% for key,url in arr_data.profile_theme1.field_youtube %}
 
-                <div class="item col-sm-12 about-wrap">
+                <div class="item col-sm-12 about-wrap shadow">
                 <iframe class=" p-3 mx-auto d-block youtube-iframe" width="80%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <h6 class="text-center pt-2"><b>{{url.field_about_video_title}}</b></h6>
                     <p class="text-center pb-2">{{url.field_about_video_description}}</p>
@@ -790,30 +791,23 @@
         <h2 class="text-center pb-4">What patients say about the doctor</h2>
         <div class="col-sm-12 border border-dark-subtle rounded p-4">
             <div class="d-flex">
-                <div class="col-sm-10 pt-2">
+                <div class="col-sm-12 pt-2">
                  <input type="search" name="search" id="tstsearch" class="p-3 form-control" placeholder="Patient Experience">
                 </div>
-                <div class="col-sm-3"> 
-                        <button type="button" class="btn p-3 test-search m-2">
-                            Search
-                        </button>
-                </div>
+                <button type="button" class="btn p-3 test-search m-2">
+                    Search
+                </button>
             
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12 border border-dark-subtle rounded mt-5 pb-3 pt-3">
-
-                <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.testimonialuid}}">All Patient Experiences</button>
+             <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.testimonialuid}}">All Patient Experiences</button>
                 {% for key,categorey in arr_data.patient_testimonialstags %}
                     {% if categorey.nodes is not empty %}
                         <button class="exp rounded-pill p-3 me-4 mt-3 testimonial-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.testimonialuid}}">{{ categorey. term_name}} </button>
                     {% endif %}
                 {% endfor %}
-
-            </div>
         </div>
+
 
        
 
@@ -872,26 +866,23 @@
 
         <div class="col-sm-12 border border-dark-subtle rounded p-4">
            <div class="d-flex">
-            <div class="col-sm-10 pt-2">
+            <div class="col-sm-12 pt-2">
                 <input type="search" name="search" id="faqsearch" class="p-3 form-control" placeholder="Faq">
             </div>
-					<div class="col-sm-3"> 
-							<button type="button" class="btn p-3 faq-search m-2">
-								Search
-							</button>
-					</div>
+            <button type="button" class="btn p-3 faq-search m-2">
+                Search
+            </button>
             </div>
-        </div>
-
-
-        <div class="col-sm-12 border border-dark-subtle rounded p-3 mt-5">
             <button class="exp rounded-pill p-3 me-4 mt-3 faq-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.faquid}}">All</button>
             {% for key,categorey in arr_data.faqtags %}
 					{% if categorey.nodes is not empty %}
                     <button class="exp rounded-pill p-3 me-4 mt-3 faq-load" data-id="{{ categorey.term_id }}" data-username="{{arr_data.faquid}}">{{ categorey.term_name}} </button>
                 {% endif %}
 			{% endfor %}
+
         </div>
+
+
 
         <div class="container pt-5">
             <div class="faq_cls">

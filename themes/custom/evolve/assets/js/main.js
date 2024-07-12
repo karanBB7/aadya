@@ -314,13 +314,11 @@ $('.docslider').owlCarousel({
     $(document).ready(function(){
         function setupReadMore(section, linkClass) {
             $(section).find('.exp-cont').each(function(){
-                var content = $(this).text();
-                var words = content.trim().split(/\s+/);
-                if(words.length > 30){
-                    var shortenedContent = words.slice(0, 30).join(' ') + '...';
+                var content = $(this).html();
+                if(content.length > 150){
+                    var shortenedContent = content.substring(0, 150).trim() + '...';
                     $(this).data('fullText', content);
-                    $(this).data('shortenedText', shortenedContent);
-                    $(this).html(shortenedContent + ' <a href="#" class="' + linkClass + '">Show more</a>');
+                    $(this).html(shortenedContent + ' <a href="#" class="' + linkClass + '">Read more</a>');
                 }
             });
     
@@ -328,22 +326,25 @@ $('.docslider').owlCarousel({
                 e.preventDefault();
                 var $expCont = $(this).closest('.exp-cont');
                 var fullText = $expCont.data('fullText');
-                var shortenedText = $expCont.data('shortenedText');
                 var isExpanded = $expCont.data('expanded') || false;
-    
                 if(isExpanded){
-                    $expCont.html(shortenedText + ' <a href="#" class="' + linkClass + '">Show more</a>');
+                    var shortenedContent = fullText.substring(0, 150).trim() + '...';
+                    $expCont.html(shortenedContent + ' <a href="#" class="' + linkClass + '">Read more</a>');
+                    $expCont.data('expanded', false);
                 } else {
                     $expCont.html(fullText + ' <a href="#" class="' + linkClass + '">Show less</a>');
+                    $expCont.data('expanded', true);
                 }
-                $expCont.data('expanded', !isExpanded);
             });
         }
-    
         setupReadMore('#sec4', 'read-more-link');
         setupReadMore('#p2sec4 .secondtheme', 'read-more-link2');
     });
-    
+
+
+
+
+
 
     $(document).ready(function() {
         function extractVideoID(url) {
@@ -468,3 +469,27 @@ $('.docslider').owlCarousel({
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const list = document.querySelector('.clinic-list');
+        const items = Array.from(list.querySelectorAll('.nav-item'));
+        const nextBtn = document.querySelector('.next-clinic');
+      
+        function rotateClinic() {
+          // Move the first item to the end
+          const firstItem = items.shift();
+          items.push(firstItem);
+      
+          // Update the DOM
+          items.forEach(item => list.appendChild(item));
+      
+          // Activate the new first item
+          items[0].querySelector('.nav-link').click();
+        }
+      
+        if (nextBtn && items.length > 1) {
+          nextBtn.addEventListener('click', rotateClinic);
+        } else {
+          nextBtn.style.display = 'none';
+        }
+      });
