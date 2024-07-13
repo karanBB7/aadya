@@ -523,14 +523,14 @@
   </ul>
   <button class="nav-arrow next-clinic d-md-none  btn" aria-label="Next clinic">Next</button>
 </div>
-    <div class="tab-content p-3">
-        <div class="col-sm-1 pt-4">
+    <div class="tab-content p-0 m-0 ">
+        <div class="col-sm-1 mt-3">
             <div id="month-carousel" class="owl-carousel owl-theme monthslider2"></div>
         </div>
         {% for k, clinic in arr_data.doctor_clinic_appointment %}
-            <div id="{{k}}" class="tab-pane {{ k == 0 ? 'active' : ''}}"><br>
-                <div id="brain" class="tab-pane active"><br>
-                    <div class="col-lg-12 col-sm-12 ">
+            <div id="{{k}}" class="tab-pane p-0 m-0 {{ k == 0 ? 'active' : ''}}"><br>
+                <div id="brain" class="tab-pane active p-0 m-0"><br>
+                    <div class="col-lg-12 col-sm-12 p-0 m-0">
                         <div class="row">
                             <div class="owl-carousel dateslider" data-target_id="{{ clinic.target_id }}">
                                 <!-- Dates will be populated here by JavaScript -->
@@ -703,7 +703,7 @@
 					<div class="col-sm-12 col-md-12">
 						<div class="search-wrapp">
 							<input class="form-control flex-grow-1 p-3" type="search" name="search" id="search" placeholder="Search for news">
-							<button class="searchBtn p-3 ml-2 search_news_btn">Search</button>
+							<button class="searchBtn p-3 ml-2 search_news_btn uname" data-username="{{arr_data.auth_na}}">Search</button>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-12 mt-3 mt-md-0">

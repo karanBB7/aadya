@@ -1789,11 +1789,11 @@ button:hover{
   #month-carousel.owl-theme .owl-nav [class*=owl-] {
     color: var(--c4) !important;
     background: transparent !important;
-    margin: 5px;
-    padding: 4px 7px;
     display: inline-block;
     cursor: pointer;
     border-radius: 3px;
+    font-size: 18px !important;
+    padding-top: 20px;
 }
 
 #month-carousel.owl-theme .owl-nav [class*=owl-] i {

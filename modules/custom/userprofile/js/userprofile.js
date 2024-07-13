@@ -18,12 +18,14 @@ jQuery(document).ready(function($) {
 
 	$('.search_news_btn').on('click',function(){
 		var search = $("#search").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_news",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".news_cls").html(data.html);
@@ -51,12 +53,14 @@ jQuery(document).ready(function($) {
 
 	$('.test-search').on('click',function(){
 		var search = $("#tstsearch").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_testimonials",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".testimonials_cls").html(data.html);
@@ -86,12 +90,14 @@ jQuery(document).ready(function($) {
 
 	$('.faq-search').on('click',function(){
 		var search = $("#faqsearch").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_faq",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".faq_cls").html(data.html);

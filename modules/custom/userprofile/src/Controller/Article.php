@@ -47,26 +47,36 @@ class Article extends ControllerBase
 
 	function getSearchNews(Request $request){
 		global $base_url;
+		$uid = $request->get('uid');
 		$search = !empty($request->get('search')) ? $request->get('search'): array();
+		
 		$ea_query = \Drupal::entityQuery('node')
 			->range(0, 6)
 			->condition('status', 1)
-			->condition('type', 'article', '=');
+			->condition('type', 'article', '=')
+			->condition('uid', $uid); 
+	
 		if(!empty($search)){
 			$ea_query->condition('title', '%'.$search.'%', 'LIKE');
 		}
 		$ea_query->accessCheck(TRUE);
 		$ea_nids = $ea_query->sort('created', 'DESC')->execute();
-
+	
+		// Modify the count query
 		$ea_query1 = \Drupal::entityQuery('node')
 			->condition('status', 1)
-			->condition('type', 'article', '=');
+			->condition('type', 'article', '=')
+			->condition('uid', $uid); 
+	
 		if(!empty($search)){
 			$ea_query1->condition('title', '%'.$search.'%', 'LIKE');
 		}
 		$ea_query1->accessCheck(TRUE);
 		$ea_nids1 = $ea_query1->sort('created', 'DESC')->execute();
 		$node_count = count($ea_nids1);
+	
+
+
 		$ea_nodes = Node::loadMultiple($ea_nids);
 		$html = '';
 		$html .='<h5 class="p-3">'.$node_count.' Results</h5>';
@@ -106,6 +116,7 @@ class Article extends ControllerBase
 						}
 					}
 				}
+				
 
 				$html .='<div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
 							<div class="articele-wrapper pb-5">
