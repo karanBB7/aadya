@@ -511,21 +511,32 @@
 
 <div class="container">
     <h2>Book Appointment</h2>
+    
 <div class="clinic-nav-container">
-  <ul class="nav nav-pills clinic-list">
-    {% set i = 1 %}
-    {% for k, clinic in arr_data.doctor_clinic_appointment %}
-      <li class="nav-item book_appointment">
-        <a class="nav-link {{ i == 1 ? 'active' : ''}} clinicname" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">{{ clinic.clinic_name }}</a>
-      </li>
-      {% set i = i + 1 %}
-    {% endfor %}
-  </ul>
-  <button class="nav-arrow next-clinic d-md-none  btn" aria-label="Next clinic">Next</button>
+  <button class="nav-arrow prev-clinic btn" aria-label="Previous clinic">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <div class="clinic-list-wrapper">
+    <ul class="nav nav-pills clinic-list">
+      {% set i = 1 %}
+      {% for k, clinic in arr_data.doctor_clinic_appointment %}
+        <li class="nav-item book_appointment">
+          <a class="nav-link {{ i == 1 ? 'active' : ''}} clinicname" data-bs-toggle="pill" href="#{{ k }}" data-target_id="{{ clinic.target_id }}">
+            {{ clinic.clinic_name }}
+          </a>
+        </li>
+        {% set i = i + 1 %}
+      {% endfor %}
+    </ul>
+  </div>
+  <button class="nav-arrow next-clinic btn" aria-label="Next clinic">
+    <i class="fas fa-chevron-right"></i>
+  </button>
 </div>
+
     <div class="tab-content p-0 m-0 ">
         <div class="col-sm-1 mt-3">
-            <div id="month-carousel" class="owl-carousel owl-theme monthslider2"></div>
+            <div id="month-carousel" class="mx-auto owl-carousel owl-theme monthslider2"></div>
         </div>
         {% for k, clinic in arr_data.doctor_clinic_appointment %}
             <div id="{{k}}" class="tab-pane p-0 m-0 {{ k == 0 ? 'active' : ''}}"><br>
@@ -702,8 +713,12 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-12">
 						<div class="search-wrapp">
-							<input class="form-control flex-grow-1 p-3" type="search" name="search" id="search" placeholder="Search for news">
-							<button class="searchBtn p-3 ml-2 search_news_btn uname" data-username="{{arr_data.auth_na}}">Search</button>
+
+                            <input  class="form-control flex-grow-1  inputfix hfix" type="search" name="search" id="search" placeholder="Search for news">
+							<button class="hfix searchBtn p-3 ml-2 search_news_btn uname" data-username="{{arr_data.auth_na}}">Search</button>
+
+
+
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-12 mt-3 mt-md-0">
@@ -827,14 +842,11 @@
 
 
     <div class="container">
-        <p class="text-center fs-5 pt-5">Patient Experience</p>
-        <h2 class="text-center pb-4">What patients say about the doctor</h2>
+        <h2 class="text-center pb-4">What Patients say about the Doctor</h2>
         <div class="col-sm-12 border border-dark-subtle rounded p-4">
             <div class="d-flex">
-                <div class="col-sm-12 pt-2">
-                 <input type="search" name="search" id="tstsearch" class="p-3 form-control" placeholder="Patient Experience">
-                </div>
-                <button type="button" class="btn p-3 test-search m-2">
+                 <input type="search" name="search" id="tstsearch" class=" form-control inputfix hfix " placeholder="Patient Experience">
+                <button type="button" class="hfix btn p-3 test-search ">
                     Search
                 </button>
             
@@ -906,13 +918,13 @@
 
         <div class="col-sm-12 border border-dark-subtle rounded p-4">
            <div class="d-flex">
-            <div class="col-sm-12 pt-2">
-                <input type="search" name="search" id="faqsearch" class="p-3 form-control" placeholder="Faq">
+                <input type="search" name="search" id="faqsearch" class="inputfix hfix form-control" placeholder="Faq">
+                <button type="button" class="btn p-3 faq-search hfix">
+                    Search
+                </button>
+
             </div>
-            <button type="button" class="btn p-3 faq-search m-2">
-                Search
-            </button>
-            </div>
+
             <button class="exp rounded-pill p-3 me-4 mt-3 faq-load {{ arr_data.profile_theme == 'theme1' ? 'activeexperience1' : 'activeexperience2' }}" data-username="{{arr_data.faquid}}">All</button>
             {% for key,categorey in arr_data.faqtags %}
 					{% if categorey.nodes is not empty %}

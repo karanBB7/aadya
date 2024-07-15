@@ -232,17 +232,6 @@
 			width: 100%;
 		}
 
-		#sec5 .searchBtn, #p2sec5 .secondtheme .searchBtn {
-			left: 63.5%!important;
-		}
-
-		#sec6 .test-search, #p2sec6 .secondtheme .test-search{
-			left: 66.5%!important;
-		}
-
-		#sec7 .faq-search, #p2sec7 .secondtheme .faq-search{
-			left: 65.5% !important;
-		}
 		  
 		.date-wrapper {
 			width: 150px !important;
@@ -271,80 +260,6 @@
 	
 	}
 
-	
-
-
-	@media (max-width: 767px) {
-		.clinic-nav-container {
-		  position: relative;
-		}
-		.next-clinic {
-		  display: block;
-		  margin-top: 10px;
-		}
-
-		#sec3 .next-clinic{
-			background-color: var(--c3);
-			color: var(--c1);
-		}
-
-		#p2sec3 .secondtheme .next-clinic{
-			background-color: var(--p2c3);
-			color: var(--c1);
-		}
-
-
-	  }
-	  
-	  @media (min-width: 768px) {
-		.next-clinic {
-		  display: none;
-		}
-	  }
-
-
-
-
-
-	  @media only screen 
-and (min-device-width: 768px) 
-and (max-device-width: 1024px) 
-and (-webkit-min-device-pixel-ratio: 2) {
-	#sec5 .searchBtn ,#p2sec5 .secondtheme .searchBtn{
-		left: 79.5%!important;
-	}
-
-	#sec6 .test-search, #p2sec6 .secondtheme .test-search {
-		left: 80.5%!important;
-	}
-
-
-	#sec7 .faq-search, #p2sec7 .secondtheme .faq-search {
-		left: 80.5% !important;
-	}
-
-
-	  
-}
-
-
-@media only screen 
-and (min-device-width: 1024px) 
-and (max-device-width: 1366px) 
-and (-webkit-min-device-pixel-ratio: 2) {
-	#sec5 .searchBtn, #p2sec5 .secondtheme .searchBtn {
-		left: 84.5%!important;
-	}
-
-	#sec6 .test-search, #p2sec6 .secondtheme .searchBtn {
-		left: 84.5%!important;
-	}
-
-	#sec7 .faq-search, #p2sec7 .secondtheme .searchBtn {
-		left: 84.5% !important;
-	}
-}
-
 
 
 
@@ -353,3 +268,78 @@ and (-webkit-min-device-pixel-ratio: 2) {
 	overflow: auto;
 }
 
+
+
+.clinic-nav-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+  }
+  
+  .clinic-list-wrapper {
+	width: 100%;
+	overflow: hidden;
+  }
+  
+  .clinic-list {
+	display: flex;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	transition: all 0.3s ease;
+  }
+  
+  .clinic-nav-container .nav-item {
+	flex: 0 0 100%;
+	width: 100%;
+	transition: all 0.3s ease;
+  }
+  
+  .clinicname {
+	white-space: nowrap;
+	overflow: visible;
+	text-overflow: clip;
+	padding: 10px;
+	text-align: center;
+  }
+
+  @media (max-width: 767px) {
+	.clinic-nav-container {
+	  padding: 0 40px;
+	}
+  
+	.clinic-nav-container .nav-arrow {
+	  position: absolute;
+	  top: 50%;
+	  transform: translateY(-50%);
+	  z-index: 1;
+	  background: rgba(255, 255, 255, 0.8);
+	  border: none;
+	  padding: 5px 10px;
+	  cursor: pointer;
+	  display: block;
+	}
+  
+	.clinic-nav-container .prev-clinic {
+	  left: 0;
+	}
+  
+	.clinic-nav-container .next-clinic {
+	  right: 0;
+	}
+  }
+  
+  @media (min-width: 768px) {
+	.clinic-nav-container .nav-arrow {
+	  display: none;
+	}
+  
+	.clinic-nav-container .clinic-list {
+	  flex-wrap: wrap;
+	}
+  
+	.clinic-nav-container .nav-item {
+	  flex: 0 1 auto;
+	  width: auto;
+	}
+  }

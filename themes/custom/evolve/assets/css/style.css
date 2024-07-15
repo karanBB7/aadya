@@ -634,12 +634,16 @@ a{
     background-color: var(--c3);
     color: var(--c1);
     font-weight: bolder;
-    position: absolute;
     width: 120px;
+    vertical-align: middle;
     left: 82.5% !important;
-    margin-top: -0.01px;
+    margin-top: -.2px;
     border: .5px solid var(--c1);
+    margin-bottom: 2px;
+    border-left: none;
 }
+
+
 
 .search-wrapp{
     display: flex;
@@ -707,8 +711,9 @@ button:hover{
 #sec6 .test-search{
     background-color: var(--c3);
     color: var(--c1);
-    position: absolute;
-    left: 83.5%;
+    vertical-align: middle;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 /* #sec6 .activeexperience {
@@ -774,8 +779,9 @@ button:hover{
 #sec7 .faq-search{
     background-color: var(--c3);
     color: var(--c1);
-    position: absolute;
-    left: 83.5%;
+    vertical-align: middle;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 /* #sec7 .activeexperience {
@@ -1249,15 +1255,17 @@ button:hover{
 }
 
 #p2sec5 .secondtheme .searchBtn {
-        text-align: center;
-        background-color: var(--p2c3);
-        color: var(--c1);
-        font-weight: bolder;
-        position: absolute;
-        width: 120px;
-        left: 82.5% !important;
-        margin-top: -0.01px;
-        border: .5px solid var(--c1);
+    text-align: center;
+    background-color: var(--p2c3);
+    color: var(--c1);
+    font-weight: bolder;
+    width: 120px;
+    vertical-align: middle;
+    left: 82.5% !important;
+    margin-top: -.2px;
+    border: .5px solid var(--c1);
+    margin-bottom: 2px;
+    border-left: none;
 }
 
 #p2sec5 .secondtheme h5 {
@@ -1324,8 +1332,9 @@ button:hover{
 #p2sec6 .secondtheme .test-search{
     background-color: var(--p2c3);
     color: var(--c1);
-    position: absolute;
-    left: 83.5%;
+    vertical-align: middle;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 
@@ -1381,8 +1390,9 @@ button:hover{
 #p2sec7 .secondtheme .faq-search{
     background-color: var(--p2c3) ;
     color: var(--c1);
-    position: absolute;
-    left: 83.5%;
+    vertical-align: middle;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 #p2sec7 .secondtheme h2 {
@@ -1792,8 +1802,8 @@ button:hover{
     display: inline-block;
     cursor: pointer;
     border-radius: 3px;
-    font-size: 18px !important;
-    padding-top: 20px;
+    font-size: 24px !important;
+    margin-top: 5px !important;
 }
 
 #month-carousel.owl-theme .owl-nav [class*=owl-] i {
@@ -1811,12 +1821,12 @@ button:hover{
 }
 
 #month-carousel .owl-nav button.owl-prev {
-    left: -35px;
+    left: -20px;
     margin-top: -5px !important;
 }
 
 #month-carousel .owl-nav button.owl-next {
-    right: -35px;
+    right: -20px;
     margin-top: -5px !important;
 }
 
@@ -2011,3 +2021,18 @@ button:hover{
 	padding: 0 40px;
 	color: #fff;
   }
+
+  .inputfix{
+    border-bottom-right-radius: 0px; 
+    border-top-right-radius: 0px; 
+    padding: 2px;
+  }
+
+
+  .hfix{
+    height: 55px;
+}
+
+
+
+

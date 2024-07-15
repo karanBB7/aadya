@@ -24,8 +24,7 @@ function loadMonthsCarousel() {
     $('.monthslider2').owlCarousel({
         loop: false,
         margin: 10,
-        nav: false,
-        // navText: ['<i class="fas fa-chevron-left owl-left"></i>', '<i class="owl-right fas fa-chevron-right"></i>'],
+        nav: true,
         items: 1,
         dots: false,
         startPosition: new Date().getMonth()
@@ -37,6 +36,8 @@ function loadMonthsCarousel() {
         loadDatesCarousel();
     });
 }
+
+
 
 function loadDatesCarousel() {
     $('.dateslider').each(function() {
@@ -72,7 +73,7 @@ function loadDatesCarousel() {
             dateContainer.append(dateWrapper);
         }
 
-        dateContainer.owlCarousel({
+        const owlOptions = {
             loop: false,
             margin: 10,
             nav: true,
@@ -87,13 +88,36 @@ function loadDatesCarousel() {
                     items: 7
                 }
             },
-            onInitialized: addCustomNavigation
-        });
+            onInitialized: addCustomNavigation,
+            onTranslated: function(event) {
+                if ($(window).width() < 600) {
+                    const activeItem = $(event.target).find('.owl-item.active .current_date_select');
+                    activeItem.click();
+                    updateCurrentViewDate(activeItem);
+                }
+            }
+        };
+
+        dateContainer.owlCarousel(owlOptions);
     });
 
     updateMonthCarousel();
-    attachDateSelectListener();
+    
+    $('.current_date_select').off('click').on('click', function() {
+        $('.current_date_select').removeClass('activedates date-highlight');
+        $(this).addClass('activedates date-highlight');
+        // Add any additional logic for date selection here
+        hidePassedSlots();
+    });
+
+    if ($(window).width() < 600) {
+        $('.dateslider').each(function() {
+            $(this).find('.owl-item:first .current_date_select').click();
+        });
+    }
 }
+
+
 
 function addCustomNavigation(event) {
     $('.dateslider .owl-nav').show();
@@ -108,40 +132,13 @@ function addCustomNavigation(event) {
     });
 }
 
-function updateDates(offset) {
-    const today = new Date();
-    currentViewDate.setDate(currentViewDate.getDate() + offset);
-    if (currentViewDate < today) {
-        currentViewDate = new Date(today);
-    }
-    loadDatesCarousel();
-}
+
 
 function updateMonthCarousel() {
     $('.monthslider2').trigger('to.owl.carousel', [currentViewDate.getMonth(), 300]);
 }
 
-// function attachDateSelectListener() {
-//     $(document).off('click', '.current_date_select').on('click', '.current_date_select', function() {
-//         var current_date = $(this).attr('data-date');
-//         var target_id = $(this).attr('data-target_id');
-//         $('.current_date_select').removeClass('activedates date-highlight');
-//         $(this).addClass('activedates date-highlight');
-//         $.ajax({
-//             url: "/get_booking_time_slot",
-//             method: "POST",
-//             cache: false,
-//             data: {
-//                 "target_id": target_id,
-//                 "current_date": current_date,
-//             },
-//             success: function (data) {
-//                 $(".time_slots").html(data.html);
-//                 setTimeout(hidePassedSlots, 0);
-//             }
-//         });
-//     });
-// }
+
 
 function hidePassedSlots() {
     const now = new Date();
@@ -216,4 +213,55 @@ function updateSlotSection(sectionClass, startHour, endHour) {
         const sectionName = headingElement.text().split('(')[0].trim();
         headingElement.text(`${sectionName} (${count} slots)`);
     }
+}
+
+
+function updateCurrentViewDate(activeItem) {
+    const day = parseInt(activeItem.attr('data-date'));
+    const month = parseInt(activeItem.attr('data-month')) - 1; 
+    const year = parseInt(activeItem.attr('data-year'));
+    currentViewDate = new Date(year, month, day);
+}
+
+
+
+
+function addCustomNavigation(event) {
+    $('.dateslider .owl-nav').show();
+    $('.dateslider .owl-next').off('click').on('click', function() {
+        if ($(window).width() < 600) {
+            handleSmallDeviceNavigation(1);
+        } else {
+            updateDates(1);
+        }
+        return false;
+    });
+
+    $('.dateslider .owl-prev').off('click').on('click', function() {
+        if ($(window).width() < 600) {
+            handleSmallDeviceNavigation(-1);
+        } else {
+            updateDates(-1);
+        }
+        return false;
+    });
+}
+function handleSmallDeviceNavigation(direction) {
+    updateDates(direction);
+    
+    setTimeout(function() {
+        const activeItem = $('.dateslider').find('.owl-item.active .current_date_select');
+        activeItem.addClass('activedates date-highlight');
+        activeItem.click();
+    }, 350);
+}
+
+
+function updateDates(offset) {
+    const today = new Date();
+    currentViewDate.setDate(currentViewDate.getDate() + offset);
+    if (currentViewDate < today) {
+        currentViewDate = new Date(today);
+    }
+    loadDatesCarousel();
 }
