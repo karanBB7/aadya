@@ -57,7 +57,21 @@ public function getProfile(Request $request)
 	{
 		global $base_url;
 		$uid = \Drupal::currentUser()->id();
+		
+		if ($uid == 0) {
+			return $this->redirect('userprofile.homepage');
+		  }
 		$user = \Drupal\user\Entity\User::load($uid);
+
+		$user_full_name = '';
+		$para = $user->get("field_paragraphtheme1")->getValue();
+		if (!empty($para) && isset($para[0]['target_id'])) {
+			$paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+			if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+				$user_full_name = $paragraph->get('field_name')->value;
+			}
+		}
+
 		$para = $user->get("field_paragraphtheme1")->getValue();
 		$appointment_type = $user->get("field_type")->getValue();
 		$doctor_type = !empty($user->get("field_type")->getValue()) ? $user->get("field_type")->getValue()[0]['value'] : '';
@@ -163,10 +177,19 @@ public function getProfile(Request $request)
 						$clincterm = Term::load($clinctarget_id);
 						$clinic_name = $clincterm->getName();
 						$address = $clincterm->get('field_address')->getValue()[0]['value'];
+						$clinc_number = $clincterm->get('field_clinic_phone_number')->getValue()[0]['value'];
+
+						$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'];
+
 						$data[$key]['clinic_name'] = $clinic_name;
 						$data[$key]['target_id'] = $valuechild["target_id"];
 						$data[$key]['address'] = $address;
+						$data[$key]['clinc_number'] = $clinc_number;
+						$data[$key]['instructions'] = $instructions;
+
 					}
+
+
 				}  else {
 					$data[$name] = $this->loadfields->getFieldValue(
 						$paragraph,
@@ -241,9 +264,13 @@ public function getProfile(Request $request)
 				$article_id = $article[0]['target_id'];
 				$article_img = "";
 				$author = $node->field_author->getValue()[0]['value'];
+
+
+
 				if(!empty($article_id)){
 					$article_img = \Drupal\file\Entity\File::load($article_id)->createFileUrl();
 				}
+
 				$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
 				$response['article'][$key]['thumb'] = $article_img;
 				$response['article'][$key]['alias_url'] = $alias_url;
@@ -251,6 +278,8 @@ public function getProfile(Request $request)
 				$response['article'][$key]['date'] = $final_date;
 				$response['article'][$key]['author'] = $author;
 				$response['article'][$key]['body'] = $body;
+				$response['article'][$key]['user_full_name'] = $user_full_name; 
+
 			//}
 		}
 
@@ -627,11 +656,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 morning-slot"><div class="fs-3 pt-5"><b>Morning ('.$mornig_slot_du.' slots)</b></div>';
 				foreach($duation_slots as $value){
 					if(!empty($unavailability_morning) && in_array($value, $unavailability_morning)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($morning_book_slot) && in_array($value, $morning_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -643,11 +672,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 morning-slot"><div class="fs-3 pt-5"><b>Morning ('.$morning_slot_count.' slots)</b></div>';
 				foreach($mroning_slot as $value){
 					if(!empty($unavailability_morning) && in_array($value, $unavailability_morning)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($morning_book_slot) && in_array($value, $morning_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -670,11 +699,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 afternoon-slot"><div class="fs-3 pt-5"><b>After Noon ('.$after_slot_du.' slots)</b></div>';
 				foreach($duation_slots as $value){
 					if(!empty($unavailability_afternoon) && in_array($value, $unavailability_afternoon)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($afternoon_book_slot) && in_array($value, $afternoon_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -686,11 +715,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 afternoon-slot"><div class="fs-3 pt-5"><b>After Noon ('.$afternoon_slot_count.' slots)</b></div>';
 				foreach($after_slots as $value){
 					if(!empty($unavailability_afternoon) && in_array($value, $unavailability_afternoon)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($afternoon_book_slot) && in_array($value, $afternoon_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 				
@@ -714,11 +743,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 evening-slot"><div class="fs-3 pt-5"><b>Evening ('.$eveing_slot_du.' slots)</b></div>';
 				foreach($duation_slots as $value){
 					if(!empty($unavailability_evening) && in_array($value, $unavailability_evening)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($evening_book_slot) && in_array($value, $evening_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -730,11 +759,11 @@ public function getProfile(Request $request)
 				$html .='<div class="col-sm-12 evening-slot"><div class="fs-3 pt-5"><b>Evening ('.$evening_slot_count.' slots)</b></div>';
 				foreach($eveningslots as $value){
 					if(!empty($unavailability_evening) && in_array($value, $unavailability_evening)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning">No Slot Available</span></button>';
 					}elseif(!empty($evening_book_slot) && in_array($value, $evening_book_slot)){
-						$html .= '<button class="ap-book closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
+						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -842,16 +871,66 @@ public function getProfile(Request $request)
 		$firsttime = !empty($request->get('firsttime')) ? $request->get('firsttime') : '0';
 		$user_id = !empty($request->get('user_id')) ? $request->get('user_id') : '';
 		$doctor_type = !empty($request->get('doctor_type')) ? $request->get('doctor_type') : '';
+		$clinic_phone_number = !empty($request->get('clinic_phone_number')) ? $request->get('clinic_phone_number') : '';
+
 		$usera = \Drupal\user\Entity\User::load($user_id);
+
+		$para = $usera->get("field_paragraphtheme1")->getValue();
+		$field_name_value = '';
+		if (!empty($para) && isset($para[0]['target_id'])) {
+			$paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+			if ($paragraph) {
+				$field_name_value = $paragraph->get('field_name')->value;
+			}
+		}
+
+
+
 		$usernames = $usera->getAccountName();
+
+		$formatted_bookingtimeslot = date("g:iA", strtotime($bookingtimeslot));
 		$date = new DrupalDateTime($booking_date);
 		$date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
+		$date_booking = preg_replace('/(\d+)(st|nd|rd|th)/', '$1$2 ', $date_booking);
 
 		if($doctor_type === "request"){
-			$text_sms = 'Dear '.$fullname.'!, your request for an appointment with Dr.'.$usernames.' at '.$date_booking.' on '.$bookingtimeslot.' at '.$clinicname.' is accepted. Someone from the clinic will call and confirm the appointment shortly. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
-		}else{
-			$text_sms = 'Dear '.$fullname.'!, your appointment with Dr.'.$usernames.' at '.$date_booking.' on '.$bookingtimeslot.' at '.$clinicname.' is confirmed. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
+			$text_sms = 'Dear '.$fullname.'!, your request for an appointment with '.$field_name_value.' at '.$formatted_bookingtimeslot.' on '.$date_booking.' at '.$clinicname.' is accepted. Someone from the clinic will call and confirm the appointment shortly. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
+		} else {
+			$text_sms = 'Dear '.$fullname.', your appointment with '.$field_name_value.' at '.$clinicname.' on '.$date_booking.' at '.$formatted_bookingtimeslot.' is confirmed. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
 		}
+
+
+
+		if($doctor_type === "request"){
+			$text_sms2 = 'Dear '.$fullname.', your appointment with '.$field_name_value.' at '.$clinicname.' on '.$date_booking.' at '.$formatted_bookingtimeslot.' is confirmed. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
+
+
+			$mob_text = str_replace('+', '%20', urlencode($text_sms2));
+
+			$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$clinic_phone_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930778294643&UNICODE=TEXT';
+			
+			try {
+				$curl = curl_init();
+				curl_setopt_array($curl, array(
+				  CURLOPT_URL => $url_sms,
+				  CURLOPT_RETURNTRANSFER => true,
+				  CURLOPT_ENCODING => '',
+				  CURLOPT_MAXREDIRS => 10,
+				  CURLOPT_TIMEOUT => 0,
+				  CURLOPT_FOLLOWLOCATION => true,
+				  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				  CURLOPT_CUSTOMREQUEST => 'GET',
+				));
+	
+				$response = curl_exec($curl);
+	
+				curl_close($curl);
+			}
+			catch (RequestException $e) {
+			}
+
+		}
+
 
 
 
@@ -895,6 +974,7 @@ public function getProfile(Request $request)
 			'visit_firsttime' => $firsttime,
 			'type' => $doctor_type,
 			'created_date' => date('Y-m-d H:i:s'),
+			'clinic_phone_number' => $clinic_phone_number,
 		);
 		// Insert data into the custom table.
 		\Drupal::database()->insert($table)
@@ -902,14 +982,29 @@ public function getProfile(Request $request)
 			->execute();
 		unset($_SESSION['generated_otp']);
 
-		$html = '';
-		$html .='<h2>Booking Confirmation</h2>
-				<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
-				<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
-				<p id="appointment">Appointment Date & Time: <b>'.$booking_date.':'.$bookingtimeslot.'</b></p>
-				<div class="btn">
-					<button class="close-btn">Close</button>
-				</div>';
+		if($doctor_type == 'request'){
+			$html = '';
+			$html .='<h2 class="popupconfirmation">Request for appointment is Accepted</h2>
+					<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
+					<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
+					<p id="appointment">Appointment Date : <b>'.$booking_date.'</b></p>
+					<p id="appointment">Appointment Time : <b>'.$bookingtimeslot.'</b></p>
+	
+	
+					<div class="btn">
+						<button class="close-btn">Close</button>
+					</div>';
+			}else{
+			$html = '';
+			$html .='<h2 class="popupconfirmation">Booking Confirmation</h2>
+					<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
+					<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
+					<p id="appointment">Appointment Date : <b>'.$booking_date.'</b></p>
+					<p id="appointment">Appointment Time : <b>'.$bookingtimeslot.'</b></p>
+					<div class="btn">
+						<button class="close-btn">Close</button>
+					</div>';
+			}
 
 		$ajax_resp = new JsonResponse(array("status"=>"sucess",'error'=>'','msg'=>'Booking is Successful','html'=>$html));
 		return ($ajax_resp);
@@ -935,7 +1030,7 @@ public function getProfile(Request $request)
 		$data = $result->fetchAll();
 		$final_data = array();
 
-		$vocabulary = \Drupal\taxonomy\Entity\Vocabulary::load('clinc');
+		$vocabulary = \Drupal\taxonomy\Entity\Vocabulary::load('clinic');
 		$termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
 		$terms = $termStorage->loadTree($vocabulary->id(), 0, NULL, TRUE);
 		$clinc_arr =array();
@@ -979,30 +1074,6 @@ public function getProfile(Request $request)
 		return new JsonResponse($responseData);
 		exit;
 	}
-
-	public function notfound() {
-		return [
-            '#theme' => 'error_page'
-        ];
-	}
-
-	// public function notfound() {
-	// 	$template_path = drupal_get_path('module', 'userprofile') . '/templates/error-page.html.twig';
-	  
-	// 	$twig = \Drupal::service('twig');
-	  
-	// 	$output = $twig->load($template_path)->render([
-	// 	  'arr_data' => [
-	// 		'message' => 'The page you are looking for is not available!',
-	// 	  ],
-	// 	]);
-	  
-	// 	$response = new Response();
-	// 	$response->setContent($output);
-	// 	$response->setStatusCode(404);
-	  
-	// 	return $response;
-	//   }
 
 
 }

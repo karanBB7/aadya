@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="326" height="458" viewBox="0 0 326 458">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00ffe5"/>
+      <stop offset="1" stop-color="#008073"/>
+    </linearGradient>
+  </defs>
+  <g id="Publish_Content" data-name="Publish Content" transform="translate(-179 -1053)">
+    <text id="Publish_Content_that_makes_you_stand_out" data-name="Publish Content that 
+makes you stand out" transform="translate(342 1085)" fill="#16113b" font-size="30" font-family="Poppins-Bold, Poppins" font-weight="700"><tspan x="-161" y="0">Publish Content that </tspan><tspan x="-162" y="46">makes you stand out</tspan></text>
+    <text id="Highlight_your_expertise_via_our_co-authored_blogs_and_your_patient_recommendations" data-name="Highlight your expertise via our
+co-authored blogs
+and your patient recommendations" transform="translate(342 1451)" fill="#222" font-size="18" font-family="Poppins-Regular, Poppins"><tspan x="-138" y="0">Highlight your expertise via our</tspan><tspan x="-85" y="27">co-authored blogs</tspan><tspan x="-161" y="54">and your patient recommendations</tspan></text>
+    <path id="canvas-logo-svgrepo-com" d="M81.253,23.181A23.121,23.121,0,0,0,104.2,2.868a93.2,93.2,0,0,0-45.885,0A23.122,23.122,0,0,0,81.253,23.181ZM4.3,56.878a23.113,23.113,0,0,1,0,45.885,93.2,93.2,0,0,1,0-45.885ZM45.405,79.821a7.289,7.289,0,1,1-7.289-7.289A7.29,7.29,0,0,1,45.405,79.821Zm92.846,0a23.121,23.121,0,0,0,20.313,22.942,93.2,93.2,0,0,0,0-45.885A23.122,23.122,0,0,0,138.251,79.821Zm-6.215,0a7.289,7.289,0,1,1-7.289-7.289A7.289,7.289,0,0,1,132.037,79.821Zm-50.783,57a23.122,23.122,0,0,0-22.942,20.313,93.2,93.2,0,0,0,45.885,0A23.121,23.121,0,0,0,81.253,136.819Zm7.29-13.384a7.289,7.289,0,1,1-7.289-7.289A7.289,7.289,0,0,1,88.543,123.435Zm0-86.751a7.289,7.289,0,1,1-7.289-7.289A7.289,7.289,0,0,1,88.543,36.684Zm32.98,83.4a23.188,23.188,0,0,0-1.911,30.59A91.39,91.39,0,0,0,151.994,118.3,22.9,22.9,0,0,0,121.523,120.089Zm-2.271-9.559a7.289,7.289,0,1,1-7.29-7.289A7.289,7.289,0,0,1,119.252,110.53ZM41.224,39.792A23.187,23.187,0,0,0,43.136,9.2,91.389,91.389,0,0,0,10.754,41.584,23.027,23.027,0,0,0,41.224,39.792ZM57.952,49.23a7.289,7.289,0,1,1-7.289-7.289A7.289,7.289,0,0,1,57.952,49.23ZM121.4,39.672a23.187,23.187,0,0,0,30.589,1.912A91.385,91.385,0,0,0,119.611,9.2,23.026,23.026,0,0,0,121.4,39.672Zm-2.151,9.558a7.289,7.289,0,1,1-7.29-7.289A7.289,7.289,0,0,1,119.252,49.23ZM41.1,119.971a23.188,23.188,0,0,0-30.59-1.912,92.7,92.7,0,0,0,32.382,32.5A23.044,23.044,0,0,0,41.1,119.971Zm16.847-9.441a7.289,7.289,0,1,1-7.289-7.289A7.289,7.289,0,0,1,57.952,110.53Z" transform="translate(260.567 1207)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

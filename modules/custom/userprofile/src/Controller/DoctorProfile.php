@@ -164,15 +164,42 @@ class DoctorProfile extends ControllerBase
 							$getSubParaCountCnt = 0;
 						}
 						
-						foreach ($childPara as $key =>$valuechild) {
-							$paragraph = Paragraph::load($valuechild["target_id"]);
-							$clinctarget_id = !empty($paragraph->get('field_clinic_name')->getValue()) ? $paragraph->get('field_clinic_name')->getValue()[0]['target_id']: '';
-							$clincterm = Term::load($clinctarget_id);
-							$clinic_name = $clincterm->getName();
-							$address = $clincterm->get('field_address')->getValue()[0]['value'];
+						foreach ($childPara as $key => $valuechild) {
+							$childParagraph = Paragraph::load($valuechild["target_id"]);
+							if (!$childParagraph) {
+								\Drupal::logger('userprofile')->warning('Failed to load child paragraph with ID: @id', ['@id' => $valuechild["target_id"]]);
+								continue;
+							}
+			
+							$clinctarget_id = $childParagraph->get('field_clinic_name')->getValue()[0]['target_id'] ?? null;
+							if ($clinctarget_id) {
+								$clincterm = Term::load($clinctarget_id);
+								if ($clincterm) {
+									$clinic_name = $clincterm->getName();
+									$address = $clincterm->get('field_address')->getValue()[0]['value'] ?? '';
+									$clinc_number = $clincterm->get('field_clinic_phone_number')->getValue()[0]['value'] ?? '';
+									$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'] ?? '';
+
+									// echo $clinc_number;exit;
+
+
+								} else {
+									$clinic_name = '';
+									$address = '';
+									$instructions = '';
+									\Drupal::logger('userprofile')->warning('Failed to load term with ID: @id', ['@id' => $clinctarget_id]);
+								}
+							} else {
+								$clinic_name = '';
+								$address = '';
+								$instructions = '';
+							}
+			
 							$data[$key]['clinic_name'] = $clinic_name;
 							$data[$key]['target_id'] = $valuechild["target_id"];
 							$data[$key]['address'] = $address;
+							$data[$key]['clinc_number'] = $clinc_number;
+							$data[$key]['instructions'] = $instructions;
 						}
 					}  else {
 						$data[$name] = $this->loadfields->getFieldValue(
@@ -216,6 +243,15 @@ class DoctorProfile extends ControllerBase
 			
 			if ($user) {
 				$uid = $user->id();
+
+				$user_full_name = '';
+				$para = $user->get("field_paragraphtheme1")->getValue();
+				if (!empty($para) && isset($para[0]['target_id'])) {
+					$paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+					if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+						$user_full_name = $paragraph->get('field_name')->value;
+					}
+				}
 			
 				$ea_query = \Drupal::entityQuery('node')
 					->condition('status', 1)
@@ -256,6 +292,7 @@ class DoctorProfile extends ControllerBase
 					$response['article'][$key]['date'] = $final_date;
 					$response['article'][$key]['author'] = $author_name;
 					$response['article'][$key]['body'] = $body;
+					$response['article'][$key]['user_full_name'] = $user_full_name;
 				}
 			
 			} 
@@ -401,9 +438,17 @@ class DoctorProfile extends ControllerBase
 
 
 
+			// $ea_query3 = \Drupal::entityQuery('node')
+			// ->condition('status', 1)
+			// ->condition('type', 'faq', '=');
+
 			$ea_query3 = \Drupal::entityQuery('node')
+			->range(0, 6)
 			->condition('status', 1)
-			->condition('type', 'faq', '=');
+			->condition('type', 'faq')
+			->condition('uid', $uid);
+
+
 			if(!empty($search)){
 				$ea_query3->condition('title', $search);
 			}

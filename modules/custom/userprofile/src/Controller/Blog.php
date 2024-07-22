@@ -64,6 +64,7 @@ class Blog extends ControllerBase
         $node = Node::load($node_id);
     
         if ($node) {
+
             $title = $node->getTitle();
             $body = $node->get('body')->value;
             $date = $node->getCreatedTime();
@@ -73,6 +74,18 @@ class Blog extends ControllerBase
             $author_uid = $node->getOwnerId(); 
             $author = \Drupal\user\Entity\User::load($author_uid);
             $author_name = $author ? $author->getDisplayName() : 'Unknown';
+
+            
+            $user_full_name = '';
+            if ($author) {
+                $para = $author->get("field_paragraphtheme1")->getValue();
+                if (!empty($para) && isset($para[0]['target_id'])) {
+                    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+                    if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+                        $user_full_name = $paragraph->get('field_name')->value;
+                    }
+                }
+            }
     
             if (!empty($article)) {
                 $article_img = $article->createFileUrl();
@@ -88,8 +101,14 @@ class Blog extends ControllerBase
                 'author' => $author_name,
                 'body' => $body,
                 'node_id' => $node_id,
+                'user_full_name' => $user_full_name,
             ];
             $response['node_id'] = $node_id;
+            $response['username'] = $username;
+            $response['title'] = $title;
+            $response['base_url'] = $base_url;
+
+
         }
         
         $entityTypeManager = \Drupal::service('entity_type.manager');
@@ -142,6 +161,17 @@ class Blog extends ControllerBase
                 $random_author_uid = $random_node->getOwnerId();
                 $random_author = \Drupal\user\Entity\User::load($random_author_uid);
                 $random_author_name = $random_author ? $random_author->getDisplayName() : '';
+
+                $random_user_full_name = '';
+                if ($random_author) {
+                    $random_para = $random_author->get("field_paragraphtheme1")->getValue();
+                    if (!empty($random_para) && isset($random_para[0]['target_id'])) {
+                        $random_paragraph = \Drupal\paragraphs\Entity\Paragraph::load($random_para[0]['target_id']);
+                        if ($random_paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+                            $random_user_full_name = $random_paragraph->get('field_name')->value;
+                        }
+                    }
+                }
     
                 $random_alias_url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $random_node->id());
     
@@ -154,6 +184,7 @@ class Blog extends ControllerBase
                     'alias_url' => $random_alias_url,
                     'title' => $random_title,
                     'author' => $random_author_name,
+                    'random_user_full_name' => $random_user_full_name,
                     'base_url' => $base_url,
                 ];
             }
@@ -196,6 +227,17 @@ class Blog extends ControllerBase
             $offset = ($page - 1) * $items_per_page;
             
             $ea_nodes = array_slice($ea_nodes, $offset, $items_per_page);
+
+
+            $user_full_name = '';
+            $para = $user->get("field_paragraphtheme1")->getValue();
+            if (!empty($para) && isset($para[0]['target_id'])) {
+                $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($para[0]['target_id']);
+                if ($paragraph instanceof \Drupal\paragraphs\Entity\Paragraph) {
+                    $user_full_name = $paragraph->get('field_name')->value;
+                }
+            }
+
             
             $response['article'] = [];
             foreach ($ea_nodes as $key => $node) {
@@ -223,15 +265,17 @@ class Blog extends ControllerBase
                 $response['article'][$key]['date'] = $final_date;
                 $response['article'][$key]['author'] = $author_name;
                 $response['article'][$key]['body'] = $body;
+                $response['article'][$key]['user_full_name'] = $user_full_name;
             }
         } 
         
+        $response['user_full_name'] = $user_full_name;
         $response['creator'] = $username;
         $filtered_node_count_article = count($response['article']);
         $response['node_count'] = $filtered_node_count_article;
-        
         $response['total_pages'] = $total_pages;
         $response['current_page'] = $page;
+        $response['username'] = $username;
     
         return [
             '#theme' => 'profile_all_blog_template',
