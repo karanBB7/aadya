@@ -273,7 +273,7 @@
 
 
             <div class="container heightallignment d-none d-sm-block">
-                <div class="row">
+                <div class="row pt-3">
                     <div class="offset-lg-1 col-10 row">
                         <div class="col-lg-4 col-sm-6 text-center fs-5 fw-bold">
                             {{ arr_data.profile_theme1.field_experiences}}
@@ -557,6 +557,7 @@
                         </div>
                         <div class="col-lg-8 p-0 m-0">
                             <p class="mx-2">{{clinic.address}}</p>
+                            <b class="mx-2">{{clinic.instructions}}</b>
                         </div>
                     </div>
 
@@ -639,10 +640,13 @@
     </div>
 </div>
 
-	<div id="popupForm1" class="popup1">
-		<h2>Booking Confirmation</h2>
-		<div class="confirmation">
-		</div>
+	<div id="popupForm1" class="popup1 shadow">
+        <div class="container">
+        	<div class="confirmation col-sm-12">
+        
+		    </div>
+        </div>
+
 	</div> 
 	
 	{% if arr_data.profile_theme == 'theme2' %}

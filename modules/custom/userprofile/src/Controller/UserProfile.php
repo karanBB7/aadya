@@ -57,6 +57,10 @@ public function getProfile(Request $request)
 	{
 		global $base_url;
 		$uid = \Drupal::currentUser()->id();
+		
+		if ($uid == 0) {
+			return $this->redirect('userprofile.homepage');
+		  }
 		$user = \Drupal\user\Entity\User::load($uid);
 
 		$user_full_name = '';
@@ -173,10 +177,16 @@ public function getProfile(Request $request)
 						$clincterm = Term::load($clinctarget_id);
 						$clinic_name = $clincterm->getName();
 						$address = $clincterm->get('field_address')->getValue()[0]['value'];
+						$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'];
+
 						$data[$key]['clinic_name'] = $clinic_name;
 						$data[$key]['target_id'] = $valuechild["target_id"];
 						$data[$key]['address'] = $address;
+						$data[$key]['instructions'] = $instructions;
+
 					}
+
+
 				}  else {
 					$data[$name] = $this->loadfields->getFieldValue(
 						$paragraph,
@@ -872,14 +882,18 @@ public function getProfile(Request $request)
 
 
 		$usernames = $usera->getAccountName();
+
+		$formatted_bookingtimeslot = date("g:iA", strtotime($bookingtimeslot));
 		$date = new DrupalDateTime($booking_date);
 		$date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
+		$date_booking = preg_replace('/(\d+)(st|nd|rd|th)/', '$1$2 ', $date_booking);
 
 		if($doctor_type === "request"){
-			$text_sms = 'Dear '.$fullname.'!, your request for an appointment with Dr.'.$field_name_value.' at '.$date_booking.' on '.$bookingtimeslot.' at '.$clinicname.' is accepted. Someone from the clinic will call and confirm the appointment shortly. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
-		}else{
-			$text_sms = 'Dear '.$fullname.'!, your appointment with Dr.'.$field_name_value.' at '.$date_booking.' on '.$bookingtimeslot.' at '.$clinicname.' is confirmed. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
+			$text_sms = 'Dear '.$fullname.'!, your request for an appointment with '.$field_name_value.' at '.$formatted_bookingtimeslot.' on '.$date_booking.' at '.$clinicname.' is accepted. Someone from the clinic will call and confirm the appointment shortly. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
+		} else {
+			$text_sms = 'Dear '.$fullname.', your appointment with '.$field_name_value.' at '.$clinicname.' on '.$date_booking.' at '.$formatted_bookingtimeslot.' is confirmed. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
 		}
+
 
 
 		$mob_text = str_replace('+', '%20', urlencode($text_sms));
@@ -929,14 +943,30 @@ public function getProfile(Request $request)
 			->execute();
 		unset($_SESSION['generated_otp']);
 
-		$html = '';
-		$html .='<h2>Booking Confirmation</h2>
-				<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
-				<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
-				<p id="appointment">Appointment Date & Time: <b>'.$booking_date.':'.$bookingtimeslot.'</b></p>
-				<div class="btn">
-					<button class="close-btn">Close</button>
-				</div>';
+
+		if($doctor_type == 'request'){
+			$html = '';
+			$html .='<h2 class="popupconfirmation">Request for appointment is Accepted</h2>
+					<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
+					<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
+					<p id="appointment">Appointment Date : <b>'.$booking_date.'</b></p>
+					<p id="appointment">Appointment Time : <b>'.$bookingtimeslot.'</b></p>
+	
+	
+					<div class="btn">
+						<button class="close-btn">Close</button>
+					</div>';
+			}else{
+				$html = '';
+			$html .='<h2 class="popupconfirmation">Booking Confirmation</h2>
+					<p id="hospital">Hospital Name: <b>'.$clinicname.'</b></p>
+					<p id="hospital">Time Slot: <b>'.$bookingtime.'</b></p>
+					<p id="appointment">Appointment Date : <b>'.$booking_date.'</b></p>
+					<p id="appointment">Appointment Time : <b>'.$bookingtimeslot.'</b></p>
+					<div class="btn">
+						<button class="close-btn">Close</button>
+					</div>';
+			}
 
 		$ajax_resp = new JsonResponse(array("status"=>"sucess",'error'=>'','msg'=>'Booking is Successful','html'=>$html));
 		return ($ajax_resp);
@@ -1006,30 +1036,6 @@ public function getProfile(Request $request)
 		return new JsonResponse($responseData);
 		exit;
 	}
-
-	public function notfound() {
-		return [
-            '#theme' => 'error_page'
-        ];
-	}
-
-	// public function notfound() {
-	// 	$template_path = drupal_get_path('module', 'userprofile') . '/templates/error-page.html.twig';
-	  
-	// 	$twig = \Drupal::service('twig');
-	  
-	// 	$output = $twig->load($template_path)->render([
-	// 	  'arr_data' => [
-	// 		'message' => 'The page you are looking for is not available!',
-	// 	  ],
-	// 	]);
-	  
-	// 	$response = new Response();
-	// 	$response->setContent($output);
-	// 	$response->setStatusCode(404);
-	  
-	// 	return $response;
-	//   }
 
 
 }

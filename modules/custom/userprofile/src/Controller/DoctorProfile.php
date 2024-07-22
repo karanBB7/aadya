@@ -177,19 +177,24 @@ class DoctorProfile extends ControllerBase
 								if ($clincterm) {
 									$clinic_name = $clincterm->getName();
 									$address = $clincterm->get('field_address')->getValue()[0]['value'] ?? '';
+									$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'] ?? '';
+
 								} else {
 									$clinic_name = '';
 									$address = '';
+									$instructions = '';
 									\Drupal::logger('userprofile')->warning('Failed to load term with ID: @id', ['@id' => $clinctarget_id]);
 								}
 							} else {
 								$clinic_name = '';
 								$address = '';
+								$instructions = '';
 							}
 			
 							$data[$key]['clinic_name'] = $clinic_name;
 							$data[$key]['target_id'] = $valuechild["target_id"];
 							$data[$key]['address'] = $address;
+							$data[$key]['instructions'] = $instructions;
 						}
 					}  else {
 						$data[$name] = $this->loadfields->getFieldValue(

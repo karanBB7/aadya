@@ -104,6 +104,36 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
+
+
+
+	$('#email-capture-form').on('submit', function(event) {
+		event.preventDefault(); 
+	
+		var emailtocapture = $(".emailtocapture").val();
+		$.ajax({
+			url: "/linqmd/capture_email",
+			method: "POST",
+			cache: false,
+			data: {
+				"emailid": emailtocapture
+			},
+			success: function(data) {
+				console.log("Email captured successfully:", data);
+				Swal.fire({
+					title: 'Thank You!',
+					text: 'We appreciate your interest. We will contact you shortly with more information.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				});
+				$(".emailtocapture").val('');
+			},
+			error: function(xhr, status, error) {
+				console.error("Error capturing email:", error);
+			}
+		});
+	});
+	
 	$(".book_appointment").click(function(){
 		$(".time_slots").html('');
 		$('.current_date_select').removeClass('activedates');

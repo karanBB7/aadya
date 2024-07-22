@@ -1,3 +1,15 @@
+userprofile.homepage:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Homepage::homepage'
+    _title: 'Home'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
 userprofile.profile:
   path: '/userprofile'
   defaults:
@@ -243,5 +255,29 @@ userprofile.error_404:
     _title: '404 Not Found'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
+
+# userprofile.capture_email:
+#   path: '/linqmd/capture_email'
+#   defaults:
+#     _controller: '\Drupal\userprofile\Controller\Homepage::captureEmail'
+#   requirements:
+#     _permission: 'access content'
+#   methods: [POST]
+#   options:
+#     no_cache: 'TRUE'
+
+
+userprofile.capture_email:
+  path: '/capture_email'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\EmailCapture::captureEmail'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
   options:
     no_cache: 'TRUE'
