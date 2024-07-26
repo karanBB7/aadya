@@ -56,6 +56,10 @@ function userprofile_theme() {
             'variables' => array('arr_data' => NULL),
             'template' => 'error-page',
         ),
+        'home_page' => array(
+            'variables' => array('home' => NULL),
+            'template' => 'home-page',
+        ),
 
   	);
 }

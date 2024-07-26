@@ -47,47 +47,46 @@ class Testimonial extends ControllerBase
 
 	function getSearchTestimonials(Request $request){
 		global $base_url;
+		$uid = $request->get('uid');
 		$search = !empty($request->get('search')) ? $request->get('search'): array();
+		
 		$ea_query = \Drupal::entityQuery('node')
 			->range(0, 50)
 			->condition('status', 1)
-			->condition('type', 'patient_testimonials', '=');
+			->condition('type', 'patient_testimonials', '=')
+			->condition('uid', $uid);
+	
 		if(!empty($search)){
 			$ea_query->condition('title', '%'.$search.'%', 'LIKE');
 		}
 		$ea_query->accessCheck(TRUE);
 		$ea_nids = $ea_query->sort('created', 'DESC')->execute();
-
+	
 		$ea_query1 = \Drupal::entityQuery('node')
 			->condition('status', 1)
-			->condition('type', 'patient_testimonials', '=');
+			->condition('type', 'patient_testimonials', '=')
+			->condition('uid', $uid); 
+	
 		if(!empty($search)){
 			$ea_query1->condition('title', '%'.$search.'%', 'LIKE');
 		}
 		$ea_query1->accessCheck(TRUE);
 		$ea_nids1 = $ea_query1->sort('created', 'DESC')->execute();
 		$node_count = count($ea_nids1);
+		
 		$ea_nodes = Node::loadMultiple($ea_nids);
 		$html = '';
 		$html .='<h5 class="p-3">'.$node_count.' Results</h5>';
-		if(!empty($ea_nodes)){
-			
 
-			
+		if(!empty($ea_nodes)){
 		$html .='<div class="row owl-carousel testimonial-slider pt-3">';
 		foreach ($ea_nodes as $key => $node) {
-
 			$nid = $node->get('nid')->value;
 			$title = $node->get('title')->value;
 			$date = $node->get('created')->value;
 			$final_date = date("d F Y", $date);
-			
 			$content = $node->field_content->getValue()[0]['value'];
 			$patienname = $node->field_patienname->getValue()[0]['value'];
-
-
-
-			
 			$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
 			
 			$images = [];

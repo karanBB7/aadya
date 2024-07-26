@@ -1,4 +1,4 @@
-<section>
+<section> 
 	<div class="px-5 header">
 		<div class="d-flex align-items-center">
 			<div>
@@ -29,14 +29,14 @@
 			<div class="">
 				<label for="months">Select a Hospital:</label>
 				<select class="select-styles hospital">
-				{% if arr_data.clinic is not empty %}
+				{# {% if arr_data.clinic is not empty %}
 					<option value="{{ arr_data.clinic }}" selected="selected">{{ arr_data.clinic_name }}</option>
 				{% else %}
 					<option value="{{ arr_data.target_id }}" selected="selected">{{ arr_data.clinic_name }}</option>
-				{% endif %}
-					{# {% for key,hospital in arr_data.hospitals %}
+				{% endif %} #}
+					{% for key,hospital in arr_data.hospitals %}
 						<option value="{{ hospital.target_id }}" {{(arr_data.clinic == hospital.target_id) ? 'selected' : ''}}>{{ hospital.clinic_name }}</option>
-					{% endfor %} #}
+					{% endfor %}
 				</select>
 			</div>
 		</div> 

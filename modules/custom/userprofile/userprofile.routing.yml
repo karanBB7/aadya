@@ -1,3 +1,15 @@
+userprofile.homepage:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\Homepage::homepage'
+    _title: 'Home'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+
+
 userprofile.profile:
   path: '/userprofile'
   defaults:
@@ -109,7 +121,7 @@ userprofile.getallblog:
 userprofile.get_booking_time_slot:
   path: '/get_booking_time_slot'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::getBookingTimeSlot'
+    _controller: '\Drupal\userprofile\Controller\Appointments::getBookingTimeSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -119,7 +131,7 @@ userprofile.get_booking_time_slot:
 userprofile.booking_appointment:
   path: '/booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::bookingAppointmentSlot'
+    _controller: '\Drupal\userprofile\Controller\Appointments::bookingAppointmentSlot'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -129,7 +141,7 @@ userprofile.booking_appointment:
 userprofile.otp_verify_booking_appointment:
   path: '/otp-verify-booking-appointment'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::OtpVerifyBookingAppointment'
+    _controller: '\Drupal\userprofile\Controller\Appointments::OtpVerifyBookingAppointment'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -149,7 +161,7 @@ userprofile.webhook_appointment:
 userprofile.book_appointment_data:
   path: '/admin/book-appointment-data'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::bookAppointmentData'
+    _controller: '\Drupal\userprofile\Controller\Appointments::bookAppointmentData'
     _title: 'Book Appointment Data'
   requirements:
     _permission: 'administer site configuration'
@@ -159,7 +171,7 @@ userprofile.book_appointment_data:
 userprofile.generate_otp:
   path: '/generate-otp'
   defaults:
-    _controller: '\Drupal\userprofile\Controller\UserProfile::generateOtp'
+    _controller: '\Drupal\userprofile\Controller\Appointments::generateOtp'
     _title: 'Profile'
   requirements:
     _permission: 'access content'
@@ -243,5 +255,15 @@ userprofile.error_404:
     _title: '404 Not Found'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
+
+userprofile.capture_email:
+  path: '/capture_email'
+  defaults:
+    _controller: '\Drupal\userprofile\Controller\EmailCapture::captureEmail'
+  requirements:
+    _permission: 'access content'
+  methods: [POST]
   options:
     no_cache: 'TRUE'

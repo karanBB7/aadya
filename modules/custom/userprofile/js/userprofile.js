@@ -18,12 +18,14 @@ jQuery(document).ready(function($) {
 
 	$('.search_news_btn').on('click',function(){
 		var search = $("#search").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_news",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".news_cls").html(data.html);
@@ -51,12 +53,14 @@ jQuery(document).ready(function($) {
 
 	$('.test-search').on('click',function(){
 		var search = $("#tstsearch").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_testimonials",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".testimonials_cls").html(data.html);
@@ -86,18 +90,60 @@ jQuery(document).ready(function($) {
 
 	$('.faq-search').on('click',function(){
 		var search = $("#faqsearch").val();
+		var username = $('.uname').data('username');
 		$.ajax({
 			url: "/linqmd/get_search_faq",
 			method: "POST",
 			cache: false,
 			data:{
 				"search":search,
+				"uid": username
 			},
 			success: function (data) {
 				$(".faq_cls").html(data.html);
 			}
 		});
 	});
+
+
+	$('#email-capture-form').on('submit', function(event) {
+		event.preventDefault(); 
+	
+		var emailtocapture = $(".emailtocapture").val();
+		$.ajax({
+			url: "/linqmd/capture_email",
+			method: "POST",
+			cache: false,
+			data: {
+				"emailid": emailtocapture
+			},
+			success: function(data) {
+				console.log("Email captured successfully:", data);
+				Swal.fire({
+					title: 'Thank You!',
+					text: 'We appreciate your interest. We will contact you shortly with more information.',
+					icon: 'success',
+					confirmButtonText: 'OK'
+				});
+				$(".emailtocapture").val('');
+			},
+			error: function(xhr, status, error) {
+				console.error("Error capturing email:", error);
+			}
+		});
+	});
+
+
+
+
+
+
+
+
+
+
+
+
 	$(".book_appointment").click(function(){
 		$(".time_slots").html('');
 		$('.current_date_select').removeClass('activedates');
@@ -108,30 +154,56 @@ jQuery(document).ready(function($) {
 
 
 
-	$(document).on('click', '.current_date_select', function() {
-		var current_date = $(this).attr('data-date');
-		var month = $(this).attr('data-month');
-		var year = $(this).attr('data-year');
-		var target_id = $(this).attr('data-target_id');
-		$('.current_date_select').removeClass('activedates date-highlight');
-		$(this).addClass('activedates date-highlight');
+	$(document).ready(function() {
+		function clickTodayAndSelect() {
+			$('.highlight-today').click();
+			setTimeout(function() {
+				$('.highlight-today.current_date_select').click();
+			}, 100);
+		}
 	
-		$.ajax({
-			url: "/linqmd/get_booking_time_slot",
-			method: "POST",
-			cache: false,
-			data: {
-				"target_id": target_id,
-				"current_date": current_date,
-				"month": month,
-				"year": year,
-			},
-			success: function (data) {
-				$(".time_slots").html(data.html);
-				filterAndUpdateTimeSlots(year, month, current_date);
+		clickTodayAndSelect();
+	
+		$(document).on('click', '.clinicname', function() {
+			var targetId = $(this).data('target_id');
+			$('.dateslider').attr('data-active-target-id', targetId);
+			clickTodayAndSelect();
+		});
+	
+		$(document).on('click', '.highlight-today', function() {
+			if (!$(this).hasClass('current_date_select')) {
+				$(this).click();
 			}
 		});
+	
+		$(document).on('click', '.current_date_select', function() {
+			var current_date = $(this).attr('data-date');
+			var month = $(this).attr('data-month');
+			var year = $(this).attr('data-year');
+			var target_id = $('.nav-link.clinicname.active').data('target_id');
+			$('.current_date_select').removeClass('activedates date-highlight');
+			$(this).addClass('activedates date-highlight');
+	
+			$.ajax({
+				url: "/linqmd/get_booking_time_slot",
+				method: "POST",
+				cache: false,
+				data: {
+					"target_id": target_id,
+					"current_date": current_date,
+					"month": month,
+					"year": year,
+				},
+				success: function (data) {
+					$(".time_slots").html(data.html);
+					filterAndUpdateTimeSlots(year, month, current_date);
+				}
+			});
+		});
+	
 	});
+
+
 	function filterAndUpdateTimeSlots(year, month, current_date) {
 		var now = new Date();
 		var selectedDate = new Date(year, month - 1, current_date);
@@ -180,6 +252,8 @@ jQuery(document).ready(function($) {
 			$('.no-slots-message').remove();
 		}
 	}
+
+
 
 
 
@@ -255,6 +329,7 @@ jQuery(document).ready(function($) {
 			var reason = $("#reason").val();
 			var firsttime = $("#first-time").val();
 			var doctor_type = $("#doctor_type").val();
+			var clinicnumber = $('.clinicnumber').data('clinicnumber');
 				$.ajax({
 					url: "/linqmd/booking-appointment",
 					method: "POST",
@@ -271,7 +346,8 @@ jQuery(document).ready(function($) {
 						reason:reason,
 						firsttime:firsttime,
 						user_id:user_id,
-						doctor_type:doctor_type
+						doctor_type:doctor_type,
+						clinic_phone_number:clinicnumber
 					}, 
 					success: function (data) {
 						$(".overlay").hide();
@@ -351,37 +427,57 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $("#verify_otp_btn").click(function(){
-        var otp = $("#verify_otp").val();
-        $.ajax({
-            url: "/linqmd/otp-verify-booking-appointment",
-            method: "POST",
-            cache: false,
-            data: {
-                otp: otp,
-            }, 
-            success: function (data) {
-                if(data.status === "success" || data.message === "OTP verify.") {
-                    $(".otp_msg1").html("OTP verified successfully").removeClass("error-message").addClass("success-message");
-                    $(".otp_cls").hide();
-                    $("#additional_fields").show();
-                    otpVerified = true;  
-                    $("#bookAppointmentButton").prop('disabled', false);  
-                } else {
-                    $("#verify_otp-error").show();
-                    $("#verify_otp-error").html(data.error || "Invalid OTP");
-                    $(".otp_msg1").html(data.message || "OTP verification failed").removeClass("success-message").addClass("error-message");
-                    otpVerified = false;  
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("AJAX error:", textStatus, errorThrown); 
+
+
+
+$("#verify_otp_btn").click(function(e) {
+    e.preventDefault(); 
+    
+    var $this = $(this);
+    
+    if ($this.prop('disabled')) {
+        return;
+    }
+    
+    $this.prop('disabled', true);
+    
+    var otp = $("#verify_otp").val();
+    $.ajax({
+        url: "/linqmd/otp-verify-booking-appointment",
+        method: "POST",
+        cache: false,
+        data: {
+            otp: otp,
+        }, 
+        success: function (data) {
+            if(data.status === "success" || data.message === "OTP verify.") {
+                $(".otp_msg1").html("OTP verified successfully").removeClass("error-message").addClass("success-message");
+                $(".otp_cls").hide();
+                $("#additional_fields").show();
+                otpVerified = true;  
+                $("#bookAppointmentButton").prop('disabled', false);  
+            } else {
                 $("#verify_otp-error").show();
-                $("#verify_otp-error").html("An error occurred while verifying OTP").addClass("error-message");
+                $("#verify_otp-error").html(data.error || "Invalid OTP");
+                $(".otp_msg1").html(data.message || "OTP verification failed").removeClass("success-message").addClass("error-message");
                 otpVerified = false;  
             }
-        });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("AJAX error:", textStatus, errorThrown); 
+            $("#verify_otp-error").show();
+            $("#verify_otp-error").html("An error occurred while verifying OTP").addClass("error-message");
+            otpVerified = false;  
+        },
+        complete: function() {
+            $this.prop('disabled', false);
+        }
     });
+});
+
+
+
+
 
     $("#booking_form").submit(function(e) {
         var phone = $("#phonenumber").val();
@@ -660,22 +756,7 @@ jQuery(document).ready(function($) {
 	if($('#switch').length > 0){
 		document.getElementById('switch').classList.add('on');
 	}
-	const link = encodeURI(window.location.href);
-	console.log(link)
-    const msg = encodeURIComponent('Hey, I found this article');
-    const title = encodeURIComponent('Article');
-    
-    const fb = document.querySelector('.fbshare');
-    fb.href = `https://www.facebook.com/share.php?u=${link}`;
-    
-    const whatsapp = document.querySelector('.whatsappshare');
-    whatsapp.href = `https://api.whatsapp.com/send?text=${msg}: ${link}`;
-    
-    const linkedIn = document.querySelector('.linkedinshare');
-    linkedIn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
-    
-    const twitter = document.querySelector('.twittershare');
-    twitter.href = `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`;
+
 
 	
     if($("#comment-form").length > 0){

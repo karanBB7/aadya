@@ -1,6 +1,39 @@
+
+<style>
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+</style>
+
 <div class="blog-container">
+
     <div class="container pt-5">
-        <h1 class="text-center">{{blog_data.creator}}</h1>
+        <h1 class="text-center">{{blog_data.user_full_name}}</h1>
+
+<ul class="breadcrumb">
+  <li><a href="https://linqmd.com/doctor-profile/{{ blog_data.username }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Home</a></li>
+  <li>Blogs</li>
+</ul>
+
         <h3>Blogs</h3>
         <div class="row">
             {% for article in blog_data.article %}
@@ -18,7 +51,7 @@
                                     </div>
                                 </a>
                                 <hr>
-                                <div class="text-center p-2 pb-0">ON <u>{{ article.date }}</u> | BY <u>{{ article.author }}</u></div>
+                                <div class="text-center p-2 pb-0">ON <u>{{ article.date }}</u> | BY <u>{{ article.user_full_name }}</u></div>
                                 <div id="article-body-{{ loop.index }}" class="text-center p-5">{{ article.body|raw }}</div>
                             </div>
                         </div>

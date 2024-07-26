@@ -1,4 +1,28 @@
 
+<style>
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+</style>
 {% for article in arr_data.article %}
     <title>{{article.title}}</title>
 {% endfor %}
@@ -8,7 +32,14 @@
                 <div class="row">
 
                     <div class="col-sm-8">
-                        {% if arr_data.article is not empty %}
+
+
+<ul class="breadcrumb">
+  <li><a href="{{ url('userprofile.getprofile', {'username': arr_data.username}) }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Home</a></li>
+  <li><a href="{{ url('<front>') }}blog/{{ arr_data.username }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Blogs</a></li>
+  <li>{{ arr_data.title }}</li>
+</ul>
+            {% if arr_data.article is not empty %}
                             {% for article in arr_data.article %}
                                 <article>
                                     <h1 class="fw-bolder">{{article.title}}</h1>
@@ -17,7 +48,7 @@
                                     </div>
                                     <div class="main-conntent">
                                         
-                               <div class="pt-4"><b>By:</b> {{article.author}} </div>
+                               <div class="pt-4"><b>By:</b> {{article.user_full_name}} </div>
                                <div><b>Date:</b> {{article.date}}</div>
                                         {{ article.body|raw }}
                                     </div>
@@ -54,24 +85,22 @@
                                 <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
                             </div>
                             <input type="hidden" name="node_id" id="node_id" value="{{ arr_data.node_id }}">
-                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+                            <button type="submit" class="btn btn-primary mb-5">Submit Comment</button>
                         </form>
                     </div>
 
                     <div class="sticky-social">
                             <ul class="social">
-                                <li class="fb"><a class="fbshare" target="_blank"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
+                                <li class="fb"><a class="fbshare" target="_blank" href="#"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
 
-                                <li class="whatsapp"><a class="whatsappshare" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
+                                <li class="whatsapp"><a class="whatsappshare" target="_blank" href="#"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
 
-                                <li class="linkedin"><a class="linkedinshare" target="_blank"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li class="linkedin"><a class="linkedinshare" target="_blank" href="#"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
 
-                                <li class="twitter"><a class="twittershare" target="_blank"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+                                <li class="twitter"><a class="twittershare" target="_blank" href="#"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
 
                             </ul>
                         </div>
-
-
                     </div>
 
 
@@ -86,7 +115,7 @@
                                 </div>
                                 <div class="col-sm-7 small-content-center">
                                     <p class="fw-bold  m-0 pt-3">{{random_article.title}}</p>
-                                    <p class="p-0 m-0 pb-2">By: {{random_article.author}}</p>
+                                    <p class="p-0 m-0 pb-2">By: {{random_article.random_user_full_name}}</p>
                                     <a href="{{random_article.base_url}}/blog/{{ random_article.author }}/{{ random_article.title | replace({' ': '-'}) }}" target="_blank">
                                          <button class="btn btn-primary mb-3" >Read More</button>
                                      </a>

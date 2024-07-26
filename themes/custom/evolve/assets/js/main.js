@@ -6,13 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
         star.addEventListener('click', function () {
             const value = parseInt(star.getAttribute('data-value'));
             ratingValue.innerText = 'You rated ' + value + ' stars.';
-            // You can implement further logic here like sending the rating to a server
         });
     });
-  });
-  
-  // Owl-carousel for doctor Videos
-  $(document).ready(function () {
+});
+
+
+$(document).ready(function () {
 
 if($(".docslider").length > 0){
 $('.docslider').owlCarousel({
@@ -314,13 +313,11 @@ $('.docslider').owlCarousel({
     $(document).ready(function(){
         function setupReadMore(section, linkClass) {
             $(section).find('.exp-cont').each(function(){
-                var content = $(this).text();
-                var words = content.trim().split(/\s+/);
-                if(words.length > 30){
-                    var shortenedContent = words.slice(0, 30).join(' ') + '...';
+                var content = $(this).html();
+                if(content.length > 150){
+                    var shortenedContent = content.substring(0, 150).trim() + '...';
                     $(this).data('fullText', content);
-                    $(this).data('shortenedText', shortenedContent);
-                    $(this).html(shortenedContent + ' <a href="#" class="' + linkClass + '">Show more</a>');
+                    $(this).html(shortenedContent + ' <a href="#" class="' + linkClass + '">Read more</a>');
                 }
             });
     
@@ -328,89 +325,53 @@ $('.docslider').owlCarousel({
                 e.preventDefault();
                 var $expCont = $(this).closest('.exp-cont');
                 var fullText = $expCont.data('fullText');
-                var shortenedText = $expCont.data('shortenedText');
                 var isExpanded = $expCont.data('expanded') || false;
-    
                 if(isExpanded){
-                    $expCont.html(shortenedText + ' <a href="#" class="' + linkClass + '">Show more</a>');
+                    var shortenedContent = fullText.substring(0, 150).trim() + '...';
+                    $expCont.html(shortenedContent + ' <a href="#" class="' + linkClass + '">Read more</a>');
+                    $expCont.data('expanded', false);
                 } else {
                     $expCont.html(fullText + ' <a href="#" class="' + linkClass + '">Show less</a>');
+                    $expCont.data('expanded', true);
                 }
-                $expCont.data('expanded', !isExpanded);
             });
         }
-    
         setupReadMore('#sec4', 'read-more-link');
         setupReadMore('#p2sec4 .secondtheme', 'read-more-link2');
     });
-    
 
-    $(document).ready(function() {
-        function extractVideoID(url) {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
-        }
-        $('.link').each(function(index) {
-            const youtubeLink = $(this).text().trim();
-            const videoID = extractVideoID(youtubeLink);
-            if (videoID) {
-                const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
-                $('.youtube-iframe').eq(index).attr('src', iframeSrc);
-            }
-        });
-    });
 
 
     
-
-    $(document).ready(function() {
-        function extractVideoID(url) {
+    function extractVideoID(url) {
+        try {
             const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
+            return urlObj.searchParams.get('v') || null;
+        } catch (error) {
+            // console.warn('Invalid URL:', url);
+            return null;
         }
-        $('.link-overview').each(function(index) {
-            const youtubeLink = $(this).text().trim();
-            const videoID = extractVideoID(youtubeLink);
-            if (videoID) {
-                const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
-                $('.youtube-iframe-overview').eq(index).attr('src', iframeSrc);
-            }
-        });
-    });
+    }
     
-
-
-
-    $(document).ready(function() {
-        function extractVideoID(url) {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
-        }
-        $('.link-speciality').each(function(index) {
+    function setupYoutubeEmbeds(linkClass, iframeClass) {
+        $(`.${linkClass}`).each(function(index) {
             const youtubeLink = $(this).text().trim();
             const videoID = extractVideoID(youtubeLink);
             if (videoID) {
                 const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
-                $('.youtube-iframe-speciality').eq(index).attr('src', iframeSrc);
+                $(`.${iframeClass}`).eq(index).attr('src', iframeSrc);
             }
         });
-    });
-
-
+    }
+    
     $(document).ready(function() {
-        function extractVideoID(url) {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
-        }
-        $('.link-patient').each(function(index) {
-            const youtubeLink = $(this).text().trim();
-            const videoID = extractVideoID(youtubeLink);
-            if (videoID) {
-                const iframeSrc = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
-                $('.youtube-iframe-patient').eq(index).attr('src', iframeSrc);
-            }
-        });
+        setupYoutubeEmbeds('link', 'youtube-iframe');
+        setupYoutubeEmbeds('link-overview', 'youtube-iframe-overview');
+        setupYoutubeEmbeds('link-speciality', 'youtube-iframe-speciality');
+        setupYoutubeEmbeds('link-patient', 'youtube-iframe-patient');
     });
+
+
 
 
 
@@ -468,3 +429,158 @@ $('.docslider').owlCarousel({
             }
         });
     });
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const listWrapper = document.querySelector('.clinic-list-wrapper');
+        const list = document.querySelector('.clinic-list');
+        
+        if (!list) {
+            console.warn("Element with class 'clinic-list' not found");
+            return;  // Exit the function early if the list is not found
+        }
+        
+        // Use querySelectorAll to select all nav-items
+        const items = Array.from(list.querySelectorAll('.nav-item'));
+        const nextBtn = document.querySelector('.next-clinic');
+        const prevBtn = document.querySelector('.prev-clinic');
+        
+        if (items.length === 0) {
+            console.warn("No elements with class 'nav-item' found");
+            return;  // Exit the function early if no items are found
+        }
+        
+        let currentIndex = 0;
+        
+        function showClinic(index) {
+            currentIndex = index;
+            items.forEach((item, i) => {
+                item.style.order = i >= index ? i - index : items.length - index + i;
+            });
+            const activeLink = items[index].querySelector('.nav-link');
+            if (activeLink) {
+                activeLink.click();
+            } else {
+                console.warn(`No .nav-link found in item at index ${index}`);
+            }
+        }
+        
+        function rotateClinic(direction) {
+            if (direction === 'next') {
+                currentIndex = (currentIndex + 1) % items.length;
+            } else {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+            }
+            showClinic(currentIndex);
+        }
+        
+        if (items.length > 1) {
+            if (nextBtn) nextBtn.addEventListener('click', () => rotateClinic('next'));
+            if (prevBtn) prevBtn.addEventListener('click', () => rotateClinic('prev'));
+            showClinic(currentIndex);
+        } else {
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (prevBtn) prevBtn.style.display = 'none';
+        }
+    });
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        function setShareLinks() {
+            const link = encodeURI(window.location.href);
+            const msg = encodeURIComponent('Hey, I found this article');
+            const title = encodeURIComponent('Article');
+    
+            const selectors = ['.fbshare', '.whatsappshare', '.linkedinshare', '.twittershare'];
+            const urls = [
+                `https://www.facebook.com/share.php?u=${link}`,
+                `https://api.whatsapp.com/send?text=${msg}: ${link}`,
+                `https://www.linkedin.com/sharing/share-offsite/?url=${link}`,
+                `http://twitter.com/share?&url=${link}&text=${msg}&hashtags=javascript,programming`
+            ];
+    
+            let allFound = true;
+            selectors.forEach((selector, index) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.href = urls[index];
+                } else {
+                    allFound = false;
+                }
+            });
+    
+            return allFound;
+        }
+    
+        function extractVideoID(url) {
+            if (!url || typeof url !== 'string') return null;
+            try {
+                const urlObj = new URL(url);
+                return urlObj.searchParams.get('v') || null;
+            } catch (error) {
+                return null;
+            }
+        }
+    
+
+    });
+
+
+    
+
+    
+    function extractVideoID(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+    
+    function setupYoutubeEmbeds(linkClass, iframeClass) {
+        const links = document.querySelectorAll(`.${linkClass}`);
+        const iframes = document.querySelectorAll(`.${iframeClass}`);
+    
+        links.forEach((link, index) => {
+            const youtubeLink = link.textContent.trim();
+            if (youtubeLink) {
+                const videoID = extractVideoID(youtubeLink);
+                if (videoID && iframes[index]) {
+                    iframes[index].src = `https://www.youtube.com/embed/${videoID}?si=83oiblxyjFLcMFmN`;
+                }
+            }
+        });
+    }
+    
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    function runSetup() {
+        setupYoutubeEmbeds('link', 'youtube-iframe');
+        setupYoutubeEmbeds('link-overview', 'youtube-iframe-overview');
+        setupYoutubeEmbeds('link-speciality', 'youtube-iframe-speciality');
+        setupYoutubeEmbeds('link-patient', 'youtube-iframe-patient');
+    }
+    
+    const debouncedRunSetup = debounce(runSetup, 300);
+    
+    runSetup();
+    
+    const observer = new MutationObserver(() => {
+        debouncedRunSetup();
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });

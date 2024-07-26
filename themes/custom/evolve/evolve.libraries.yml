@@ -2,14 +2,14 @@ global-styling:
   version: 1.0
   css:
     theme:
-      assets/css/style.css: {}
-      assets/css/style_mobile.css: {}
-      assets/css/blog.css: {}
-      assets/css/login.css: {}
+      assets/css/style.css?v=2.0: {}
+      assets/css/style_mobile.css?v=2.0: {}
+      assets/css/blog.css?v=1.0: {}
+      assets/css/login.css?v=1.0: {}
   js:
-    assets/js/jquery.validate.min.js: {}
-    assets/js/main.js: {}
-    assets/js/dates.js: {}
+    assets/js/jquery.validate.min.js?v=1.0: {}
+    assets/js/main.js?v=2.0: {}
+    assets/js/dates.js?v=2.0: {}
   dependencies:
     - core/jquery
   images:

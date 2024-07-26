@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="884" viewBox="0 0 1920 884">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#16113b"/>
+      <stop offset="0" stop-color="#0070a1"/>
+      <stop offset="1" stop-color="#16113b"/>
+    </radialGradient>
+  </defs>
+  <path id="Overlay" d="M0,0H1920V884H0Z" fill="url(#radial-gradient)"/>
+</svg>
