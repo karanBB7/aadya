@@ -177,8 +177,17 @@ class DoctorProfile extends ControllerBase
 								if ($clincterm) {
 									$clinic_name = $clincterm->getName();
 									$address = $clincterm->get('field_address')->getValue()[0]['value'] ?? '';
+<<<<<<< HEAD
 									$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'] ?? '';
 									$clinc_number = $clincterm->get('field_clinic_phone_number')->getValue()[0]['value'] ?? '';
+=======
+									$clinc_number = $clincterm->get('field_clinic_phone_number')->getValue()[0]['value'] ?? '';
+									$instructions = $clincterm->get('field_instructions')->getValue()[0]['value'] ?? '';
+
+									// echo $clinc_number;exit;
+
+
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 								} else {
 									$clinic_name = '';
 									$address = '';
@@ -194,8 +203,13 @@ class DoctorProfile extends ControllerBase
 							$data[$key]['clinic_name'] = $clinic_name;
 							$data[$key]['target_id'] = $valuechild["target_id"];
 							$data[$key]['address'] = $address;
+<<<<<<< HEAD
 							$data[$key]['instructions'] = $instructions;
 							$data[$key]['clinc_number'] = $clinc_number;
+=======
+							$data[$key]['clinc_number'] = $clinc_number;
+							$data[$key]['instructions'] = $instructions;
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 						}
 					}  else {
 						$data[$name] = $this->loadfields->getFieldValue(

@@ -881,7 +881,11 @@ button:hover{
 
 #p2sec1 .secondtheme .banner img {
     width: 100%;
+<<<<<<< HEAD
     height: 360px;
+=======
+    height: 300px;
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
     object-fit: cover;
 }
 
@@ -2062,5 +2066,8 @@ button:hover{
 }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282

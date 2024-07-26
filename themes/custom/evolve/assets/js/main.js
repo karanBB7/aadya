@@ -339,6 +339,14 @@ $('.docslider').owlCarousel({
         setupReadMore('#sec4', 'read-more-link');
         setupReadMore('#p2sec4 .secondtheme', 'read-more-link2');
     });
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 
 
 
@@ -430,6 +438,7 @@ $('.docslider').owlCarousel({
         });
     });
 
+<<<<<<< HEAD
 
 
 
@@ -584,3 +593,40 @@ $('.docslider').owlCarousel({
     });
     
     observer.observe(document.body, { childList: true, subtree: true });
+=======
+    document.addEventListener('DOMContentLoaded', function() {
+        const listWrapper = document.querySelector('.clinic-list-wrapper');
+        const list = document.querySelector('.clinic-list');
+        const items = Array.from(list.querySelectorAll('.nav-item'));
+        const nextBtn = document.querySelector('.next-clinic');
+        const prevBtn = document.querySelector('.prev-clinic');
+      
+        let currentIndex = 0;
+      
+        function showClinic(index) {
+          currentIndex = index;
+          items.forEach((item, i) => {
+            item.style.order = i >= index ? i - index : items.length - index + i;
+          });
+          items[index].querySelector('.nav-link').click();
+        }
+      
+        function rotateClinic(direction) {
+          if (direction === 'next') {
+            currentIndex = (currentIndex + 1) % items.length;
+          } else {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+          }
+          showClinic(currentIndex);
+        }
+      
+        if (items.length > 1) {
+          nextBtn.addEventListener('click', () => rotateClinic('next'));
+          prevBtn.addEventListener('click', () => rotateClinic('prev'));
+          showClinic(currentIndex);
+        } else {
+          nextBtn.style.display = 'none';
+          prevBtn.style.display = 'none';
+        }
+      });
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282

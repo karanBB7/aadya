@@ -15,7 +15,11 @@
 }
 
 
+<<<<<<< HEAD
 @media only screen and (max-width: 567px) {
+=======
+@media only screen and (max-width: 767px) {
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 	#sec1 .img-bg {
 		background: var(--c1);
 		width: 100%;
@@ -256,9 +260,12 @@
 		}
 
 
+<<<<<<< HEAD
 		.about-wrap{
 			height: 100% !important;
 		}
+=======
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 		
 	
 	}

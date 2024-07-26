@@ -330,6 +330,10 @@ jQuery(document).ready(function($) {
 			var firsttime = $("#first-time").val();
 			var doctor_type = $("#doctor_type").val();
 			var clinicnumber = $('.clinicnumber').data('clinicnumber');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 				$.ajax({
 					url: "/linqmd/booking-appointment",
 					method: "POST",
