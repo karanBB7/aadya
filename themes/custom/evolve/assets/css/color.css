@@ -1,0 +1,256 @@
+/* sec2 */
+
+
+
+h2 {
+    color: var(--c3);
+}
+
+.secondtheme h2 {
+    color: var(--p2c3);
+}
+
+.read-more-btn {
+    color: var(--c3);
+}
+
+.secondtheme .read-more-btn {
+    color: var(--p2c3);
+}
+
+.content-overflow {
+    scrollbar-color: var(--c3) #f1f1f1;
+}
+
+.secondtheme .content-overflow {
+    scrollbar-color: var(--p2c3) #f1f1f1;
+}
+
+.content-overflow::-webkit-scrollbar-track {
+    background: var(--c3);
+}
+
+.content-overflow::-webkit-scrollbar-thumb {
+    background: var(--c3);
+}
+
+.secondtheme .content-overflow::-webkit-scrollbar-track {
+    background: var(--p2c3);
+}
+
+.secondtheme .content-overflow::-webkit-scrollbar-thumb {
+    background: var(--p2c3);
+}
+
+
+
+/* sec3 */
+
+
+
+.date-number {
+    color: var(--c3);
+}
+
+.secondtheme .date-number {
+    color: var(--p2c3);
+}
+
+.date-wrapper:hover {
+    background-color: var(--c3);
+}
+
+.secondtheme .date-wrapper:hover {
+    background-color: var(--p2c3);
+}
+
+
+.popupconfirmation {
+    color: var(--c3) !important;
+}
+
+.secondtheme .popupconfirmation {
+    color: var(--p2c3) !important;
+}
+
+.month-wrapper {
+    background: var(--c3);
+    color: var(--c1) !important;
+}
+
+.secondtheme .month-wrapper {
+    background: var(--p2c3);
+    color: var(--c1) !important;
+}
+
+.ap-book {
+    border: 1px solid var(--c3);
+}
+
+.secondtheme .ap-book {
+    border: 1px solid var(--p2c3);
+}
+
+.ap-book:hover {
+    background: var(--c3);
+}
+
+.secondtheme .ap-book:hover {
+    background: var(--p2c3);
+}
+
+.location-wrapper {
+    background-color: var(--c3);
+}
+
+.secondtheme .location-wrapper {
+    background-color: var(--p2c3);
+}
+
+.date-highlight {
+    background-color: var(--c3);
+    color: #fff !important;
+}
+
+.secondtheme .date-highlight {
+    background-color: var(--p2c3);
+    color: #fff !important;
+}
+
+
+
+/* sec4 */
+
+
+
+/* sec5 */
+
+
+
+.search-wrapper {
+    background-color: var(--c3);
+}
+
+.secondtheme .search-wrapper {
+    background-color: var(--p2c3);
+}
+
+.searchBtn {
+    background-color: var(--c3);
+}
+
+.secondtheme .searchBtn {
+    background-color: var(--p2c3);
+}
+
+.readMore {
+    background-color: var(--c3);
+}
+
+.secondtheme .readMore {
+    background-color: var(--p2c3);
+}
+
+
+
+/* sec6 */
+
+
+
+h5 {
+    color: var(--c3);
+    font-weight: bolder;
+}
+
+.secondtheme h5 {
+    color: var(--p2c3);
+    font-weight: bolder;
+}
+
+.test-search {
+    background-color: var(--c3);
+}
+
+.secondtheme .test-search {
+    background-color: var(--p2c3);
+}
+
+.exp {
+    border: 1px solid var(--c3);
+}
+
+.secondtheme .exp {
+    border: 1px solid var(--p2c3);
+}
+
+.readMoreLink {
+    color: var(--c3);
+}
+
+.secondtheme .readMoreLink {
+    color: var(--p2c3);
+}
+
+.activeexperience1 {
+    background-color: var(--c3);
+    color: var(--c1);
+}
+
+.activeexperience2 {
+    background-color: var(--p2c3) !important;
+    color: var(--c1);
+}
+
+.quotes {
+    color: var(--c3);
+}
+
+.secondtheme .quotes {
+    color: var(--p2c3);
+}
+
+.active-tag1 {
+    color: var(--c3);
+}
+
+.secondtheme .active-tag1 {
+    color: var(--p2c3);
+}
+
+
+
+/* sec7 */
+
+
+
+.accordion-item {
+    border: var(--c3) 1px solid;
+}
+
+.secondtheme .accordion-item {
+    border: var(--p2c3) 1px solid;
+}
+
+.accordion-item .accordion-label:after {
+    color: var(--c3);
+}
+
+.secondtheme .accordion-item .accordion-label:after {
+    color: var(--p2c3);
+}
+
+.faq-search {
+    background-color: var(--c3);
+}
+
+.secondtheme .faq-search {
+    background-color: var(--p2c3);
+}
+
+.map-pill .nav-item .active {
+    border-bottom: 3px solid var(--c3);
+}
+
+.secondtheme .map-pill .nav-item .active {
+    border-bottom: 3px solid var(--p2c3);
+}

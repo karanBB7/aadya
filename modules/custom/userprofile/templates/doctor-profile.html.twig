@@ -24,7 +24,7 @@
 
             <div class="col-lg-5 col-md-6  mx-auto order-lg-2 order-xs-2 img-bg">
 
-                <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
 
             </div>
 
@@ -98,7 +98,7 @@
                      <div class="bg-change row sm-hide">
                             {% for key,imgdata in arr_data.profile_theme1.field_logos %}
                             <div class="col-sm-4 m-2 clinic-wrap ">
-                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
                             </div>
                             {% endfor %}
                         </div>
@@ -108,7 +108,7 @@
                         <div class="bg-change row d-flex d-sm-none">
                             {% for key,imgdata in arr_data.profile_theme1.field_logos %}
                             <div class="col-sm-4 m-2 clinic-wrap mx-auto d-block">
-                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
                             </div>
                             {% endfor %}
                         </div>
@@ -171,15 +171,15 @@
 }
 </style>
 
-<section id="p2sec1">
+    <section id="p2sec1">
         <div class="secondtheme">
             <div class="banner">
-                <img src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="{{ arr_data.profile_theme1.field_displaypicture.alt }}" >
+                <img   src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="{{ arr_data.profile_theme1.field_displaypicture.alt }}" >
 
                 <div class="container d-none d-sm-block">
                     <div class="row profile-wrapper">
                         <div class="circle-container">
-                            <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                            <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
                         </div>
                         <div class="col-sm-8 content-wrapper">
                             <div class="d-flex">
@@ -220,7 +220,7 @@
                 <div class="d-block d-sm-none">
                     <div class="small-profileWrapper p-5">
                         <div class="circle-container mx-auto">
-                            <img src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                            <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
                         </div>
                         <h1 class="fon1 pt-4 text-center">{{ arr_data.profile_theme1.field_name}}</h1>
                         <p class="title tc fw-bold">{{ arr_data.profile_theme1.field_specialitiy}} </p>
@@ -229,9 +229,9 @@
                         </p> #}
                         <p class="text-center">
 
-                    <div class="d-flexjustify-content-center">
-                        <a class="fs-low pt-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
-                        <a class="mailto fs-low pt-1" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                    <div class="d-flex justify-content-center">
+                        <a class="fs-low mx-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
+                        <a class="mailto fs-low mx-1" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
                     </div>
 
                         </p>
@@ -252,7 +252,7 @@
                     <div class="d-flex">
                         {% for key,imgdata in arr_data.profile_theme1.field_logos %}
                             <div class=" mx-auto d-block col-sm-4 m-2 clinic-wrap">
-                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
+                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
                             </div>
                         {% endfor %}   
                        
@@ -274,7 +274,7 @@
 
             <div class="container heightallignment d-none d-sm-block">
                 <div class="row pt-1">
-                    <div class="offset-lg-1 col-10 row">
+                    <div class="offset-lg-1 col-10 row pt-3">
                         <div class="col-lg-4 col-sm-6 text-center fs-5 fw-bold">
                             {{ arr_data.profile_theme1.field_experiences}}
                         </div>
@@ -293,7 +293,7 @@
 
                         {% for key,imgdata in arr_data.profile_theme1.field_logos %}
                             <div class=" col-sm-4 m-2 clinic-wrap">
-                                <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
+                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="{{imgdata.field_logo.alt}}">
                             </div>
                         {% endfor %}     
 
@@ -330,15 +330,10 @@
     </div>
 
 
-<<<<<<< HEAD
-</section>
-=======
     </section>
->>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 
 
 {% endif %}
-
 
 
 
@@ -375,12 +370,7 @@
                     <a class="nav-link fw-bold" data-bs-toggle="pill" href="#awandh"> Awards & Publication</a>
                 </li>
             {% endif %}
-{# 
-            {% if arr_data.profile_theme1.field_publication %}
-                <li class="nav-item">
-                    <a class="nav-link fw-bold" data-bs-toggle="pill" href="#publication">Publication</a>
-                </li>
-            {% endif %} #}
+
 
 
             {% if arr_data.profile_theme1.field_education_in_details %}
@@ -408,13 +398,13 @@
                         <span class="link-overview" style="display:none;">{{arr_data.profile_theme1.field_doctoroverviewvideo }}</span>
 
                         {% if arr_data.profile_theme1.field_doctoroverviewvideo %}
-                            <div class="col-lg-5 col-sm-5">
+                            <div class="col-lg-5 col-sm-5 overview-frame">
                                <iframe width="100%" height="100%"  class="youtube-iframe-overview" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
 
                         {% else %}
                             <div class="col-lg-5 col-sm-5">
-                                <img class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_overview_image.url}}" style="max-height:300px">
+                                <img   class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_overview_image.url}}" style="max-height:300px">
                             </div>
                         {% endif %}
                     {% endif %}
@@ -442,7 +432,7 @@
 
                         {% else %}
                             <div class="col-lg-5 col-sm-5">
-                                <img class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_speciality_image.url}}" style="max-height:300px">
+                                <img   class="img-fluid mx-auto d-block" alt="" src="{{arr_data.profile_theme1.field_speciality_image.url}}" style="max-height:300px">
                             </div>
                         {% endif %}
                     {% endif %}
@@ -470,16 +460,6 @@
                     
                 </div>
             </div>
-
-            {# <div id="publication" class="container tab-pane fade pt-4">
-                <div class="row">
-                    <div class="col-lg-12 pilltext">
-                        <div class="overview-content">{{arr_data.profile_theme1.field_publication|raw}}</div>                      
-                    </div>
-                   
-                </div>
-            </div> #}
-
 
 
 
@@ -616,13 +596,13 @@
                 <label for="fullname">Patient Name</label>
                 <input class="form-control p-2" type="text" id="fullname" name="fullname" placeholder="Name">
                 <div class="checkbox-cont">
-                    <input class="" type="checkbox" id="first-time" name="first-time" style="width: auto">
+                    <input  type="checkbox" id="first-time" name="first-time" style="width: auto">
                     <label for="first-time">Visiting for the First Time?</label>
                 </div>
                 <label for="reason">Reason for Doctor Visit</label>
                 <input class="form-control" type="text" name="reason" id="reason" placeholder="Please specify your reason in short">
                 <div class="checkbox-cont">
-                    <input class="" type="checkbox" id="terms" name="terms" style="width: auto" value="1">
+                    <input  type="checkbox" id="terms" name="terms" style="width: auto" value="1">
                     <label for="terms" class="pt-1">I agree to receive calls and messages from linqMD regarding this appointment</label>
                 </div>
                 <label id="terms-error" class="error" for="terms"></label>
@@ -689,7 +669,7 @@
                 <div class="p-4 shadow" style="border-radius: 10px;" >
                 <div class="exp-imag-wrapper">
                     <div class="col-sm-12 mx-auto">
-                        <img src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
+                        <img   src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
                     </div>
                 </div>
                 <h6 class="text-center p-3 expertise-title"><b>{{data.field_expertisehead}}</b></h6>
@@ -710,6 +690,8 @@
 	{% endif %}
 
 </section>
+
+
 
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec5' : 'p2sec5' }}" class="">
 	{% if arr_data.profile_theme == 'theme2' %}
@@ -748,7 +730,7 @@
                        <div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
             <div class="articele-wrapper mb-5">
                 <div class="article-image">
-                    <img src="{{ news_article.thumb }}" width="100%">
+                    <img   src="{{ news_article.thumb }}" width="100%">
                 </div>
                 <div class="d-flex mx-4 mt-2">
                     <div class="offset-lg-0 text-capitalize">By {{ news_article.user_full_name }}</div>
@@ -779,7 +761,7 @@
                     <div class="owl-carousel blogslider d-block d-sm-none">
                     {% for key,news_article in arr_data.article %}
                             <div class="articele-wrapper pb-5 mx-auto">
-                                <img src="{{ news_article.thumb }}" width="100%">
+                                <img   src="{{ news_article.thumb }}" width="100%">
                                 <div class="d-flex mx-4 mt-2">
                                     <div class="offset-lg-0 text-capitalize">{{ news_article.author }} </div>
                                     <div class="offset-lg-1">{{ news_article.date }}</div>
@@ -812,9 +794,9 @@
         <div class="owl-carousel docslider ">
             {% for key,url in arr_data.profile_theme1.field_youtube %}
 
-                <div class="item col-sm-12 about-wrap shadow">
-                <iframe class=" p-3 mx-auto d-block youtube-iframe" width="80%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h6 class="text-center pt-2"><b>{{url.field_about_video_title}}</b></h6>
+                <div class="item col-sm-12 about-wrap shadow ">
+                    <iframe class=" p-3 mx-auto d-block youtube-iframe" width="80%" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                     <h6 class="text-center pt-2"><b>{{url.field_about_video_title}}</b></h6>
                     <p class="text-center pb-2">{{url.field_about_video_description}}</p>
                 </div> 
             {% endfor %}
@@ -823,7 +805,7 @@
 
             <div class="item col-sm-12 about-wrap">
                     <div class="overview-image-wrap">
-                        <img src="{{image.field_about_images.url}}" alt="{{image.alt}}">
+                        <img   src="{{image.field_about_images.url}}" alt="{{image.alt}}">
                     </div>
                     <h6 class="text-center pt-2"><b>{{image.field_about_image_title}}</b></h6>
                     <p class="text-center pb-2">{{image.field_about_shot_description}}</p>
@@ -890,7 +872,7 @@
                     {% for image in testimonials.images %}
                         <div class="item">
                             <div class="patient-imag-wrapper">
-                                <img src="{{ image }}" class="patientImg pt-2 d-block mx-auto">
+                                <img   src="{{ image }}" class="patientImg pt-2 d-block mx-auto">
                             </div>
                         </div>
                     {% endfor %}
@@ -917,6 +899,9 @@
 		</div>
 	{% endif %}
 </section>
+
+
+
 
 <section id="{{ arr_data.profile_theme == 'theme1' ? 'sec7' : 'p2sec7' }}" class="pt-5 pb-5">
 	{% if arr_data.profile_theme == 'theme2' %}

@@ -658,7 +658,6 @@ class Webhook extends ControllerBase
                         }
 
                         $cn = $rows[0]->clinic_name;
-<<<<<<< HEAD
                         $patient_name = $rows[0]->patient_name;
                         $time_slot = $rows[0]->time_slot;
                         $time_slot = str_replace(' ', '', $time_slot);
@@ -669,16 +668,6 @@ class Webhook extends ControllerBase
 
                         $mob_text = str_replace('+', '%20', urlencode($text_sms));
                         $url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$rows[0]->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707172128612230453&UNICODE=TEXT';
-=======
-
-                        $text_sms = 'Dear '.$rows[0]->patient_name.', your appointment with '.$field_name_value.' at '.$cn.' on '.$date_booking.' at '.$rows[0]->time_slot.' is cancelled. Aadya Health Sciences.';
-
-
-
-
-                        $mob_text = str_replace('+', '%20', urlencode($text_sms));
-                        $url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$rows[0]->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930774075419&UNICODE=TEXT';
->>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 
                         $user = \Drupal\user\Entity\User::load($appointment->user_id);
                         $para = $user->get("field_paragraphtheme1")->getValue();

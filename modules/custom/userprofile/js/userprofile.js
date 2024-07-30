@@ -330,10 +330,6 @@ jQuery(document).ready(function($) {
 			var firsttime = $("#first-time").val();
 			var doctor_type = $("#doctor_type").val();
 			var clinicnumber = $('.clinicnumber').data('clinicnumber');
-<<<<<<< HEAD
-=======
-
->>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 				$.ajax({
 					url: "/linqmd/booking-appointment",
 					method: "POST",
@@ -432,55 +428,52 @@ jQuery(document).ready(function($) {
     });
 
 
-
-
-$("#verify_otp_btn").click(function(e) {
-    e.preventDefault(); 
-    
-    var $this = $(this);
-    
-    if ($this.prop('disabled')) {
-        return;
-    }
-    
-    $this.prop('disabled', true);
-    
-    var otp = $("#verify_otp").val();
-    $.ajax({
-        url: "/linqmd/otp-verify-booking-appointment",
-        method: "POST",
-        cache: false,
-        data: {
-            otp: otp,
-        }, 
-        success: function (data) {
-            if(data.status === "success" || data.message === "OTP verify.") {
-                $(".otp_msg1").html("OTP verified successfully").removeClass("error-message").addClass("success-message");
-                $(".otp_cls").hide();
-                $("#additional_fields").show();
-                otpVerified = true;  
-                $("#bookAppointmentButton").prop('disabled', false);  
-            } else {
-                $("#verify_otp-error").show();
-                $("#verify_otp-error").html(data.error || "Invalid OTP");
-                $(".otp_msg1").html(data.message || "OTP verification failed").removeClass("success-message").addClass("error-message");
-                otpVerified = false;  
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log("AJAX error:", textStatus, errorThrown); 
-            $("#verify_otp-error").show();
-            $("#verify_otp-error").html("An error occurred while verifying OTP").addClass("error-message");
-            otpVerified = false;  
-        },
-        complete: function() {
-            $this.prop('disabled', false);
-        }
-    });
-});
-
-
-
+	
+	$("#verify_otp_btn").click(function(e) {
+		e.preventDefault(); 
+		
+		var $this = $(this);
+		
+		if ($this.prop('disabled')) {
+			return;
+		}
+		
+		$this.prop('disabled', true);
+		
+		var otp = $("#verify_otp").val();
+		$.ajax({
+			url: "/linqmd/otp-verify-booking-appointment",
+			method: "POST",
+			cache: false,
+			data: {
+				otp: otp,
+			}, 
+			success: function (data) {
+				if(data.status === "success" || data.message === "OTP verify.") {
+					$(".otp_msg1").html("OTP verified successfully").removeClass("error-message").addClass("success-message");
+					$(".otp_cls").hide();
+					$("#additional_fields").show();
+					otpVerified = true;  
+					$("#bookAppointmentButton").prop('disabled', false);  
+				} else {
+					$("#verify_otp-error").show();
+					$("#verify_otp-error").html(data.error || "Invalid OTP");
+					$(".otp_msg1").html(data.message || "OTP verification failed").removeClass("success-message").addClass("error-message");
+					otpVerified = false;  
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log("AJAX error:", textStatus, errorThrown); 
+				$("#verify_otp-error").show();
+				$("#verify_otp-error").html("An error occurred while verifying OTP").addClass("error-message");
+				otpVerified = false;  
+			},
+			complete: function() {
+				$this.prop('disabled', false);
+			}
+		});
+	});
+	
 
 
     $("#booking_form").submit(function(e) {

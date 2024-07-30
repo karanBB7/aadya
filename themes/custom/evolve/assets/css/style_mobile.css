@@ -15,11 +15,7 @@
 }
 
 
-<<<<<<< HEAD
 @media only screen and (max-width: 567px) {
-=======
-@media only screen and (max-width: 767px) {
->>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 	#sec1 .img-bg {
 		background: var(--c1);
 		width: 100%;
@@ -62,9 +58,7 @@
 			text-align: center;
 		}
 		
-		
-		
-	
+
 		.appbtn {
 			margin: 5px;
 			border: 1px solid var(--c3);
@@ -82,6 +76,10 @@
 			align-content: center;
 			text-align: center;
 		}
+
+		#p2sec1 .secondtheme .banner img {
+			height: 100% !important;
+		}
 	
 		#p2sec1 .secondtheme .whatsappbtn{
 			align-items: center;
@@ -90,6 +88,9 @@
 		}
 
 		#p2sec1 .secondtheme .clinic-wrap{
+			box-shadow: none !important;
+		}
+		#sec1 .clinic-wrap{
 			box-shadow: none !important;
 		}
 
@@ -163,12 +164,18 @@
 			
 		#p2sec1 .secondtheme .circle-container {
 			position: relative;
-			margin-top: -130px;
+			margin-top: -80px;
 		}
 		
 		#p2sec1 .secondtheme .whatsappbtn {
-			top: 0px;
+			top: 0px !important;
 			border: 1px solid var(--p2c3);
+		}
+
+		#p2sec1 .clinic-wrap {
+			width: 100% !important;
+			height: 35px !important;
+			overflow: auto !important;
 		}
 			
 
@@ -233,7 +240,7 @@
 		}
 
 		.popup {
-			width: 100%;
+			width: 100% !important;
 		}
 
 		  
@@ -260,12 +267,9 @@
 		}
 
 
-<<<<<<< HEAD
 		.about-wrap{
 			height: 100% !important;
 		}
-=======
->>>>>>> 37e909f711b18bff7d01a6d043f8782342da7282
 		
 	
 	}

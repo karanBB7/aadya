@@ -367,7 +367,7 @@ class Appointments extends ControllerBase
 		$text_sms = 'Hi! OTP for booking an appointment with '.$doc_name.' is: '.$otp.'. Please do not share it with anyone. Aadya Health Sciences.';
 		$mob_text = urlencode($text_sms);
 
-		$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$phonenumber.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930776525622&UNICODE=TEXT';
+		$url_sms = 'https://onlysms.co.in/api/otp.aspx?UserID=adhsplotp&UserPass=Adh909@&MobileNo='.$phonenumber.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930776525622&UNICODE=TEXT';
 
 
 		try {
@@ -466,7 +466,7 @@ class Appointments extends ControllerBase
             // Second SMS to the clinic
             $text_sms2 = ' ' . $fullname . ' has requested an appointment with ' . $field_name_value . ' on ' . $date_booking . ', ' . $formatted_bookingtimeslot . ' at ' . $clinicname . ', please call ' . $phonenumber . ' and confirm the appointment. Aadya Health Sciences.';
             $mob_text2 = str_replace('+', '%20', urlencode($text_sms2));
-            $url_sms2 = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo=' . $clinic_phone_number . '&GSMID=AADHSP&PEID=1701171921100574462&Message=' . $mob_text2 . '&TEMPID=1707172182539434761&UNICODE=TEXT';
+            $url_sms2 = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo=' . $clinic_phone_number . '&GSMID=AADHSP&PEID=1701171921100574462&Message=' . $mob_text2 . '&TEMPID=1707172197927510568&UNICODE=TEXT';
             
             try {
                 $curl = curl_init();

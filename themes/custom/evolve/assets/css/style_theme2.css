@@ -1,0 +1,188 @@
+#p2sec1 .secondtheme .banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+#p2sec1 .secondtheme .banner img {
+    width: 100%;
+    height: 370px;
+    object-fit: cover;
+}
+
+#p2sec1 .secondtheme .circle-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 10px 25px 10px rgba(0, 0, 0, 0.09);
+    position: relative;
+    background: var(--p2c3);
+    z-index: 5;
+}
+
+#p2sec1 .secondtheme .circle-container img {
+    width: 99%;
+    height: 95%;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 50%;
+}
+
+#p2sec1 .secondtheme .content-wrapper {
+    background-color: var(--p2c3);
+}
+
+#p2sec1 .secondtheme .profile-wrapper {
+    background-color: var(--p2c3);
+    position: relative;
+    margin-top: -80px;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+}
+
+#p2sec1 .secondtheme .content-wrapper {
+    color: var(--c1);
+}
+
+#p2sec1 .secondtheme h1 {
+    font-weight: bolder;
+}
+
+#p2sec1 .secondtheme .appbtnred {
+    background-color: var(--c1);
+    color: var(--p2c3);
+    transition: .5s;
+    position: relative;
+    top: -20px;
+    border: 1px solid var(--p2c3);
+}
+
+#p2sec1 .secondtheme .appbtnred:hover {
+    background-color: var(--p2c3);
+    color: var(--c1);
+    border: 1px solid var(--c1);
+    transition: .5s;
+}
+
+#p2sec1 .secondtheme .line {
+    width: 5px;
+    height: 40.5px;
+    background-color: var(--p2c3);
+    position: absolute;
+    margin-top: -7.5px;
+    margin-left: -2px;
+}
+
+#p2sec1 .secondtheme .whatsappbtn {
+    color: var(--p2c3);
+    font-weight: bolder;
+    letter-spacing: 1px;
+    background-color: var(--c1);
+    border-radius: 5px;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    top: 50px;
+}
+
+.fa-whatsapp {
+    font-size: 1.4em;
+}
+
+@media screen and (min-width: 1083px) {
+
+    #p2sec1 .secondtheme .appbtnred {
+        left: 150px;
+    }
+
+    #p2sec1 .secondtheme .whatsappbtn {
+        left: 150px;
+    }
+}
+
+#p2sec1 .secondtheme .star i {
+    color: gold;
+    margin: 5px;
+    background-color: var(--c1);
+    padding: 10px;
+    border-radius: 100px;
+    border: 1px solid var(--p2c3);
+}
+
+
+#p2sec1 .secondtheme .star {
+    font-size: 20px;
+    border-radius: 100%;
+    padding: 4px 8px;
+    color: var(--c3);
+
+}
+
+#p2sec1 .clinic-wrap {
+    width: 25%;
+    height: 55px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--c1);
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    box-shadow: 0 10px 15px 15px rgba(0, 0, 0, 0.05);
+}
+
+#p2sec1 .clinic-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.secondtheme .profile-wrapper {
+    background-color: var(--p2c3);
+    color: var(--c1);
+}
+
+.secondtheme .ppWrapper {
+    position: relative;
+    top: 80px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background-color: var(--p2c3);
+    overflow: hidden;
+    z-index: 5;
+}
+
+.secondtheme .appbtnsm {
+    position: relative;
+    top: -25px;
+    background-color: var(--c1);
+    font-weight: bolder;
+    border: 1px solid var(--c2);
+}
+
+.secondtheme .gotopsm {
+    position: relative;
+    top: -250px;
+}
+
+.secondtheme .top-fix {
+    position: relative;
+    top: -150px;
+}
+
+.small-profileWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--p2c3);
+    color: var(--c1);
+}
+
+#p2sec1 .heightallignment {
+    margin-top: -10px;
+}
