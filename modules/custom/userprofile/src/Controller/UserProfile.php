@@ -348,6 +348,50 @@ public function getProfile(Request $request)
 				$response['patient_testimonials'][$key]['content'] = $content;
 				$response['patient_testimonials'][$key]['patienname'] = $patienname;
 				$response['patient_testimonials'][$key]['doc'] = $doctor_ids;
+
+
+				$paragraphs = $node->get('field_picture')->referencedEntities();
+				$images = [];
+				foreach ($paragraphs as $paragraph) {
+					if ($paragraph->hasField('field_patient_picture')) {
+						$file = $paragraph->get('field_patient_picture')->entity;
+						if ($file) {
+							$file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+							$images[] = $file_url;
+						}
+					}
+				}
+
+				$video_paragraphs = $node->get('field_videos')->referencedEntities();
+				$videos = [];
+				foreach ($video_paragraphs as $video_paragraph) {
+					if ($video_paragraph->hasField('field_patient_videos')) {
+						$video_url = $video_paragraph->get('field_patient_videos')->value;
+						if ($video_url) {
+							$videos[] = $video_url;
+						}
+					}
+				}
+
+				$tags_paragraphs = $node->get('field_testimonial_tags')->referencedEntities();
+				$tags = [];
+				foreach ($tags_paragraphs as $tags_paragraph) {
+					if ($tags_paragraph->hasField('field_tags')) {
+						$tags_field = $tags_paragraph->get('field_tags');
+						foreach ($tags_field as $tag_item) {
+							$tag_value = $tag_item->value;
+							if ($tag_value) {
+								$tags[] = $tag_value;
+							}
+						}
+					}
+				}
+				
+
+				$response['patient_testimonials'][$key]['tags'] = $tags;
+				$response['patient_testimonials'][$key]['videos'] = $videos;
+				$response['patient_testimonials'][$key]['images'] = $images;
+
 			//}
 		}
 		

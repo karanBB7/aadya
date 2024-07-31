@@ -1,0 +1,19 @@
+parameters:
+	fileExtensions:
+	    - php
+	    - module
+	    - install
+	paths:
+		- ./
+	excludePaths:
+		- web
+		- vendor
+		- expand_composer_json.php
+		- symlink_project.php
+	level: 9
+	ignoreErrors:
+		- '#Unsafe usage of new static\(\)#'
+		- identifier: missingType.iterableValue
+	checkMissingIterableValueType: True
+includes:
+	- phpstan-baseline.neon

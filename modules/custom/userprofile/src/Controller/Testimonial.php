@@ -80,15 +80,13 @@ class Testimonial extends ControllerBase
 
 		if(!empty($ea_nodes)){
 		$html .='<div class="row owl-carousel testimonial-slider pt-3">';
+
 		foreach ($ea_nodes as $key => $node) {
 			$nid = $node->get('nid')->value;
 			$title = $node->get('title')->value;
-			$date = $node->get('created')->value;
-			$final_date = date("d F Y", $date);
 			$content = $node->field_content->getValue()[0]['value'];
 			$patienname = $node->field_patienname->getValue()[0]['value'];
-			$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
-			
+		
 			$images = [];
 			if ($node->hasField('field_picture') && !$node->get('field_picture')->isEmpty()) {
 				$paragraphs = $node->get('field_picture')->referencedEntities();
@@ -102,7 +100,7 @@ class Testimonial extends ControllerBase
 					}
 				}
 			}
-
+		
 			$videos = [];
 			if ($node->hasField('field_videos') && !$node->get('field_videos')->isEmpty()) {
 				$video_paragraphs = $node->get('field_videos')->referencedEntities();
@@ -115,7 +113,23 @@ class Testimonial extends ControllerBase
 					}
 				}
 			}
-
+		
+			$tags = [];
+			if ($node->hasField('field_testimonial_tags') && !$node->get('field_testimonial_tags')->isEmpty()) {
+				$tags_paragraphs = $node->get('field_testimonial_tags')->referencedEntities();
+				foreach ($tags_paragraphs as $tags_paragraph) {
+					if ($tags_paragraph->hasField('field_tags')) {
+						$tags_field = $tags_paragraph->get('field_tags');
+						foreach ($tags_field as $tag_item) {
+							$tag_value = $tag_item->value;
+							if ($tag_value) {
+								$tags[] = $tag_value;
+							}
+						}
+					}
+				}
+			}
+		
 			$html .= '<div class="test-wrapp">
 						<div class="p-3">
 							<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
@@ -125,7 +139,7 @@ class Testimonial extends ControllerBase
 							'</div>
 							<a class="readMoreLink">Read more</a>
 							<div class="owl-carousel owl-theme patient">';
-
+		
 			foreach ($images as $image) {
 				$html .= '<div class="item">
 							<div class="patient-imag-wrapper">
@@ -133,7 +147,7 @@ class Testimonial extends ControllerBase
 							</div>
 						  </div>';
 			}
-
+		
 			foreach ($videos as $video) {
 				$html .= '<div class="item">
 							<div class="patient-imag-wrapper">
@@ -142,12 +156,21 @@ class Testimonial extends ControllerBase
 							</div>
 						  </div>';
 			}
-
+		
 			$html .= '</div>
 					  <div class="fw-bolder">' . $patienname . '</div>
-					  </div>
-					</div>';
+					  </div>';
+		
+			$html .= '<div class="col-md-12 col-sm-6 pt-2 p-0 m-0">';
+			foreach ($tags as $tag) {
+				$html .= '<button class="rel-btn p-2 m-2 btn"><h3 class="fs-6 m-0">' . $tag . '</h3></button>';
+			}
+			$html .= '</div>';
+		
+			$html .= '</div>';
 		}
+
+
 		$html .= '</div>';
 
 
@@ -278,22 +301,13 @@ class Testimonial extends ControllerBase
 
 
 			$html .='<div class="row owl-carousel testimonial-slider pt-3">';
-			foreach ($ea_nodes as $key => $node) {
 
+			foreach ($ea_nodes as $key => $node) {
 				$nid = $node->get('nid')->value;
 				$title = $node->get('title')->value;
-				$date = $node->get('created')->value;
-				$final_date = date("d F Y", $date);
-				// $test = $node->field_patienpicture->getValue();
-				// $test_id = $test[0]['target_id'];
 				$content = $node->field_content->getValue()[0]['value'];
 				$patienname = $node->field_patienname->getValue()[0]['value'];
-
-
-				$alias_url = $base_url.\Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$nid);
-
-
-
+			
 				$images = [];
 				if ($node->hasField('field_picture') && !$node->get('field_picture')->isEmpty()) {
 					$paragraphs = $node->get('field_picture')->referencedEntities();
@@ -307,7 +321,7 @@ class Testimonial extends ControllerBase
 						}
 					}
 				}
-	
+			
 				$videos = [];
 				if ($node->hasField('field_videos') && !$node->get('field_videos')->isEmpty()) {
 					$video_paragraphs = $node->get('field_videos')->referencedEntities();
@@ -320,7 +334,23 @@ class Testimonial extends ControllerBase
 						}
 					}
 				}
-	
+			
+				$tags = [];
+				if ($node->hasField('field_testimonial_tags') && !$node->get('field_testimonial_tags')->isEmpty()) {
+					$tags_paragraphs = $node->get('field_testimonial_tags')->referencedEntities();
+					foreach ($tags_paragraphs as $tags_paragraph) {
+						if ($tags_paragraph->hasField('field_tags')) {
+							$tags_field = $tags_paragraph->get('field_tags');
+							foreach ($tags_field as $tag_item) {
+								$tag_value = $tag_item->value;
+								if ($tag_value) {
+									$tags[] = $tag_value;
+								}
+							}
+						}
+					}
+				}
+			
 				$html .= '<div class="test-wrapp">
 							<div class="p-3">
 								<div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
@@ -330,7 +360,7 @@ class Testimonial extends ControllerBase
 								'</div>
 								<a class="readMoreLink">Read more</a>
 								<div class="owl-carousel owl-theme patient">';
-	
+			
 				foreach ($images as $image) {
 					$html .= '<div class="item">
 								<div class="patient-imag-wrapper">
@@ -338,7 +368,7 @@ class Testimonial extends ControllerBase
 								</div>
 							  </div>';
 				}
-	
+			
 				foreach ($videos as $video) {
 					$html .= '<div class="item">
 								<div class="patient-imag-wrapper">
@@ -347,12 +377,21 @@ class Testimonial extends ControllerBase
 								</div>
 							  </div>';
 				}
-	
+			
 				$html .= '</div>
 						  <div class="fw-bolder">' . $patienname . '</div>
-						  </div>
-						</div>';
+						  </div>';
+			
+				$html .= '<div class="col-md-12 col-sm-6 pt-2 p-0 m-0">';
+				foreach ($tags as $tag) {
+					$html .= '<button class="rel-btn p-2 m-2 btn"><h3 class="fs-6 m-0">' . $tag . '</h3></button>';
+				}
+				$html .= '</div>';
+			
+				$html .= '</div>'; 
 			}
+
+
 			$html .= '</div>';
 
 

@@ -374,6 +374,22 @@ class DoctorProfile extends ControllerBase
 						}
 					}
 
+					$tags_paragraphs = $node->get('field_testimonial_tags')->referencedEntities();
+					$tags = [];
+					foreach ($tags_paragraphs as $tags_paragraph) {
+						if ($tags_paragraph->hasField('field_tags')) {
+							$tags_field = $tags_paragraph->get('field_tags');
+							foreach ($tags_field as $tag_item) {
+								$tag_value = $tag_item->value;
+								if ($tag_value) {
+									$tags[] = $tag_value;
+								}
+							}
+						}
+					}
+					
+
+					$response['patient_testimonials'][$key]['tags'] = $tags;
 					$response['patient_testimonials'][$key]['videos'] = $videos;
 					$response['patient_testimonials'][$key]['images'] = $images;
 				}

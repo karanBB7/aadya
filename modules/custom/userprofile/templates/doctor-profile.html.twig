@@ -1,5 +1,13 @@
 <title>{{ arr_data.profile_theme1.field_name }}</title>
 
+{% if arr_data.profile_theme1 is defined %}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('<current>') }}">
+    <meta property="og:title" content="{{ arr_data.profile_theme1.field_name }} - {{ arr_data.profile_theme1.field_specialitiy }}">
+    <meta property="og:description" content="{{ arr_data.profile_theme1.field_overview|striptags|slice(0, 60) ~ (arr_data.profile_theme1.field_overview|striptags|length > 60 ? '...' : '') }}">
+    <meta property="og:image" content="{{ arr_data.profile_theme1.field_background_image.url }}">
+{% endif %}
+
 {% if arr_data.profile_theme == 'theme1' %}
 <style>
     :root {
@@ -24,7 +32,7 @@
 
             <div class="col-lg-5 col-md-6  mx-auto order-lg-2 order-xs-2 img-bg">
 
-                <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="display-picture">
 
             </div>
 
@@ -174,7 +182,7 @@
     <section id="p2sec1">
         <div class="secondtheme">
             <div class="banner">
-                <img   src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="{{ arr_data.profile_theme1.field_displaypicture.alt }}" >
+                <img   src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="display-picture" >
 
                 <div class="container d-none d-sm-block">
                     <div class="row profile-wrapper">
@@ -888,7 +896,17 @@
                 </div>
 
                 <div class="fw-bolder">{{ testimonials.patienname }}</div>
+                
             </div>
+
+
+            <div class="col-md-12 col-sm-6 pt-2 p-0 m-0">
+                {% for tag in testimonials.tags %}
+                    <button class="rel-btn p-2 m-2  btn"><h3 class="fs-6 m-0">{{ tag }}</h3></button>
+                {% endfor %}
+            </div>
+
+
         </div>
     {% endfor %}
 </div>

@@ -254,3 +254,10 @@ h5 {
 .secondtheme .map-pill .nav-item .active {
     border-bottom: 3px solid var(--p2c3);
 }
+
+.rel-btn {
+    background-color: var(--c1);
+    border-radius: 10px;
+    border: 1px solid var(--c3) !important;
+
+}
