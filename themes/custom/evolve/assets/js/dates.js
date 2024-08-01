@@ -85,6 +85,9 @@ function loadDatesCarousel() {
                     items: 1
                 },
                 600: {
+                    items: 3
+                },
+                900: {
                     items: 7
                 }
             },

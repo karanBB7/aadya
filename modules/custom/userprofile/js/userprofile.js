@@ -133,24 +133,10 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-
-
-
-
-
-
-
-
-
-
-
 	$(".book_appointment").click(function(){
 		$(".time_slots").html('');
 		$('.current_date_select').removeClass('activedates');
 	});
-
-
-
 
 
 
@@ -253,13 +239,6 @@ jQuery(document).ready(function($) {
 		}
 	}
 
-
-
-
-
-
-
-
 	$(document).on("click",".openPopup",function(){
 		$(".overlay").show();
 		$(".popup").show(); 
@@ -278,6 +257,7 @@ jQuery(document).ready(function($) {
 		$("#clinic_target_id").val(target_id);
 		$("#bookingtimeslot").val(time_slot);
 		$("#bookingtime").val(slot_name);
+		$('#booking_date').val(date);
 		$(".booking_details").html('Please fill in details to Request an appointment with Dr. Murali Mohan S on '+date+' at '+time_slot+'.')
 	});
 	if($("#booking_form").length > 0){
@@ -323,7 +303,7 @@ jQuery(document).ready(function($) {
 			var clinic_target_id = $("#clinic_target_id").val();
 			var bookingtimeslot = $("#bookingtimeslot").val();
 			var bookingtime = $("#bookingtime").val();
-			var booking_date = $(".activedates").attr('data-date');
+			var booking_date = $("#booking_date").val();
 			var terms = $("#terms").val();
 			var user_id = $("#user_id").val();
 			var reason = $("#reason").val();
@@ -361,12 +341,6 @@ jQuery(document).ready(function($) {
 	}
 
 
-
-	
-
-
-
-	
 	var otpVerified = false;
 
     function isValidPhoneNumber(phone) {
@@ -417,8 +391,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-  
-
     $("#verify_otp").keypress(function(e){
         if(e.which == 13) { 
             e.preventDefault();  
@@ -427,8 +399,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-
-	
 	$("#verify_otp_btn").click(function(e) {
 		e.preventDefault(); 
 		
@@ -474,8 +444,6 @@ jQuery(document).ready(function($) {
 		});
 	});
 	
-
-
     $("#booking_form").submit(function(e) {
         var phone = $("#phonenumber").val();
         if (!isValidPhoneNumber(phone)) {
@@ -490,14 +458,6 @@ jQuery(document).ready(function($) {
         }
     });
     $("#bookAppointmentButton").prop('disabled', true);
-
-
-
-
-
-
-
-
 
 	$(".resend_otp").click(function(){
 		var phonenumber = $("#phonenumber").val();
@@ -517,8 +477,6 @@ jQuery(document).ready(function($) {
 			}, 
 			success: function (data) {
 				$(".otp_msg").html(data.message);
-				// $(".generate_otp").hide();
-				// $(".resend_otp").show();
 			}
 		});
 	});
@@ -581,18 +539,6 @@ jQuery(document).ready(function($) {
 		location.reload();
 	});
 	function getUrlParameter(name) {
-		// var sPageURL = window.location.search.substring(1),
-		// sURLVariables = sPageURL.split('&'),
-		// sParameterName,
-		// i;
-
-		// for (i = 0; i < sURLVariables.length; i++) {
-		// 	sParameterName = sURLVariables[i].split('=');
-
-		// 	if (sParameterName[0] === sParam) {
-		// 		return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-		// 	}
-		// }
 		const urlParams = new URLSearchParams(window.location.search);
 		const param1 = urlParams.get(name);
 		return param1;
@@ -688,12 +634,9 @@ jQuery(document).ready(function($) {
 		var hospital = $(".hospital option:selected").val();
 		var years = $(".years option:selected").val();
 		var doctor_select = $(".doctor_select option:selected").val();
-		var month = $("#months option:selected").val(); // Assuming months is a separate dropdown
-
-		// Initialize query string
+		var month = $("#months option:selected").val();
 		var query_url = '';
 
-		// Append parameters if they are defined
 		if (years !== undefined) {
 			query_url += '&year=' + years;
 		}
@@ -707,10 +650,8 @@ jQuery(document).ready(function($) {
 			query_url += '&month=' + month;
 		}
 
-		// Construct the full URL with base_url
-		var full_url = base_url + '?' + query_url.substring(1); // Remove leading '&' or '?'
+		var full_url = base_url + '?' + query_url.substring(1);
 
-		// Redirect to the constructed URL
 		window.location.href = full_url;
 	});
 	$(document).on("change",".doctor_select",function(){
@@ -743,11 +684,11 @@ jQuery(document).ready(function($) {
 		const nextBtn = document.getElementById("nextBtn");
 
 		prevBtn.addEventListener("click", () => {
-		  container.scrollLeft -= 200; // Adjust scrolling distance as needed
+		  container.scrollLeft -= 200; 
 		});
 
 		nextBtn.addEventListener("click", () => {
-		  container.scrollLeft += 200; // Adjust scrolling distance as needed
+		  container.scrollLeft += 200;
 		});
 	}
 	if($('#switch').length > 0){

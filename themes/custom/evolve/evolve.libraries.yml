@@ -12,8 +12,8 @@ global-styling:
       assets/css/min/color.css?v=1.1: {}
   js:
     assets/js/min/jquery.validate.min.js?v=1.0: {}
-    assets/js/min/main.js?v=1.0: {}
-    assets/js/min/dates.js?v=1.0: {}
+    assets/js/min/main.js?v=2.0: {}
+    assets/js/min/dates.js?v=3.0: {}
     assets/js/min/youtubeEmbede.js: {}
     
   dependencies:

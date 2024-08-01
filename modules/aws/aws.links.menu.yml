@@ -1,5 +1,0 @@
-aws.overview:
-  title: 'Amazon Web Services'
-  description: 'AWS configuration overview'
-  route_name: aws.overview
-  parent: system.admin_config_services

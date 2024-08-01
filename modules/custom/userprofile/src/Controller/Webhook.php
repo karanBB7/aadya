@@ -84,25 +84,45 @@ class Webhook extends ControllerBase
                 $query = $connection->select('booking_appointment', 'ba')
                     ->fields('ba', ['user_id', 'booking_date', 'time_slot', 'created_date', 'time_slot_name', 'status', 'patient_name', 'clinic_name'])
                     ->condition('mobile_number', $mobilenumber)
-                    ->orderBy('created_date', 'DESC')
-                    ->range(0, 1);
+                    ->orderBy('created_date', 'DESC');
                 $result = $query->execute();
-                $appointment = $result->fetchAssoc();
+                $appointments = $result->fetchAll();
+            
                 $response = [];
-                if ($appointment && ($appointment['status'] == 1 || $appointment['status'] == 3)) {
+                $valid_appointment = null;
+            
+                function safe_get($data, $key) {
+                    if (is_array($data)) {
+                        return isset($data[$key]) ? $data[$key] : null;
+                    } elseif (is_object($data)) {
+                        return isset($data->$key) ? $data->$key : null;
+                    }
+                    return null;
+                }
+            
+
+                foreach ($appointments as $appointment) {
+                    $status = safe_get($appointment, 'status');
+                    if ($status == 1 || $status == 3) {
+                        $valid_appointment = $appointment;
+                        break;
+                    }
+                }
+            
+                if ($valid_appointment) {
                     $user_query = $connection->select('users_field_data', 'u')
                         ->fields('u', ['name'])
-                        ->condition('uid', $appointment['user_id'])
+                        ->condition('uid', safe_get($valid_appointment, 'user_id'))
                         ->range(0, 1);
                     $user_result = $user_query->execute();
                     $username = $user_result->fetchField();
                     
                     $current_datetime = new DrupalDateTime();
-                    $appointment_datetime = new DrupalDateTime($appointment['booking_date'] . ' ' . $appointment['time_slot']);
+                    $appointment_datetime = new DrupalDateTime(safe_get($valid_appointment, 'booking_date') . ' ' . safe_get($valid_appointment, 'time_slot'));
                     
                     $appointment_tense = ($appointment_datetime > $current_datetime) ? "future" : "past";
             
-                    $user = \Drupal\user\Entity\User::load($appointment['user_id']);
+                    $user = \Drupal\user\Entity\User::load(safe_get($valid_appointment, 'user_id'));
                     $para = $user->get("field_paragraphtheme1")->getValue();
                     $getParaCount = $this->loadfields->getCount($para);
                     $field_name_value = '';
@@ -118,11 +138,11 @@ class Webhook extends ControllerBase
                         "Username" => $username,
                         "appointment_tense" => $appointment_tense,
                         "Docfullname" => $field_name_value,
-                        "date" => $appointment['booking_date'],
-                        "slotName" => $appointment['time_slot_name'],
-                        "slotTime" => $appointment['time_slot'],
-                        "patient_name" => $appointment['patient_name'],
-                        "clinic_name" => $appointment['clinic_name'],
+                        "date" => safe_get($valid_appointment, 'booking_date'),
+                        "slotName" => safe_get($valid_appointment, 'time_slot_name'),
+                        "slotTime" => safe_get($valid_appointment, 'time_slot'),
+                        "patient_name" => safe_get($valid_appointment, 'patient_name'),
+                        "clinic_name" => safe_get($valid_appointment, 'clinic_name'),
                     ];
                 } else {
                     $response = [
@@ -132,13 +152,12 @@ class Webhook extends ControllerBase
                 }
                 
                 return new JsonResponse($response);
-            }else {
+            } else {
                 $list_message = array("1"=>"Book Appointment","2"=>"Reschedule","3"=>"Cancel Appointment","4"=>"Show appointment details");
                 if(empty($list_type)){
                     $responseData = ["list_message" => $list_message];
                 }
             }
-
 
 
             $query = \Drupal::database()->select('users_field_data', 'u');

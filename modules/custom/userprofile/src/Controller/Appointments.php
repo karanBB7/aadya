@@ -207,7 +207,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($morning_book_slot) && in_array($value, $morning_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -223,7 +223,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($morning_book_slot) && in_array($value, $morning_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Morning" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -250,7 +250,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($afternoon_book_slot) && in_array($value, $afternoon_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -266,7 +266,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($afternoon_book_slot) && in_array($value, $afternoon_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="After Noon" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 				
@@ -294,7 +294,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($evening_book_slot) && in_array($value, $evening_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -310,7 +310,7 @@ class Appointments extends ControllerBase
 					}elseif(!empty($evening_book_slot) && in_array($value, $evening_book_slot)){
 						$html .= '<button class="ap-book mx-1 closed p-3 mt-2"><b>'.$value.' </b> <span class="text-warning"></span></button>';
 					}else{
-						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
+						$html .= '<button class="ap-book mx-1 openPopup p-3 mt-2" data-clinicname="'.$clinic_name.'" data-target_id="'.$target_id.'" data-time-slot="'.$value.'" data-slot-name="Evening" data-date="'.date("d/m/Y",strtotime($current_date)).'"><b>'.$value.' </b> <span class="text-danger"></span></button>';
 					}
 				}
 			}else{
@@ -412,7 +412,7 @@ class Appointments extends ControllerBase
 		$bookingtimeslot = !empty($request->get('bookingtimeslot')) ? $request->get('bookingtimeslot') : '';
 		$bookingtime = !empty($request->get('bookingtime')) ? $request->get('bookingtime') : '';
 		$fullname = !empty($request->get('fullname')) ? $request->get('fullname') : '';
-		$booking_date = !empty($request->get('booking_date')) ? date('Y-m-'.$request->get('booking_date')) : '';
+		$booking_date = !empty($request->get('booking_date')) ? str_replace("/", "-", $request->get('booking_date')) : '';
 		$terms = !empty($request->get('terms')) ? $request->get('terms') : '0';
 		$reason = !empty($request->get('reason')) ? $request->get('reason') : '';
 		$firsttime = !empty($request->get('firsttime')) ? $request->get('firsttime') : '0';
@@ -439,7 +439,6 @@ class Appointments extends ControllerBase
 		$date = new DrupalDateTime($booking_date);
 		$date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
 		$date_booking = preg_replace('/(\d+)(st|nd|rd|th)/', '$1$2 ', $date_booking);
-
 		if($doctor_type === "request"){
             $text_sms = 'Dear ' . $fullname . '!, your request for an appointment with ' . $field_name_value . ' at ' . $formatted_bookingtimeslot . ' on ' . $date_booking . ' at ' . $clinicname . ' is accepted. Someone from the clinic will call and confirm the appointment shortly. WhatsApp us on +91 8861191019 to cancel or reschedule. Aadya Health Sciences.';
             $mob_text = str_replace('+', '%20', urlencode($text_sms));

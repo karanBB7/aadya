@@ -1,4 +1,82 @@
-function extractVideoID(e){let t=e.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);return t&&11===t[2].length?t[2]:null}function setupYoutubeEmbeds(e,t){let o=document.querySelectorAll(`.${e}`),u=document.querySelectorAll(`.${t}`);o.forEach((e,t)=>{let o=e.textContent.trim();if(o){let a=extractVideoID(o);if(a&&u[t]){let i=document.createElement("div");i.className="youtube-facade",i.setAttribute("data-video-id",a);let r=document.createElement("div");r.className="youtube-facade-thumbnail";let n=document.createElement("img");n.src=`https://img.youtube.com/vi/${a}/hqdefault.jpg`,n.alt="Video Thumbnail",r.appendChild(n),i.appendChild(r);let l=document.createElement("div");l.className="youtube-facade-play-button",i.appendChild(l),i.addEventListener("click",function(){let e=document.createElement("iframe");e.setAttribute("width","100%"),e.setAttribute("src",`https://www.youtube.com/embed/${a}?autoplay=1&si=83oiblxyjFLcMFmN`),e.setAttribute("frameborder","0"),e.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"),e.setAttribute("allowfullscreen","true"),this.parentNode.replaceChild(e,this)}),u[t].parentNode.replaceChild(i,u[t])}}})}function debounce(e,t){let o;return function u(...a){let i=()=>{clearTimeout(o),e(...a)};clearTimeout(o),o=setTimeout(i,t)}}function runSetup(){setupYoutubeEmbeds("link","youtube-iframe"),setupYoutubeEmbeds("link-overview","youtube-iframe-overview"),setupYoutubeEmbeds("link-speciality","youtube-iframe-speciality"),setupYoutubeEmbeds("link-patient","youtube-iframe-patient")}const debouncedRunSetup=debounce(runSetup,300);runSetup();const observer=new MutationObserver(()=>{debouncedRunSetup()});observer.observe(document.body,{childList:!0,subtree:!0});const style=document.createElement("style");style.textContent=`
+function extractVideoID(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+function setupYoutubeEmbeds(linkClass, iframeClass) {
+    const links = document.querySelectorAll(`.${linkClass}`);
+    const iframes = document.querySelectorAll(`.${iframeClass}`);
+
+    links.forEach((link, index) => {
+        const youtubeLink = link.textContent.trim();
+        if (youtubeLink) {
+            const videoID = extractVideoID(youtubeLink);
+            if (videoID && iframes[index]) {
+                const facade = document.createElement('div');
+                facade.className = 'youtube-facade';
+                facade.setAttribute('data-video-id', videoID);
+
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'youtube-facade-thumbnail';
+                const img = document.createElement('img');
+                img.src = `https://img.youtube.com/vi/${videoID}/hqdefault.jpg`;
+                img.alt = 'Video Thumbnail';
+                thumbnail.appendChild(img);
+                facade.appendChild(thumbnail);
+
+                const playButton = document.createElement('div');
+                playButton.className = 'youtube-facade-play-button';
+                facade.appendChild(playButton);
+
+                facade.addEventListener('click', function() {
+                    const iframe = document.createElement('iframe');
+                    iframe.setAttribute('width', '100%');
+                    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoID}?autoplay=1&si=83oiblxyjFLcMFmN`);
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                    iframe.setAttribute('allowfullscreen', 'true');
+
+                    this.parentNode.replaceChild(iframe, this);
+                });
+
+                iframes[index].parentNode.replaceChild(facade, iframes[index]);
+            }
+        }
+    });
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function runSetup() {
+    setupYoutubeEmbeds('link', 'youtube-iframe');
+    setupYoutubeEmbeds('link-overview', 'youtube-iframe-overview');
+    setupYoutubeEmbeds('link-speciality', 'youtube-iframe-speciality');
+    setupYoutubeEmbeds('link-patient', 'youtube-iframe-patient');
+}
+
+const debouncedRunSetup = debounce(runSetup, 300);
+
+runSetup();
+
+const observer = new MutationObserver(() => {
+    debouncedRunSetup();
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+const style = document.createElement('style');
+style.textContent = `
 .youtube-facade {
     position: relative;
     width: 100%;
@@ -38,4 +116,6 @@ function extractVideoID(e){let t=e.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|wat
     border-width: 15px 0 15px 26px;
     border-color: transparent transparent transparent white;
 }
-`,document.head.appendChild(style);
+`;
+document.head.appendChild(style);
+

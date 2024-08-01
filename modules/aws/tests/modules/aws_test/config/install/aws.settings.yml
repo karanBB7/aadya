@@ -1,4 +1,0 @@
-services:
-  s3:
-    profile: aws_test
-    version: latest
