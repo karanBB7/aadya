@@ -216,6 +216,8 @@ class DoctorProfile extends ControllerBase
 			}
 			
 			//$currentDate = new DrupalDateTime();
+
+
 			$dates = array();
 			$current_date = new DrupalDateTime();
 			for ($i = 0; $i < 7; $i++) {
@@ -224,8 +226,9 @@ class DoctorProfile extends ControllerBase
 			}
 			$response['dates'] = $dates;
 			$response['user_id'] = $uid;
-			$response['doctor_type'] = $doctor_type;
+			$doctor_type = $doctor_type ?? 'default_type';
 			$search = !empty($request->get('search')) ? $request->get('search'): array();
+
 
 
 

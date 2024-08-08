@@ -1,3 +1,17 @@
+# RewriteEngine On
+
+# # Subdomain redirects
+# RewriteCond %{HTTP_HOST} ^dr-balachandra\.linqmd\.com$ [NC]
+# RewriteRule ^(.*)$ https://www.linqmd.com/doctor-profile/dr-balachandra-bv [L,R=301]
+
+# RewriteCond %{HTTP_HOST} ^dr-murali-mohan\.linqmd\.com$ [NC]
+# RewriteRule ^(.*)$ https://www.linqmd.com/doctor-profile/dr-murali-mohan [L,R=301]
+
+# # URL path redirects
+# RewriteRule ^doctor-profile/drmurali/?$ /doctor-profile/dr-murali-mohan [L,R=301]
+# RewriteRule ^doctor-profile/drbala/?$ /doctor-profile/dr-balachandra-bv [L,R=301]
+
+
 #
 # Apache/PHP/Drupal settings:
 #

@@ -115,7 +115,7 @@ class DoctorDashboard extends ControllerBase
 		}
 		
 		
-		for ($i = 0; $i < 7; $i++) {
+		for ($i = 0; $i < 31; $i++) {
 			$dates[$i]['date'] = $current_date->format('d');
 			$dates[$i]['day'] = $current_date->format('l');
 			$dates[$i]['fulldate'] = $current_date->format('Y-m-d');
@@ -260,7 +260,10 @@ class DoctorDashboard extends ControllerBase
 			$afternoonslots= [];
 			$eveningslots= [];
 			foreach($dates as $value){
-				$booking_dates = (!empty($month) && !empty($year)) ? $year.'-'.$month.'-'.$value['date'] : date("Y-m-".$value['date']);
+				$booking_dates = (!empty($month) && !empty($year)) 
+    ? sprintf('%04d-%02d-%02d', $year, $month, $value['date']) 
+    : date("Y-m-".sprintf('%02d', $value['date']));
+
 				$select_day = date("l",strtotime($booking_dates));
 				$query = $connection->select('doctor_availability','ba')
 					->fields('ba');
@@ -552,9 +555,14 @@ class DoctorDashboard extends ControllerBase
 					$usernames = $usera->getAccountName();
 					$date = new DrupalDateTime($value->booking_date);
 					$date_booking = \Drupal::service('date.formatter')->format($date->getTimestamp(), 'custom', 'l jSF');
-					$text_sms = 'Dear '.$value->patient_name.', your appointment with Dr.'.$usernames.' at  on '.$date_booking.' at '.$value->time_slot.' is cancelled. WhatsApp us on 9376005515 to book an appointment. Aadya Health Sciences.';
+
+					$text_sms = 'Dear '.$patient_name.', your appointment with '.$field_name_value.'  at '.$cn.' on '.$date_booking.' at '.$time_slot.' is cancelled. Aadya Health Sciences.';
+
+
 					$mob_text = str_replace('+', '%20', urlencode($text_sms));
-					$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$value->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707171930774075419&UNICODE=TEXT';
+					$url_sms = 'https://onlysms.co.in/api/sms.aspx?UserID=adhspl&UserPass=Adh909@&MobileNo='.$rows[0]->mobile_number.'&GSMID=AADHSP&PEID=1701171921100574462&Message='.$mob_text.'&TEMPID=1707172128612230453&UNICODE=TEXT';
+
+
 					try {
 						$curl = curl_init();
 						curl_setopt_array($curl, array(
@@ -732,6 +740,7 @@ class DoctorDashboard extends ControllerBase
 		exit;
 	}
 	public function adminBookingAppointment(Request $request){
+
 		$phone_number = !empty($request->get('phone_number')) ? $request->get('phone_number') : '';
 		$paitent_name = !empty($request->get('paitent_name')) ? $request->get('paitent_name') : '';
 		$time_slot = !empty($request->get('time_slot')) ? $request->get('time_slot') : '';
@@ -742,7 +751,7 @@ class DoctorDashboard extends ControllerBase
 		$hospital_name = !empty($request->get('hospital_name')) ? $request->get('hospital_name') : '';
 		$table = 'booking_appointment';
 		$fields = array(
-			'mobile_number' => $phone_number,
+			'mobile_number' => '91'.$phone_number,
 			'clinic_target_id' => $hospital,
 			'clinic_name' => $hospital_name,
 			'time_slot' => $time_slot,
@@ -754,6 +763,7 @@ class DoctorDashboard extends ControllerBase
 			'request' => '',
 			'status' => '1',
 			'created_date' => date('Y-m-d H:i:s'),
+			'clinic_phone_number' => "0",
 		);			
 		\Drupal::database()->insert($table)
 			->fields($fields)

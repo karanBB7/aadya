@@ -215,6 +215,7 @@ class Article extends ControllerBase
     
 	function getCategoryNews(Request $request){
 		global $base_url;
+		$html = '';
 		$cat_id = !empty($request->get('cat_id')) ? $request->get('cat_id'): array();
 		$username = $request->get('username');
 		if(!empty($username)){

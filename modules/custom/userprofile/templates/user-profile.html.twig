@@ -1,13 +1,3 @@
-<title>{{ arr_data.profile_theme1.field_name }}</title>
-
-{% if arr_data.profile_theme1 is defined %}
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url('<current>') }}">
-    <meta property="og:title" content="{{ arr_data.profile_theme1.field_name }} - {{ arr_data.profile_theme1.field_specialitiy }}">
-    <meta property="og:description" content="{{ arr_data.profile_theme1.field_overview|striptags|slice(0, 60) ~ (arr_data.profile_theme1.field_overview|striptags|length > 60 ? '...' : '') }}">
-    <meta property="og:image" content="{{ arr_data.profile_theme1.field_background_image.url }}">
-{% endif %}
-
 {% if arr_data.profile_theme == 'theme1' %}
 <style>
     :root {
@@ -27,110 +17,171 @@
 
 <section id="sec1">
     <div class="container">
-        <div class="row">
+        <div itemscope itemtype="https://schema.org/Person">
+            <div class="row">
+                <div class="col-lg-5 col-md-6  mx-auto order-lg-2 order-xs-2 img-bg">
 
+                    <img itemprop="image" src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="display-picture">
 
-            <div class="col-lg-5 col-md-6  mx-auto order-lg-2 order-xs-2 img-bg">
-
-                <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="display-picture">
-
-            </div>
-
-            <div class="svg d-block d-sm-none">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                    <path fill="{{ arr_data.profile_theme1.field_colorcode | default('#4c94d3') | trim  }}" fill-opacity="1" d="M0,128L80,144C160,160,320,192,480,197.3C640,203,800,181,960,149.3C1120,117,1280,75,1360,53.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-                </svg>
-            </div>
-
-            <div class="col-lg-6 col-md-12 intro-box order-lg-1 order-xs-1">
-                <h1 class="fs-1 tc">{{ arr_data.profile_theme1.field_name}}</h1>
-                <p class="title tc p-0 m-0">{{ arr_data.profile_theme1.field_specialitiy}} </p>
-
-                 <p class="fs-low  small-padding tc col-sm-8">  
-                    {{ arr_data.profile_theme1.field_degree}}
-                  </p>
-
-                {# <p class="small-padding fs-low col-sm-8 tc">{{ arr_data.profile_theme1.field_allcertifications}} #}
-
-                <div class="d-block d-sm-none" style="margin-top: -20px;">
-                    <div class="d-flex pt-2 justify-content-center">
-                        <a class="fs-low p-2 pt-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
-
-                        <a class="mailto fs-low p-2 pt-1 " href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
-                    </div>
-                    
                 </div>
 
+                <div class="svg d-block d-sm-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                        <path fill="{{ arr_data.profile_theme1.field_colorcode | default('#4c94d3') | trim  }}" fill-opacity="1" d="M0,128L80,144C160,160,320,192,480,197.3C640,203,800,181,960,149.3C1120,117,1280,75,1360,53.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+                    </svg>
+                </div>
 
-                <div class="row">
+                <div class="col-lg-6 col-md-12 intro-box order-lg-1 order-xs-1">
+                    <h1 class="fs-1 tc" itemprop="name">{{ arr_data.profile_theme1.field_name}}</h1>
+                    <p class="title tc p-0 m-0" itemprop="jobTitle">{{ arr_data.profile_theme1.field_specialitiy}} </p>
 
-                    <div class="col-sm-7 ">
-                       <div class="d-none d-sm-block">
-                              <button class="btn appbtn mb-2 p-2 order-lg-1 order-sm-2">Book an appointment</button>
-                       </div>
+                    <p class="fs-low  small-padding tc col-sm-8" itemprop="hasCredential">
+                        {{ arr_data.profile_theme1.field_degree}}
+                    </p>
 
-                        <div class="d-flex ">
-                             <a href="tel:{{ arr_data.profile_theme1.field_phone_number }}" class="p-1 pt-1 callto  d-none d-sm-block fs-low">
-                                {{ arr_data.profile_theme1.field_phone_number}} 
-                            | </a> 
-                            
-                             <a class="mailto fs-low pt-1 p-1 d-none d-sm-block" href="mailto:{{ arr_data.profile_theme1.field_email_address }}">
-                                 {{ arr_data.profile_theme1.field_email_address }}
-                             </a>
+
+
+                    <div class="d-block d-sm-none" style="margin-top: -20px;">
+                        <div class="d-flex pt-2 justify-content-center">
+                            <a class="fs-low p-2 pt-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}" itemprop="telephone">{{ arr_data.profile_theme1.field_phone_number}} </a> |
+
+                            <a class="mailto fs-low p-2 pt-1 " href="mailto:{{ arr_data.profile_theme1.field_email_address }}" itemprop="email">{{ arr_data.profile_theme1.field_email_address}}</a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-sm-7 ">
+                            <div class="d-none d-sm-block">
+                                <button class="btn appbtn mb-2 p-2 order-lg-1 order-sm-2">Book an appointment</button>
+                            </div>
+
+                            <div class="d-flex ">
+                                <a href="tel:{{ arr_data.profile_theme1.field_phone_number }} " itemprop="telephone" class="p-1 pt-1 callto  d-none d-sm-block fs-low">
+                                    {{ arr_data.profile_theme1.field_phone_number}}
+                                    | </a>
+
+                                <a class="mailto fs-low pt-1 p-1 d-none d-sm-block" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" itemprop="email">
+                                    {{ arr_data.profile_theme1.field_email_address }}
+                                </a>
+                            </div>
+
+<div class="order-lg-2 order-sm-2" id="rating">
+  <div id="star" class="star" data-rating="4.6">
+    <div itemscope itemtype="https://schema.org/Physician">
+      <meta itemprop="name" content="{{ arr_data.profile_theme1.field_name }}">
+      <meta itemprop="image" content="{{arr_data.profile_theme1.profile_image}}">
+      <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+        <meta itemprop="ratingValue" content="4.6">
+        <meta itemprop="bestRating" content="5">
+        <meta itemprop="worstRating" content="1">
+        <meta itemprop="ratingCount" content="{{arr_data.profile_theme1.rating_count}}">
+        <meta itemprop="reviewCount" content="{{arr_data.profile_theme1.review_count}}">
+      </div>
+      <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Anonymous">
+        </div>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="ratingValue" content="1">
+        </div>
+      </div>
+      <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Anonymous">
+        </div>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="ratingValue" content="2">
+        </div>
+      </div>
+      <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Anonymous">
+        </div>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="ratingValue" content="3">
+        </div>
+      </div>
+      <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Anonymous">
+        </div>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="ratingValue" content="4">
+        </div>
+      </div>
+      <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Anonymous">
+        </div>
+        <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="ratingValue" content="5">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
                         </div>
 
 
-                    <div class="order-lg-2 order-sm-2" id="rating">
-                     <div id="star" class="star " data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
-                    </div>
+                        <div class="col-sm-5 d-none d-sm-block">
 
-
-                        
-                    </div>
-
-
-                    <div class="col-sm-5 d-none d-sm-block">
-    
-                              <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank">
-                            <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button>
+                            <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank">
+                                <button class="whatsappbtn btn mb-2"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button>
                             </a>
-                        <p class="exp mt-3 col-8">{{ arr_data.profile_theme1.field_experiences}}</p>
-                       
-                        <p class="exp mb-4 col-8">{{ arr_data.profile_theme1.field_patients}}</p>
-                    </div>
+                            <p class="exp mt-3 col-8">{{ arr_data.profile_theme1.field_experiences}}</p>
 
-
-                    <div class="col-sm-12">
-
-{# large #}
-                     <div class="bg-change row sm-hide">
-                            {% for key,imgdata in arr_data.profile_theme1.field_logos %}
-                            <div class="col-sm-4 m-2 clinic-wrap ">
-                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
-                            </div>
-                            {% endfor %}
+                            <p class="exp mb-4 col-8">{{ arr_data.profile_theme1.field_patients}}</p>
                         </div>
 
-                        {# small #}
 
-                        <div class="bg-change row d-flex d-sm-none">
-                            {% for key,imgdata in arr_data.profile_theme1.field_logos %}
-                            <div class="col-sm-4 m-2 clinic-wrap mx-auto d-block">
-                                <img   class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                        <div class="col-sm-12">
+
+                            {# large #}
+                            <div class="bg-change row sm-hide">
+                                {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                                <div class="col-sm-4 m-2 clinic-wrap ">
+                                    <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
-                        
-                    </div>
 
-                    <div class="sm-fl d-block d-sm-none" style="background:var(--c1);">
+                            {# small #}
+
+                            <div class="bg-change row d-flex d-sm-none">
+                                {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                                <div class="col-sm-4 m-2 clinic-wrap mx-auto d-block">
+                                    <img class="img-fluid mx-auto d-block" src="{{imgdata.field_logo.url}}" alt="">
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+                        <div class="sm-fl d-block d-sm-none px-3" style="background:var(--c1);">
                             <button class="btn appbtn mb-2 order-lg-2 order-sm-2 ">Book an appointment</button>
-                            <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
+                            <a href="https://api.whatsapp.com/send?phone=918861191019&text=Hello! {{ arr_data.profile_theme1.field_name }}" target="_blank"><button class="whatsappbtn btn mb-2 mt-1 mx-4"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
 
                         </div>
+                    </div>
+
+
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -180,30 +231,31 @@
 </style>
 
     <section id="p2sec1">
+      <div itemscope itemtype="https://schema.org/Person">
         <div class="secondtheme">
             <div class="banner">
-                <img   src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="display-picture" >
+                <img  itemprop="image" src="{{ arr_data.profile_theme1.field_displaypicture.url }}" alt="display-picture" >
 
                 <div class="container d-none d-sm-block">
                     <div class="row profile-wrapper">
                         <div class="circle-container">
-                            <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                            <img  itemprop="image" src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
                         </div>
                         <div class="col-sm-8 content-wrapper">
                             <div class="d-flex">
 
                                 <div class="col-8 mx-3">
-                                    <h1 class="fon1 pt-4">{{ arr_data.profile_theme1.field_name}}</h1>
-                                    <p class="title  fw-bold p-0 m-0 ">{{ arr_data.profile_theme1.field_specialitiy}} </p>
+                                    <h1 class="fon1 pt-4" itemprop="name">{{ arr_data.profile_theme1.field_name}}</h1>
+                                    <p class="title  fw-bold p-0 m-0 " itemprop="jobTitle">{{ arr_data.profile_theme1.field_specialitiy}} </p>
                                     <p class="fs-low pt-1 p-0 m-0 ">{{ arr_data.profile_theme1.field_allcertifications}}
                                     </p>
 
 
                                     <p class="fs-low pt-1 mb-2 p-0 m-0 ">
-                                        <a class="callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">
+                                        <a class="callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}" itemprop="telephone">
                                         {{ arr_data.profile_theme1.field_phone_number}}</a>
                                 
-                                        | <a class="mailto" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                                        | <a class="mailto" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" itemprop="email">{{ arr_data.profile_theme1.field_email_address}}</a>
                                     </p>
 
 
@@ -228,18 +280,18 @@
                 <div class="d-block d-sm-none">
                     <div class="small-profileWrapper p-5">
                         <div class="circle-container mx-auto">
-                            <img   src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
+                            <img itemprop="image" src="{{ arr_data.profile_theme1.field_background_image.url }}" alt="{{ arr_data.profile_theme1.field_background_image.alt }}">
                         </div>
-                        <h1 class="fon1 pt-4 text-center">{{ arr_data.profile_theme1.field_name}}</h1>
-                        <p class="title tc fw-bold">{{ arr_data.profile_theme1.field_specialitiy}} </p>
-                        <p class="text-center">{{ arr_data.profile_theme1.field_degree}}<br>
+                        <h1 class="fon1 pt-4 text-center" itemprop="name">{{ arr_data.profile_theme1.field_name}}</h1>
+                        <p class="title tc fw-bold" itemprop="jobTitle">{{ arr_data.profile_theme1.field_specialitiy}} </p>
+                        <p class="text-center" itemprop="hasCredential">{{ arr_data.profile_theme1.field_degree}}<br>
                         {# <p>{{ arr_data.profile_theme1.field_allcertifications}}<br>
                         </p> #}
                         <p class="text-center">
 
                     <div class="d-flex justify-content-center">
-                        <a class="fs-low mx-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
-                        <a class="mailto fs-low mx-1" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" >{{ arr_data.profile_theme1.field_email_address}}</a>
+                        <a class="fs-low mx-1 callto" href="tel:{{ arr_data.profile_theme1.field_phone_number }}" itemprop="telephone">{{ arr_data.profile_theme1.field_phone_number}} </a> | 
+                        <a class="mailto fs-low mx-1" href="mailto:{{ arr_data.profile_theme1.field_email_address }}" itemprop="email">{{ arr_data.profile_theme1.field_email_address}}</a>
                     </div>
 
                         </p>
@@ -250,11 +302,73 @@
                     <button class="whatsappbtn btn mx-auto d-block"><span><i class="fa-brands fa-whatsapp mx-1"></i> </span> <span class="line"></span> <span class="mx-2 fw-bolder">CHAT</span></button></a>
                     
 
-                    <div class="col-lg-4">
-                            <div id="rating">
-                                <div id="star" class="star text-center" data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
-                            </div>
+<div class="col-lg-4">
+    <div id="rating">
+        <div id="star" class="star text-center" data-rating="{{arr_data.profile_theme1.field_profilerating}}">
+            <div itemscope itemtype="https://schema.org/Physician">
+                <meta itemprop="name" content="{{ arr_data.profile_theme1.field_name }}">
+                <meta itemprop="image" content="{{arr_data.profile_theme1.profile_image}}">
+                <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <meta itemprop="ratingValue" content="{{arr_data.profile_theme1.field_profilerating}}">
+                    <meta itemprop="bestRating" content="5">
+                    <meta itemprop="worstRating" content="1">
+                    <meta itemprop="ratingCount" content="{{arr_data.profile_theme1.rating_count}}">
+                    <meta itemprop="reviewCount" content="{{arr_data.profile_theme1.review_count}}">
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
                     </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="1">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="2">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="3">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="4">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
                     <div class="d-flex">
@@ -290,12 +404,73 @@
                         <div class="col-lg-3 col-sm-6 text-center fs-5 fw-bold">
                             {{ arr_data.profile_theme1.field_patients}}
                         </div> 
-
-                        <div class="col-lg-5">
-                            <div id="rating">
-                                <div id="starsecondtheme" class="star" data-rating="{{arr_data.profile_theme1.field_profilerating}}"></div>
-                            </div>
-                        </div>
+<div class="col-lg-5">
+    <div id="rating">
+        <div id="starsecondtheme" class="star" data-rating="{{arr_data.profile_theme1.field_profilerating}}">
+            <div itemscope itemtype="https://schema.org/Physician">
+                <meta itemprop="name" content="{{ arr_data.profile_theme1.field_name }}">
+                <meta itemprop="image" content="{{arr_data.profile_theme1.profile_image}}">
+                <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                    <meta itemprop="ratingValue" content="{{arr_data.profile_theme1.field_profilerating}}">
+                    <meta itemprop="bestRating" content="5">
+                    <meta itemprop="worstRating" content="1">
+                    <meta itemprop="ratingCount" content="{{arr_data.profile_theme1.rating_count}}">
+                    <meta itemprop="reviewCount" content="{{arr_data.profile_theme1.review_count}}">
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="1">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="2">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="3">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="4">
+                    </div>
+                </div>
+                <div itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <meta itemprop="name" content="Anonymous">
+                    </div>
+                    <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                        <meta itemprop="worstRating" content="1">
+                        <meta itemprop="bestRating" content="5">
+                        <meta itemprop="ratingValue" content="5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
   
 
@@ -312,33 +487,33 @@
             
         </div>
 
-    <div class="text-scroll-container mt-3">
-        <div class="text-scroll">
-            <div class="text-slide">
-                <span class="blog-scroll2">Blog</span> /
-                <span class="blog-scroll2">Status</span> /
-                <span class="blog-scroll2">News</span> /
-                <span class="blog-scroll2">Articles</span> /
-                <span class="blog-scroll2">Blog</span> /
-                <span class="blog-scroll2">Status</span> /
-                <span class="blog-scroll2">News</span> /
-                <span class="blog-scroll2">Articles</span> /
-            </div>
-            <div class="text-slide">
-                <span class="blog-scroll2">Blog</span> /
-                <span class="blog-scroll2">Status</span> /
-                <span class="blog-scroll2">News</span> /
-                <span class="blog-scroll2">Articles</span> /
-                <span class="blog-scroll2">Blog</span> /
-                <span class="blog-scroll2">Status</span> /
-                <span class="blog-scroll2">News</span> /
-                <span class="blog-scroll2">Articles</span> /
+        <div class="text-scroll-container mt-3">
+            <div class="text-scroll">
+                <div class="text-slide">
+                    <span class="blog-scroll2">Blog</span> /
+                    <span class="blog-scroll2">Status</span> /
+                    <span class="blog-scroll2">News</span> /
+                    <span class="blog-scroll2">Articles</span> /
+                    <span class="blog-scroll2">Blog</span> /
+                    <span class="blog-scroll2">Status</span> /
+                    <span class="blog-scroll2">News</span> /
+                    <span class="blog-scroll2">Articles</span> /
+                </div>
+                <div class="text-slide">
+                    <span class="blog-scroll2">Blog</span> /
+                    <span class="blog-scroll2">Status</span> /
+                    <span class="blog-scroll2">News</span> /
+                    <span class="blog-scroll2">Articles</span> /
+                    <span class="blog-scroll2">Blog</span> /
+                    <span class="blog-scroll2">Status</span> /
+                    <span class="blog-scroll2">News</span> /
+                    <span class="blog-scroll2">Articles</span> /
+                </div>
             </div>
         </div>
     </div>
 
-
-    </section>
+</section>
 
 
 {% endif %}
@@ -347,7 +522,7 @@
 
 
 
-<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec2' : 'p2sec2' }}" class="pt-5 pb-5 {{ arr_data.profile_theme == 'theme1' ? '' : 'theme2' }}">
+<section id="{{ arr_data.profile_theme == 'theme1' ? 'sec2' : 'p2sec2' }}" class="pt-5 pb-5 {{ arr_data.profile_theme == 'theme1' ? '' : 'theme2' }}" itemscope itemtype="https://schema.org/MedicalOrganization">
 
 		{% if arr_data.profile_theme == 'theme2' %}
 			<div class="secondtheme">
@@ -396,7 +571,7 @@
             <div id="overview" class="container tab-pane active pt-4">
                 <div class="row">
                     <div class="col-lg-7 col-sm-7 pilltext">
-                        <p class="overview-content">{{arr_data.profile_theme1.field_overview}}</p>
+                        <p class="overview-content" itemprop="description">{{arr_data.profile_theme1.field_overview}}</p>
                         <span class="read-more-btn" style="display:none;">Read more</span>
                         <br>
 
@@ -424,7 +599,7 @@
             <div id="speciality" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-7 col-sm-7 pilltext">
-                        <p class="overview-content">{{arr_data.profile_theme1.field_specialities}}</p>
+                        <p class="overview-content" itemprop="description">{{arr_data.profile_theme1.field_specialities}}</p>
                         <span class="read-more-btn" style="display:none;">Read more</span>
                         <br>
                     </div>
@@ -454,7 +629,7 @@
             <div id="summary" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
-                        <div class="overview-contents">{{arr_data.profile_theme1.field_expertise_summary|raw}}</div>                       
+                        <div class="overview-contents" itemprop="description">{{arr_data.profile_theme1.field_expertise_summary|raw}}</div>                       
                     </div>
                     
                 </div>
@@ -463,7 +638,7 @@
             <div id="awandh" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
-                        <div class="overview-contents content-overflow">{{arr_data.profile_theme1.field_awards_honors|raw}}</div>                       
+                        <div class="overview-contents content-overflow" itemprop="description">{{arr_data.profile_theme1.field_awards_honors|raw}}</div>                       
                     </div>
                     
                 </div>
@@ -475,7 +650,7 @@
             <div id="eductaion" class="container tab-pane fade pt-4">
                 <div class="row">
                     <div class="col-lg-12 pilltext">
-                        <p class="overview-content">{{arr_data.profile_theme1.field_education_in_details|raw}}</p>   <span class="read-more-btn" style="display:none;">Read more</span>                     
+                        <p class="overview-content" itemprop="description">{{arr_data.profile_theme1.field_education_in_details|raw}}</p>   <span class="read-more-btn" style="display:none;">Read more</span>                     
                     </div>
                     <div class="col-lg-5 col-sm-5">
                     </div>
@@ -526,12 +701,14 @@
   </button>
 </div>
 
+
+
     <div class="tab-content p-0 m-0 ">
         <div class="col-sm-1 mt-3">
             <div id="month-carousel" class="mx-auto owl-carousel owl-theme monthslider2"></div>
         </div>
         {% for k, clinic in arr_data.doctor_clinic_appointment %}
-            <div id="{{k}}" class="tab-pane p-0 m-0 {{ k == 0 ? 'active' : ''}}"><br>
+            <div id="{{k}}" class="tab-pane p-0 m-0 {{ k == 0 ? 'active' : ''}}" itemscope itemtype="https://schema.org/MedicalClinic"><br>
                 <div id="brain" class="tab-pane active p-0 m-0"><br>
                     <div class="col-lg-12 col-sm-12 p-0 m-0">
                         <div class="row">
@@ -548,18 +725,24 @@
                             </div>
                         </div>
                         <div class="col-lg-8 p-0 m-0">
-                            <p class="mx-2">{{clinic.address}}</p>
-                            <b class="mx-2">{{clinic.instructions}}</b>
-                            <p class="mx-2 clinicnumber" data-clinicnumber="{{clinic.clinc_number}}"></p>
+                            <p class="mx-2" itemprop="address">{{clinic.address}}</p>
+                            <b class="mx-2" itemprop="description">{{clinic.instructions}}</b>
+                            <p class="mx-2 clinicnumber" itemprop="telephone" data-clinicnumber="{{clinic.clinc_number}}"></p>
+
+                            
                         </div>
                     </div>
 
                     <div class="row time_slots">
                     </div>
+                      <meta itemprop="name" content="{{ clinic.clinic_name }}">
                 </div>
             </div>
         {% endfor %}
     </div>
+
+
+
 </div>
 
 	
@@ -673,15 +856,15 @@
 
         <div class="owl-carousel expslider ">
             {% for key,data in arr_data.profile_theme1.field_areaofexpertise %}
-            <div class="col-lg-12 expcontent p-2 m-0 pb-4">
+            <div class="col-lg-12 expcontent p-2 m-0 pb-4" itemscope itemtype="https://schema.org/MedicalSpecialty">
                 <div class="p-4 shadow" style="border-radius: 10px;" >
                 <div class="exp-imag-wrapper">
                     <div class="col-sm-12 mx-auto">
-                        <img   src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
+                        <img itemprop="image" src="{{data.field_logoexpertise.url}}" alt="{{expimg.field_logoexpertise.alt}}" class="mx-auto" style="width:100% !important;height:250px;">
                     </div>
                 </div>
-                <h6 class="text-center p-3 expertise-title"><b>{{data.field_expertisehead}}</b></h6>
-                <div class="exp-cont">{{data.field_expertisecontent}}</div>
+                <h6 class="text-center p-3 expertise-title" itemprop="name"><b>{{data.field_expertisehead}}</b></h6>
+                <div class="exp-cont" itemprop="description">{{data.field_expertisecontent}}</div>
             </div>
             </div>
 
@@ -735,24 +918,24 @@
 				<h5 class="p-3">{{ arr_data.node_count }} Results</h5>
 				<div class="row">
                     {% for key,news_article in arr_data.article %}
-                       <div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block">
+                       <div class="col-lg-4 col-md-6 col-sm-4 d-none d-sm-block"  itemscope itemtype="https://schema.org/NewsArticle">
             <div class="articele-wrapper mb-5">
                 <div class="article-image">
-                    <img   src="{{ news_article.thumb }}" width="100%">
+                    <img src="{{ news_article.thumb }}" width="100%" itemprop="image">
                 </div>
                 <div class="d-flex mx-4 mt-2">
-                    <div class="offset-lg-0 text-capitalize">By {{ news_article.user_full_name }}</div>
-                    <div class="offset-lg-1">{{ news_article.date }}</div>
+                    <div class="offset-lg-0 text-capitalize" itemprop="author">By {{ news_article.user_full_name }}</div>
+                    <div class="offset-lg-1" itemprop="datePublished">{{ news_article.date }}</div>
                 </div>
                 <div class="p-4 pt-0">
-                    <h6 class="pt-3"><b>{{ news_article.title }}</b></h6>
+                    <h6 class="pt-3" itemprop="headline"><b>{{ news_article.title }}</b></h6>
 
-                    <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                    <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;" itemprop="articleBody">
                         {{ news_article.body|raw }}
                     </div>
 
 
-                    <a href="/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" >
+                    <a href="/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" itemprop="url">
                          <button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button>
                     </a>
 
@@ -760,7 +943,7 @@
                     
                 </div>
             </div>
-        </div>
+          </div>
 
                     {% endfor %}
 
@@ -768,16 +951,16 @@
 
                     <div class="owl-carousel blogslider d-block d-sm-none">
                     {% for key,news_article in arr_data.article %}
-                            <div class="articele-wrapper pb-5 mx-auto">
-                                <img   src="{{ news_article.thumb }}" width="100%">
+                            <div class="articele-wrapper pb-5 mx-auto"  itemscope itemtype="https://schema.org/NewsArticle">
+                                <img  src="{{ news_article.thumb }}" width="100%" itemprop="image">
                                 <div class="d-flex mx-4 mt-2">
-                                    <div class="offset-lg-0 text-capitalize">{{ news_article.author }} </div>
-                                    <div class="offset-lg-1">{{ news_article.date }}</div>
+                                    <div class="offset-lg-0 text-capitalize" itemprop="author">{{ news_article.author }} </div>
+                                    <div class="offset-lg-1" itemprop="datePublished">{{ news_article.date }}</div>
                                 </div>
                                 <div class="p-4 pt-0">
 
-                                    <h6 class="pt-3 "><b>{{news_article.title }}</b></h6>
-                                     <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                                    <h6 class="pt-3" itemprop="headline"><b>{{news_article.title }}</b></h6>
+                                     <div class="article-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;" itemprop="articleBody">
                                           {{ news_article.body|raw }}
                                       </div>
                                       <a href="/blog/{{ news_article.author }}/{{ news_article.title | replace({' ': '-'}) }}" traget="_blank"><button class="readMore p-2 float-start col-sm-7 mt-3">Read More</button></a>
@@ -859,63 +1042,73 @@
                 {% endfor %}
         </div>
 
-
-       
-
 <div class="testimonials_cls">
+    <h5 class="p-3">{{ arr_data.node_count_testimonials }} Results</h5>
+    <div class="row owl-carousel testimonial-slider pt-3">
+        {% for key, testimonials in arr_data.patient_testimonials %}
+            <div class="test-wrapp" itemscope itemtype="https://schema.org/Review">
+                <div class="p-3">
+                    <div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
+                    <b itemprop="name">{{ testimonials.title }}</b><br>
+                    <div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;" itemprop="reviewBody">
+                        {{ testimonials.content }}
+                    </div>
+                    <a class="readMoreLink">Read more</a>
 
-<h5 class="p-3">{{ arr_data.node_count_testimonials }} Results</h5>
-<div class="row owl-carousel testimonial-slider pt-3">
-    {% for key, testimonials in arr_data.patient_testimonials %}
-        <div class="test-wrapp">
-            <div class="p-3">
-                <div class="quotes"><i class="fa-solid fa-quote-left"></i></div>
-                <b>{{ testimonials.title }}</b><br>
-                <div class="testimonial-content" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
-                    {{ testimonials.content }}
-                </div>
-                <a class="readMoreLink">Read more</a>
-
-                <div class="owl-carousel owl-theme patient">
-                    {% for image in testimonials.images %}
-                        <div class="item">
-                            <div class="patient-imag-wrapper">
-                                <img   src="{{ image }}" class="patientImg pt-2 d-block mx-auto">
+                    <div class="owl-carousel owl-theme patient">
+                        {% for image in testimonials.images %}
+                            <div class="item">
+                                <div class="patient-imag-wrapper">
+                                    <img src="{{ image }}" class="patientImg pt-2 d-block mx-auto" alt="Patient image">
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
 
-                    {% for video in testimonials.videos %}
-                        <div class="item">
-                            <div class="patient-imag-wrapper">
-                                <span class="link-patient" style="display:none;">{{ video }}</span>
-                                <iframe class="youtube-iframe-patient" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        {% for video in testimonials.videos %}
+                            <div class="item">
+                                <div class="patient-imag-wrapper">
+                                    <span class="link-patient" style="display:none;">{{ video }}</span>
+                                    <iframe class="youtube-iframe-patient" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
                             </div>
+                        {% endfor %}
+                    </div>
+
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <span itemprop="name" class="fw-bolder">
+                            {% if testimonials.patienname %}
+                                {{ testimonials.patienname }}
+                            {% else %}
+                                Anonymous Patient
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div itemprop="itemReviewed" itemscope itemtype="https://schema.org/MedicalBusiness">
+                        <meta itemprop="name" content="{{arr_data.profile_theme1.field_name}}">
+                        <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                            {% for key,imgdata in arr_data.profile_theme1.field_logos %}
+                                {% if imgdata.field_address %}
+                                    <meta itemprop="streetAddress" content="{{imgdata.field_address}}">
+                                {% endif %}
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
 
-                <div class="fw-bolder">{{ testimonials.patienname }}</div>
-                
+                <div class="col-md-12 col-sm-6 pt-2 p-0 m-0">
+                    {% for tag in testimonials.tags %}
+                        <button class="rel-btn p-2 m-2 btn"><h3 class="fs-6 m-0">{{ tag }}</h3></button>
+                    {% endfor %}
+                </div>
             </div>
-
-
-            <div class="col-md-12 col-sm-6 pt-2 p-0 m-0">
-                {% for tag in testimonials.tags %}
-                    <button class="rel-btn p-2 m-2  btn"><h3 class="fs-6 m-0">{{ tag }}</h3></button>
-                {% endfor %}
-            </div>
-
-
-        </div>
-    {% endfor %}
-</div>
-
-
+        {% endfor %}
     </div>
+</div>
 			{% if arr_data.profile_theme == 'theme2' %}
-		</div>
-	{% endif %}
+	        	</div>
+	        {% endif %}
+    </div>
 </section>
 
 
@@ -956,9 +1149,9 @@
                         {% for key,faq in arr_data.faq %}
                         <div class="col-lg-6 col-md-6 mb-4">
                             <article class="accordion-item rounded">
-                                <span class="accordion-label">{{loop.index}}) {{faq.title}}</span>
+                                <span class="accordion-label" itemscope itemtype="https://schema.org/Question">{{loop.index}}) {{faq.title}}</span>
                                 <div class="accordion-content">
-                                    <p>{{faq.body|raw}}</p>
+                                    <p itemprop="text">{{faq.body|raw}}</p>
                                 </div>
                             </article>
                         </div>
@@ -999,8 +1192,10 @@
 
             <div class="tab-content">
                 {% for clinic in arr_data.profile_theme1.field_logos %}
-                    <div class="pt-2 tab-pane fade {% if loop.first %}show active{% endif %}" id="clinic-content-{{ loop.index0 }}">
-                        <div class="maplink">{{ clinic.field_map_link|raw}}</div>
+                    <div class="pt-2 tab-pane fade {% if loop.first %}show active{% endif %}" id="clinic-content-{{ loop.index0 }}" itemscope itemtype="https://schema.org/MedicalClinic">
+                        <div class="maplink" itemprop="hasMap">{{ clinic.field_map_link|raw}}</div>
+                        <meta itemprop="name" content="{{ clinic.field_clinicname }}">
+                        <meta itemprop="address" content="{{ clinic.field_map_link }}">
                     </div>
                 {% endfor %}
             </div>
@@ -1036,6 +1231,4 @@ $(document).ready(function () {
 });
 
 </script>
-
-
 

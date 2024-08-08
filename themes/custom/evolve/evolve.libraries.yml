@@ -10,6 +10,7 @@ global-styling:
       assets/css/min/style_theme2.css?v=1.1: {}
       assets/css/min/common.css?v=1.1: {}
       assets/css/min/color.css?v=1.1: {}
+      # assets/css/min/dr.css?v=1.1: {}
   js:
     assets/js/min/jquery.validate.min.js?v=1.0: {}
     assets/js/min/main.js?v=2.0: {}

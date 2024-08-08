@@ -11,6 +11,9 @@ use Drupal\Core\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\media\Entity\Media;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\user\Entity\User;
+use Drupal\paragraphs\Entity\Paragraph;
 
 function evolve_preprocess_node(&$variables) {
 	global $base_url;
@@ -88,4 +91,101 @@ function evolve_preprocess_node(&$variables) {
 	}
 	
 }
+
+
+function evolve_preprocess_html(&$variables) {
+  $route_match = \Drupal::routeMatch();
+  $route_name = $route_match->getRouteName();
+
+  if ($route_name === 'userprofile.getprofile') {
+    $username = $route_match->getParameter('username');
+    $query = \Drupal::database()->select('users_field_data', 'u');
+    $query->addField('u', 'uid');
+    $query->condition('u.name', $username);
+    $uid = $query->execute()->fetchField();
+
+    if (!empty($uid)) {
+      $user = User::load($uid);
+      $para = $user->get("field_paragraphtheme1")->getValue();
+      
+      if (!empty($para)) {
+        $arr_data = [];
+        foreach ($para as $value) {
+          $paragraph = Paragraph::load($value["target_id"]);
+          if ($paragraph && $paragraph->getType() == 'profile_theme1') {
+            $arr_data['profile_theme1'] = [
+              'field_name' => $paragraph->hasField('field_name') ? $paragraph->get('field_name')->value : $user->getDisplayName(),
+              'field_specialitiy' => $paragraph->hasField('field_specialitiy') ? $paragraph->get('field_specialitiy')->value : 'Not specified',
+              'field_overview' => $paragraph->hasField('field_overview') ? $paragraph->get('field_overview')->value : 'No overview available',
+              'field_background_image' => [
+                'url' => $paragraph->hasField('field_background_image') && !$paragraph->get('field_background_image')->isEmpty() 
+                  ? $paragraph->get('field_background_image')->entity->createFileUrl() 
+                  : '',
+              ],
+              'field_phone_number' => $paragraph->hasField('field_phone_number') ? $paragraph->get('field_phone_number')->value : 'Not provided',
+              'field_email_address' => $paragraph->hasField('field_email_address') ? $paragraph->get('field_email_address')->value : $user->getEmail(),
+              'field_profilerating' => $paragraph->hasField('field_profilerating') ? $paragraph->get('field_profilerating')->value : '1',
+              'field_review_count' => $paragraph->hasField('field_review_count') ? $paragraph->get('field_review_count')->value : '1',
+            ];
+
+            // Fetch logos and addresses
+            if ($paragraph->hasField('field_logos')) {
+              $logos = $paragraph->get('field_logos')->referencedEntities();
+              foreach ($logos as $key => $logo) {
+                $arr_data['profile_theme1']['field_logos'][$key] = [
+                  'field_address' => $logo->hasField('field_address') ? $logo->get('field_address')->value : '',
+                ];
+              }
+            }
+
+            // Fetch clinic appointments
+            $para1 = $user->get("field_book_appointment")->getValue();
+            foreach ($para1 as $appointmentValue) {
+              $appointmentParagraph = Paragraph::load($appointmentValue["target_id"]);
+              if ($appointmentParagraph) {
+                $fields = $appointmentParagraph->getFields();
+                foreach ($fields as $field_name => $field) {
+                  if ($field->getFieldDefinition()->getType() == "entity_reference_revisions") {
+                    $childPara = $appointmentParagraph->get($field_name)->getValue();
+                    foreach ($childPara as $key => $valuechild) {
+                      $childParagraph = Paragraph::load($valuechild["target_id"]);
+                      if ($childParagraph) {
+                        $clinctarget_id = $childParagraph->get('field_clinic_name')->getValue()[0]['target_id'] ?? null;
+                        if ($clinctarget_id) {
+                          $clincterm = Term::load($clinctarget_id);
+                          if ($clincterm) {
+                            $arr_data['doctor_clinic_appointment'][] = [
+                              'clinic_name' => $clincterm->getName(),
+                              'target_id' => $valuechild["target_id"],
+                              'address' => $clincterm->get('field_address')->getValue()[0]['value'] ?? '',
+                              'instructions' => $clincterm->get('field_instructions')->getValue()[0]['value'] ?? '',
+                              'clinc_number' => $clincterm->get('field_clinic_phone_number')->getValue()[0]['value'] ?? '',
+                            ];
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            
+            break; // We only need the first 'profile_theme1' paragraph
+          }
+        }
+
+        if (!empty($arr_data)) {
+          $variables['arr_data'] = $arr_data;
+          
+          if (!empty($arr_data['doctor_clinic_appointment'])) {
+            $first_clinic = reset($arr_data['doctor_clinic_appointment']);
+            $variables['first_clinic_address'] = $first_clinic['address'];
+            $variables['first_clinic_name'] = $first_clinic['clinic_name'];
+          }
+        }
+      }
+    }
+  }
+}
+  
 ?>

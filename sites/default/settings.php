@@ -743,6 +743,13 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  */
 # $settings['yaml_parser_class'] = NULL;
 
+
+// $settings['trusted_host_patterns'] = [
+//   '^linqmd\.com$',
+//   '^www\.linqmd\.com$',
+//   '^3\.109\.208\.254$',
+// ];
+
 /**
  * Trusted host configuration.
  *
@@ -904,3 +911,6 @@ $databases['default']['default'] = array (
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_Uo8rz9APLni_fscu9h7Mpi7Uumh-we-_WhL2SZe3eN8YIhv2g4O5LEyaiFoxby0Cp7yCQR6NrA/sync';
 $config['system.logging']['error_level'] = 'verbose';
+
+
+

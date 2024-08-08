@@ -68,21 +68,58 @@ class Appointments extends ControllerBase
 	}
 
 
-	public function durationwiseslot($slot,$duration){
+	// public function durationwiseslot($slot,$duration){
+	// 	$adjustedTimes = [];
+	// 	for ($i = 0; $i < count($slot) - 1; $i++) {
+	// 		$start = strtotime($slot[$i]);
+	// 		$end = strtotime($slot[$i + 1]);
+			
+	// 		// Generate times in 10-minute intervals between $times[$i] and $times[$i + 1]
+	// 		$generatedTimes = $this->generateTimesInInterval($slot[$i], $slot[$i + 1], $duration);
+			
+	// 		// Merge generated times into adjustedTimes array
+	// 		$adjustedTimes = array_merge($adjustedTimes, $generatedTimes);
+	// 	}
+	// 	return $adjustedTimes;
+	// }
+
+	public function durationwiseslot($slot, $duration) {
 		$adjustedTimes = [];
-		for ($i = 0; $i < count($slot) - 1; $i++) {
+	
+		// Check if $slot is an array and not empty
+		if (!is_array($slot) || empty($slot)) {
+			\Drupal::logger('userprofile')->warning('Invalid or empty slot array passed to durationwiseslot');
+			return $adjustedTimes; // Return empty array
+		}
+	
+		$slotCount = count($slot);
+	
+		// Check if there's at least two elements to create an interval
+		if ($slotCount < 2) {
+			\Drupal::logger('userprofile')->warning('Not enough elements in slot array to create intervals');
+			return $adjustedTimes; // Return empty array
+		}
+	
+		for ($i = 0; $i < $slotCount - 1; $i++) {
 			$start = strtotime($slot[$i]);
 			$end = strtotime($slot[$i + 1]);
 			
-			// Generate times in 10-minute intervals between $times[$i] and $times[$i + 1]
+			// Check if conversion to timestamp was successful
+			if ($start === false || $end === false) {
+				\Drupal::logger('userprofile')->warning('Invalid time format in slot array');
+				continue; // Skip this iteration
+			}
+			
+			// Generate times in intervals between $slot[$i] and $slot[$i + 1]
 			$generatedTimes = $this->generateTimesInInterval($slot[$i], $slot[$i + 1], $duration);
 			
 			// Merge generated times into adjustedTimes array
 			$adjustedTimes = array_merge($adjustedTimes, $generatedTimes);
 		}
+	
 		return $adjustedTimes;
 	}
-
+	
 
 	
 	public function getBookingTimeSlot(Request $request){
@@ -190,14 +227,31 @@ class Appointments extends ControllerBase
 		$morning_slot_count = is_array($field_morning_slots) ? count($field_morning_slots) : 0;
 		
 		
-		$mroning_slot = [] ;
-		$i = 0;
-		foreach($field_morning_slots as $key => $morning_slot){
-			$mr_slot = Term::load($morning_slot['target_id']);
-			$mroning_slot[] = $mr_slot->getName();
-		}
+		// $mroning_slot = [] ;
+		// $i = 0;
+		// foreach($field_morning_slots as $key => $morning_slot){
+		// 	$mr_slot = Term::load($morning_slot['target_id']);
+		// 	$mroning_slot[] = $mr_slot->getName();
+		// }
+
+		$mroning_slot = [];
+$field_morning_slots = !empty($paragraph->get('field_morning_slots')->getValue()) ? $paragraph->get('field_morning_slots')->getValue() : [];
+
+foreach ($field_morning_slots as $key => $morning_slot) {
+    if (isset($morning_slot['target_id'])) {
+        $mr_slot = Term::load($morning_slot['target_id']);
+        if ($mr_slot) {
+            $mroning_slot[] = $mr_slot->getName();
+        }
+    }
+}
+
+
+
+
 		if(!empty($duration)){
-			if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			// if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			if(!empty($mroning_slot) && !empty($weekdays_select) && in_array($select_day, $weekdays_select)){
 				$duation_slots = $this->durationwiseslot($mroning_slot,$duration);
 				$mornig_slot_du = !empty($duation_slots) ? count($duation_slots): 0;
 				$html .='<div class="col-sm-12 morning-slot"><div class="fs-3 pt-5"><b>Morning ('.$mornig_slot_du.' slots)</b></div>';
@@ -234,13 +288,24 @@ class Appointments extends ControllerBase
 		
 		$field_afternoon_slots = !empty($paragraph->get('field_afternoon_slots')->getValue()) ? $paragraph->get('field_afternoon_slots')->getValue(): '';
 		$afternoon_slot_count = !empty($field_afternoon_slots) ? count($field_afternoon_slots): 0;
+
 		$after_slots = [];
-		foreach($field_afternoon_slots as $afternoon_slot){
-			$after_slot = Term::load($afternoon_slot['target_id']);
+		if (is_array($field_afternoon_slots)) {
+			foreach ($field_afternoon_slots as $afternoon_slot) {
+				$after_slot = Term::load($afternoon_slot['target_id']);
+				$after_slots[] = $after_slot->getName();
+			}
+		} elseif (!empty($field_afternoon_slots)) {
+			// Handle single value
+			$after_slot = Term::load($field_afternoon_slots['target_id']);
 			$after_slots[] = $after_slot->getName();
 		}
+		// If $field_afternoon_slots is empty, $after_slots will remain an empty array
+
+		
 		if(!empty($duration)){
-			if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			// if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			if(!empty($after_slots) && !empty($weekdays_select) && in_array($select_day, $weekdays_select)){
 				$duation_slots = $this->durationwiseslot($after_slots,$duration);
 				$after_slot_du = !empty($duation_slots) ? count($duation_slots): 0;
 				$html .='<div class="col-sm-12 afternoon-slot"><div class="fs-3 pt-5"><b>After Noon ('.$after_slot_du.' slots)</b></div>';
@@ -275,16 +340,37 @@ class Appointments extends ControllerBase
 			}
 			$html .='</div>';
 		}
+
+
+
 		
-		$field_evening_slots = !empty($paragraph->get('field_evening_slots')->getValue()) ? $paragraph->get('field_evening_slots')->getValue(): '';
-		$evening_slot_count = !empty($field_evening_slots) ? count($field_evening_slots) : 0;
-		$eveningslots = [];
-		foreach($field_evening_slots as $evening_slot){
-			$even_slot = Term::load($evening_slot['target_id']);
-			$eveningslots[] = $even_slot->getName();
-		}
+		// $field_evening_slots = !empty($paragraph->get('field_evening_slots')->getValue()) ? $paragraph->get('field_evening_slots')->getValue(): '';
+		// $evening_slot_count = !empty($field_evening_slots) ? count($field_evening_slots) : 0;
+		// $eveningslots = [];
+		// foreach($field_evening_slots as $evening_slot){
+		// 	$even_slot = Term::load($evening_slot['target_id']);
+		// 	$eveningslots[] = $even_slot->getName();
+		// }
+
+
+		$field_evening_slots = !empty($paragraph->get('field_evening_slots')->getValue()) ? $paragraph->get('field_evening_slots')->getValue() : [];
+$evening_slot_count = count($field_evening_slots);
+$eveningslots = [];
+foreach ($field_evening_slots as $evening_slot) {
+    if (isset($evening_slot['target_id'])) {
+        $even_slot = Term::load($evening_slot['target_id']);
+        if ($even_slot) {
+            $eveningslots[] = $even_slot->getName();
+        }
+    }
+}
+
+
+		
 		if(!empty($duration)){
-			if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			// if(!empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+			if(!empty($eveningslots) && !empty($weekdays_select) && in_array($select_day, $weekdays_select)){
+
 				$duation_slots = $this->durationwiseslot($eveningslots,$duration);
 				$eveing_slot_du = !empty($duation_slots) ? count($duation_slots): 0;
 				$html .='<div class="col-sm-12 evening-slot"><div class="fs-3 pt-5"><b>Evening ('.$eveing_slot_du.' slots)</b></div>';

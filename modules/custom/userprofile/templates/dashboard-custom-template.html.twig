@@ -1,4 +1,8 @@
-<section> 
+<style>
+#dashboard .popup-content input[type=email],#dashboard .popup-content input[type=text],#dashboard input[type=email],#dashboard input[type=text],#dashboard textarea{width:calc(100% - 22px);padding:10px;margin-bottom:20px;border:1px solid #ccc;border-radius:4px}#dashboard fieldset{border:1px solid #ddd;margin-bottom:20px;padding:10px;border-radius:4px}#dashboard legend{font-weight:700;color:#555}#dashboard .hospital-section{margin-top:20px;padding:10px;border:1px solid #ccc;border-radius:4px;background:#f9f9f9}#dashboard .add-btn{padding:1rem;margin-top:1rem;color:#007bff}#dashboard .add-button,#dashboard button[type=submit]{display:block;width:100%;padding:10px;margin-top:20px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:16px}#dashboard .add-button:hover,#dashboard .popup-content button:hover,#dashboardbutton[type=submit]:hover{background:#0056b3}#dashboard .toggle-container{display:flex;justify-content:center;margin-bottom:20px}#dashboard .toggle-button{display:flex;width:200px;height:50px;background:#ccc;border-radius:25px;position:relative;cursor:pointer}#dashboard .popup,#dashboard .toggle-button input[type=radio],.mydata-details{display:none}.toggle-button label{flex:1;line-height:50px;text-align:center;margin:0;font-weight:700;transition:color .3s}.header,.popup{justify-content:center}.toggle-button input[type=radio]:checked+label{color:#fff}.toggle-button .slider{position:absolute;width:100px;height:50px;background:#007bff;border-radius:25px;transition:transform .3s;opacity:.5}#doctor:checked~.slider{transform:translateX(0)}#hospital:checked~.slider{transform:translateX(100px)}.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);align-items:center}.popup-content{background:#fff;padding:20px;border-radius:8px;text-align:center;width:300px;box-shadow:0 2px 4px rgba(0,0,0,.1)}.nav-button,.popup-content button{color:#fff;border:none;cursor:pointer}.popup-content button{display:block;width:100%;padding:10px;background:#007bff;border-radius:4px;font-size:16px}.shift-section{display:none;margin-top:10px}.mar-label{margin-top:-15px;margin-bottom:15px}.doctor-details,.mydata-details{margin:15px 0 0 25px}.input-container input{padding:10px;border:1px solid #ccc;border-radius:4px}.input-container label{position:relative;top:5px;left:40px;background-color:#fff;padding:0 5px;color:#777;font-size:14px}#image{width:188px;height:44px;padding:10px 10px 10px 15px;border-radius:3px;font-weight:400;user-select:none;font-style:italic;border:1px solid gray}#user-input{padding-right:10px;height:50px}input{border:1px solid gray}.inline{display:inline-block}.header,.sidebar{display:flex}.select-styles{height:33px;width:111px;border-radius:3px}.side-list{background-color:rgba(49,167,167,.726);border:1px solid #dcdcdc;width:15%;height:85vh}.nav-button,.switch.on{background-color:#007bff}.side-list ul{list-style:none}.side-list ul li{padding-top:15px}.side-list ul li a{text-decoration:none;color:#000}.side-list ul li a:hover{color:#fff;text-decoration:underline}.log-out a{text-decoration:none;font-size:20px;padding-left:5px}.header{align-items:center;height:80px}.day-item,.nav-button{display:inline-block;margin:10px}.header-img{height:55px;width:55px;border-radius:50%}.scroller-container{width:70rem;overflow-x:auto;white-space:nowrap}.day-item{width:80px;height:80px;border-radius:5px;text-align:center}.nav-button{padding:18px;border-radius:50%}.scroller-container::-webkit-scrollbar{display:none}table,td,th{border:1px solid #000;border-collapse:collapse;padding:8px}.btn-time{border:none}.switch{width:60px;height:30px;background-color:grey;border-radius:15px;position:relative;cursor:pointer;transition:background-color .3s}.switch-handle{width:30px;height:30px;background-color:#fff;border-radius:50%;position:absolute;top:0;left:0;transition:left .3s;display:flex;justify-content:center;align-items:center}.icon{font-size:18px;position:absolute}.switch.on .switch-handle{left:30px}.switch.on .icon-check{display:block}.switch.on .icon-cross{display:none}b,strong{color:rgba(var(--bs-primary-rgb),var(--bs-text-opacity))!important}.leave_doctor{color:red!important}
+</style>
+
+<section id="dashboard"> 
 	<div class="px-5 header">
 		<div class="d-flex align-items-center">
 			<div>
@@ -72,17 +76,17 @@
 							</p>
 						</td>
 						<th>
-							<strong> Morning 2PM-4PM</strong>
+							<strong> Morning 8AM-12PM</strong>
 						</th>
 					</tr>
 					<tr>
 						<th>
-							<strong>AfterNoon 6PM-8PM</strong>
+							<strong>AfterNoon 12PM-4PM</strong>
 						</th>
 					</tr>
 					<tr>
 						<th>
-							<strong>Evening 6PM-8PM</strong>
+							<strong>Evening 4PM-10PM</strong>
 						</th>
 					</tr>
 				</table>

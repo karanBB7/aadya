@@ -26,112 +26,115 @@ ul.breadcrumb li a:hover {
 {% for article in arr_data.article %}
     <title>{{article.title}}</title>
 {% endfor %}
+   
+
     <section id="blogsec">
-        <div class="main-content">
-            <div class="container pt-5">
-                <div class="row">
+     <div class="main-content">
+         <div class="container pt-5">
+             <div class="row">
+                 <div class="col-sm-8">
+                     <ul class="breadcrumb">
+                         <li><a href="{{ url('userprofile.getprofile', {'username': arr_data.username}) }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Home</a></li>
+                         <li><a href="{{ url('<front>') }}blog/{{ arr_data.username }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Blogs</a></li>
+                         <li>{{ arr_data.title }}</li>
+                     </ul>
+                     {% if arr_data.article is not empty %}
+                     {% for article in arr_data.article %}
+                     <article itemtype="http://schema.org/BlogPosting">
+                         <h1 class="fw-bolder">{{article.title}}</h1>
+                         <div class="col-sm-10">
+                             <img src="{{ article.thumb }}" alt="Article Thumbnail" width="100%" itemprop="image">
+                         </div>
+                         <div class="main-conntent">
 
-                    <div class="col-sm-8">
-
-
-<ul class="breadcrumb">
-  <li><a href="{{ url('userprofile.getprofile', {'username': arr_data.username}) }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Home</a></li>
-  <li><a href="{{ url('<front>') }}blog/{{ arr_data.username }}" target="_self" rel="noopener noreferrer" onclick="event.preventDefault(); window.location.href=this.href;">Blogs</a></li>
-  <li>{{ arr_data.title }}</li>
-</ul>
-            {% if arr_data.article is not empty %}
-                            {% for article in arr_data.article %}
-                                <article>
-                                    <h1 class="fw-bolder">{{article.title}}</h1>
-                                    <div class="col-sm-10">
-                                         <img src="{{ article.thumb }}" alt="Article Thumbnail" width="100%">
-                                    </div>
-                                    <div class="main-conntent">
-                                        
-                               <div class="pt-4"><b>By:</b> {{article.user_full_name}} </div>
-                               <div><b>Date:</b> {{article.date}}</div>
-                                        {{ article.body|raw }}
-                                    </div>
-                                </article>
-                              {% endfor %}
-                        {% else %}
-                            <p>No articles found.</p>
-                        {% endif %}
-                        <div class="comment-section">
-                        {% if arr_data.comments_info is not empty %}
-                            <h3>Comments</h3>
-                            <div id="comments-list" class="mb-4">
-                                {% for key,item in arr_data.comments_info %}
-                                <div class="comment mb-3">
-                                    <h5>{{ item.name }}</h5>
-                                    <p class="text-muted">Posted on: {{ item.created }}</p>
-                                    <p>{{ item.comment_body }}</p>
+                             <div class="pt-4"><b>By:</b> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{article.user_full_name}} </div>
+                             <div><b>Date:</b> <time itemprop="datePublished" datetime="{{article.date|date('Y-m-d')}}">{{article.date}}</time>{{article.date}}</div>
+                                <div itemprop="articleBody">
+                                   {{ article.body|raw }}
                                 </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        <h4>Add a Comment</h4>
-                        <form id="comment-form" name="comment-form" action="post">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" name="username" class="form-control" id="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="comment" class="form-label">Comment</label>
-                                <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
-                            </div>
-                            <input type="hidden" name="node_id" id="node_id" value="{{ arr_data.node_id }}">
-                            <button type="submit" class="btn btn-primary mb-5">Submit Comment</button>
-                        </form>
-                    </div>
+                         </div>
+                         <meta itemprop="dateModified" content="{{article.date|date('Y-m-d')}}">
+                     </article>
+                     {% endfor %}
+                     {% else %}
+                     <p>No articles found.</p>
+                     {% endif %}
+                     <div class="comment-section">
+                         {% if arr_data.comments_info is not empty %}
+                         <h3>Comments</h3>
+                         <div id="comments-list" class="mb-4">
+                             {% for key,item in arr_data.comments_info %}
+                             <div class="comment mb-3">
+                                 <h5>{{ item.name }}</h5>
+                                 <p class="text-muted">Posted on: {{ item.created }}</p>
+                                 <p>{{ item.comment_body }}</p>
+                             </div>
+                             {% endfor %}
+                         </div>
+                         {% endif %}
+                         <h4>Add a Comment</h4>
+                         <form id="comment-form" name="comment-form" action="post">
+                             <div class="mb-3">
+                                 <label for="name" class="form-label">Name</label>
+                                 <input type="text" name="username" class="form-control" id="name" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="email" class="form-label">Email</label>
+                                 <input type="email" name="email" class="form-control" id="email" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="comment" class="form-label">Comment</label>
+                                 <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
+                             </div>
+                             <input type="hidden" name="node_id" id="node_id" value="{{ arr_data.node_id }}">
+                             <button type="submit" class="btn btn-primary mb-5">Submit Comment</button>
+                         </form>
+                     </div>
 
-                    <div class="sticky-social">
-                            <ul class="social">
-                                <li class="fb"><a class="fbshare" target="_blank" href="#"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
+                     <div class="sticky-social">
+                         <ul class="social">
+                             <li class="fb"><a class="fbshare" target="_blank" href="#"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a></li>
 
-                                <li class="whatsapp"><a class="whatsappshare" target="_blank" href="#"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
+                             <li class="whatsapp"><a class="whatsappshare" target="_blank" href="#"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></li>
 
-                                <li class="linkedin"><a class="linkedinshare" target="_blank" href="#"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+                             <li class="linkedin"><a class="linkedinshare" target="_blank" href="#"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
 
-                                <li class="twitter"><a class="twittershare" target="_blank" href="#"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+                             <li class="twitter"><a class="twittershare" target="_blank" href="#"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
 
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-4 other-blog " style="z-index:1 !important;">
-                        <h5 class=" fw-bolder">Other Articles you might Like</h5>
-                        <hr>
-                        <div class="row size-reduce">
-
-                            {% for random_article in arr_data.random_articles %}
-                                <div class="col-sm-5 mx-auto p-3 small-img-size">
-                                    <img src="{{ random_article.thumb }}" width="100%">
-                                </div>
-                                <div class="col-sm-7 small-content-center">
-                                    <p class="fw-bold  m-0 pt-3">{{random_article.title}}</p>
-                                    <p class="p-0 m-0 pb-2">By: {{random_article.random_user_full_name}}</p>
-                                    <a href="{{random_article.base_url}}/blog/{{ random_article.author }}/{{ random_article.title | replace({' ': '-'}) }}" target="_blank">
-                                         <button class="btn btn-primary mb-3" >Read More</button>
-                                     </a>
-                                </div>
-                                <hr>
-                            {% endfor %}
+                         </ul>
+                     </div>
+                 </div>
 
 
-                        </div>
-                    </div>
+                 <div class="col-sm-4 other-blog " style="z-index:1 !important;">
+                     <h5 class=" fw-bolder">Other Articles you might Like</h5>
+                     <hr>
+                     <div class="row size-reduce">
 
-                </div>
-            </div>
-        </div>
+                         {% for random_article in arr_data.random_articles %}
+                         <div class="col-sm-5 mx-auto p-3 small-img-size">
+                             <img src="{{ random_article.thumb }}" width="100%">
+                         </div>
+                         <div class="col-sm-7 small-content-center">
+                             <p class="fw-bold  m-0 pt-3">{{random_article.title}}</p>
+                             <p class="p-0 m-0 pb-2">By: {{random_article.random_user_full_name}}</p>
+                             <a href="{{random_article.base_url}}/blog/{{ random_article.author }}/{{ random_article.title | replace({' ': '-'}) }}" target="_blank">
+                                 <button class="btn btn-primary mb-3">Read More</button>
+                             </a>
+                         </div>
+                         <hr>
+                         {% endfor %}
 
-    </section>
+
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+     </div>
+
+ </section>
+
 
 
 
